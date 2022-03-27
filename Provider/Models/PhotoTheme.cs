@@ -2,6 +2,9 @@
 
 namespace Provider.Models
 {
+    /// <summary>
+    /// Contains details of PhotoTheme
+    /// </summary>
     public class PhotoTheme
     {
         /// <summary>

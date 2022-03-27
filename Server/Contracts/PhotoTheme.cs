@@ -2,6 +2,9 @@
 
 namespace Server.Contracts
 {
+    /// <summary>
+    /// Contains details of PhotoTheme
+    /// </summary>
     public class PhotoTheme
     {
         /// <summary>

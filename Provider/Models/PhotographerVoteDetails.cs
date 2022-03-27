@@ -1,6 +1,9 @@
 ﻿namespace Provider.Models
 {
-    public class UserVoteDetails
+    /// <summary>
+    /// Contains voting details of a photographer
+    /// </summary>
+    public class PhotographerVoteDetails
     {
         /// <summary>
         /// Details of the photographer whos voting details are encapsulated

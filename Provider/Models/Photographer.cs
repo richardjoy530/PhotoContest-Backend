@@ -1,5 +1,8 @@
 ﻿namespace Provider.Models
 {
+    /// <summary>
+    /// Contains details of Photographer
+    /// </summary>
     public class Photographer
     {
         /// <summary>

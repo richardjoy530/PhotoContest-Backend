@@ -1,5 +1,8 @@
 ﻿namespace Server.Contracts
 {
+    /// <summary>
+    /// Contains details of Photographer
+    /// </summary>
     public class Photographer
     {
         /// <summary>

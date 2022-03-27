@@ -38,7 +38,7 @@ namespace Provider
         /// <summary>
         /// Deletes the record of <see cref="PhotoEntry"/> with the specified ID
         /// </summary>
-        /// <param name="referenceId"></param>
+        /// <param name="id"></param>
         public void DeletePhotoEntry(int id);
     }
 }

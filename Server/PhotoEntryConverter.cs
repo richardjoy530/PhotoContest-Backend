@@ -108,14 +108,14 @@ namespace Server
             };
         }
 
-        public static UserVoteDetails ToContract(this Provider.Models.UserVoteDetails model)
+        public static PhotographerVoteDetails ToContract(this Provider.Models.PhotographerVoteDetails model)
         {
             if (model == null)
             {
                 return null;
             }
 
-            return new UserVoteDetails
+            return new PhotographerVoteDetails
             {
                 FirstVoteId = model.FirstVoteId,
                 Photographer = model.Photographer.ToContract(),
@@ -124,14 +124,14 @@ namespace Server
             };
         }
 
-        public static Provider.Models.UserVoteDetails ToModel(this UserVoteDetails contract)
+        public static Provider.Models.PhotographerVoteDetails ToModel(this PhotographerVoteDetails contract)
         {
             if (contract == null)
             {
                 return null;
             }
 
-            return new Provider.Models.UserVoteDetails
+            return new Provider.Models.PhotographerVoteDetails
             {
                 FirstVoteId = contract.FirstVoteId,
                 Photographer = contract.Photographer.ToModel(),
@@ -140,28 +140,28 @@ namespace Server
             };
         }
 
-        public static VoteDetails ToContract(this Provider.Models.VoteDetails model)
+        public static ScoreDetail ToContract(this Provider.Models.ScoreDetail model)
         {
             if (model == null)
             {
                 return null;
             }
 
-            return new VoteDetails
+            return new ScoreDetail
             {
                 EntryId = model.EntryId,
                 Score = model.Score,
             };
         }
 
-        public static Provider.Models.VoteDetails ToContract(this VoteDetails contract)
+        public static Provider.Models.ScoreDetail ToContract(this ScoreDetail contract)
         {
             if (contract == null)
             {
                 return null;
             }
 
-            return new Provider.Models.VoteDetails
+            return new Provider.Models.ScoreDetail
             {
                 EntryId = contract.EntryId,
                 Score = contract.Score,

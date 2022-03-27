@@ -1,7 +1,7 @@
 ﻿namespace Provider
 {
     /// <summary>
-    /// An interface for referenceId <=> integerId mapper
+    /// An interface for referenceId - integerId mapper
     /// </summary>
     public interface IReferenceIdMapper
     {

@@ -1,6 +1,9 @@
 ﻿namespace Provider.Models
 {
-    public class VoteDetails
+    /// <summary>
+    /// Contains scores of a PhotoRntry
+    /// </summary>
+    public class ScoreDetail
     {
         /// <summary>
         /// Reference Id of the PhotoEntry

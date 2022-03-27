@@ -2,6 +2,9 @@
 
 namespace Provider.Models
 {
+    /// <summary>
+    /// Contains the details of PhotoEntry
+    /// </summary>
     public class PhotoEntry
     {
         /// <summary>
@@ -10,7 +13,7 @@ namespace Provider.Models
         public string ReferenceId { get; set; }
 
         /// <summary>
-        /// Theme of the photo. This must correspond to <see cref="PhotoTheme">
+        /// Theme of the photo. This must correspond to <see cref="PhotoTheme"/>
         /// </summary>
         public string Theme { get; set; }
 
