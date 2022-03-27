@@ -1,4 +1,4 @@
-﻿namespace Server.Models
+﻿namespace Server.Contracts
 {
     public class Photographer
     {

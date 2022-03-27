@@ -1,4 +1,4 @@
-﻿namespace Server.Models
+﻿namespace Provider.Models
 {
     public class UserVoteDetails
     {
