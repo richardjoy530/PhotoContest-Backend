@@ -2,7 +2,6 @@
 using Provider;
 using Server.Contracts;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Server.Controllers
 {
@@ -11,35 +10,50 @@ namespace Server.Controllers
     public class PhotoEntryController : ControllerBase
     {
         private readonly IPhotoEntryProvider photoEntryProvider;
-        public PhotoEntryController(IPhotoEntryProvider _photoEntryProvider)
+        private readonly IReferenceIdMapper referenceIdMapper;
+
+        public PhotoEntryController(
+            IPhotoEntryProvider _photoEntryProvider,
+            IReferenceIdMapper _referenceIdMapper
+            )
         {
             photoEntryProvider = _photoEntryProvider;
-        }
-        [HttpGet]
-        public IEnumerable<PhotoEntry> Get()
-        {
-            return photoEntryProvider.GetPhotoEntries();
+            referenceIdMapper = _referenceIdMapper;
         }
 
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        public IEnumerable<PhotoEntry> GetAll()
         {
-            return "value";
+            return photoEntryProvider.GetPhotoEntries().ToContract();
+        }
+
+        [HttpGet("{theme}")]
+        public IEnumerable<PhotoEntry> GetAll(string theme)
+        {
+            return photoEntryProvider.GetPhotoEntries(theme).ToContract();
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public PhotoEntry AddPhotoEntry([FromBody] PhotoEntry photoEntry)
         {
+            return photoEntryProvider.AddPhotoEntry(photoEntry.ToModel()).ToContract();
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{referenceId}")]
+        public PhotoEntry UpdatePhotoEntry(string referenceId, [FromBody] PhotoEntry photoEntry)
         {
+            if (referenceId != photoEntry.ReferenceId)
+            {
+                // throw validation
+            }
+            return photoEntryProvider.UpdatePhotoEntry(photoEntry.ToModel()).ToContract();
         }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{referenceId}")]
+        public void Delete(string referenceId)
         {
+            var id = referenceIdMapper.GetIntegerId(referenceId, IdType.PhotoEntry);
+            photoEntryProvider.DeletePhotoEntry(id);
         }
     }
 }
