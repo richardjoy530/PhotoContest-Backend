@@ -135,12 +135,21 @@
             Date and time of the upload
             </summary>
         </member>
+        <member name="P:Provider.Models.PhotoEntry.Id">
+            <inheritdoc />
+        </member>
+        <member name="M:Provider.Models.PhotoEntry.ResolveId(Provider.IReferenceIdMapper)">
+            <inheritdoc />
+        </member>
+        <member name="M:Provider.Models.PhotoEntry.ResolveReferenceId(Provider.IReferenceIdMapper)">
+            <inheritdoc />
+        </member>
         <member name="T:Provider.Models.Photographer">
             <summary>
             Contains details of Photographer
             </summary>
         </member>
-        <member name="P:Provider.Models.Photographer.Id">
+        <member name="P:Provider.Models.Photographer.ReferenceId">
             <summary>
             Reference Id of the phographer
             </summary>
@@ -149,6 +158,15 @@
             <summary>
             Name of the photographer
             </summary>
+        </member>
+        <member name="P:Provider.Models.Photographer.Id">
+            <inheritdoc />
+        </member>
+        <member name="M:Provider.Models.Photographer.ResolveId(Provider.IReferenceIdMapper)">
+            <inheritdoc />
+        </member>
+        <member name="M:Provider.Models.Photographer.ResolveReferenceId(Provider.IReferenceIdMapper)">
+            <inheritdoc />
         </member>
         <member name="T:Provider.Models.PhotographerVoteDetails">
             <summary>

@@ -8,7 +8,7 @@
         /// <summary>
         /// Reference Id of the phographer
         /// </summary>
-        public string Id { get; set; }
+        public string ReferenceId { get; set; }
 
         /// <summary>
         /// Name of the photographer

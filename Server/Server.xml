@@ -44,7 +44,7 @@
             Contains details of Photographer
             </summary>
         </member>
-        <member name="P:Server.Contracts.Photographer.Id">
+        <member name="P:Server.Contracts.Photographer.ReferenceId">
             <summary>
             Reference Id of the phographer
             </summary>

@@ -61,7 +61,7 @@ namespace Server
 
             return new Photographer
             {
-                Id = model.Id,
+                ReferenceId = model.ReferenceId,
                 UploaderName = model.UploaderName,
             };
         }
@@ -75,7 +75,7 @@ namespace Server
 
             return new Provider.Models.Photographer
             {
-                Id = contract.Id,
+                ReferenceId = contract.ReferenceId,
                 UploaderName = contract.UploaderName,
             };
         }
