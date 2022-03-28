@@ -1,17 +1,22 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Provider;
 using Provider.Implementation;
-using Server.Controllers;
+using Server.Auth;
 using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace Server
 {
@@ -57,7 +62,35 @@ namespace Server
                 c.IncludeXmlComments(XmlCommentsFilePath);
             });
 
-            services.AddSingleton<IDbConnection>(db => new SqlConnection(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TestConnection")));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultTokenProviders();
+
+            services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(tokenOptions =>
+            {
+                var key = Encoding.ASCII.GetBytes(Configuration["JwtConfig:Secret"]);
+                tokenOptions.SaveToken = true;
+                tokenOptions.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    RequireExpirationTime = false,
+                    ValidateLifetime = true
+                };
+            });
+
+
+            services.AddSingleton<IDbConnection>(db => new SqlConnection(Configuration.GetConnectionString("TestConnection")));
             services.AddSingleton<IReferenceIdMapper, ReferenceIdProvider>();
             services.AddSingleton<IReferenceIdProvider, ReferenceIdProvider>();
             services.AddSingleton<IPhotoEntryProvider, PhotoEntryProvider>();

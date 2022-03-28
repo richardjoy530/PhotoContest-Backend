@@ -4,6 +4,41 @@
         <name>Server</name>
     </assembly>
     <members>
+        <member name="T:Server.Auth.AuthController">
+            <summary>
+            Authentication controller
+            </summary>
+        </member>
+        <member name="M:Server.Auth.AuthController.#ctor(Microsoft.AspNetCore.Identity.UserManager{Microsoft.AspNetCore.Identity.IdentityUser},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole},Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes new instance of AuthController
+            </summary>
+            <param name="_userManager"></param>
+            <param name="_roleManager"></param>
+            <param name="_configuration"></param>
+        </member>
+        <member name="M:Server.Auth.AuthController.GetToken(Server.Auth.LoginModel)">
+            <summary>
+            Generated a JWT token if the given credentials are valid
+            </summary>
+            <remarks>Use this as a Bearer token in Authentication header of the HTTP requests</remarks>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Server.Auth.AuthController.Register(Server.Auth.RegisterModel)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Server.Auth.AuthController.RegisterAdmin(Server.Auth.RegisterModel)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="T:Server.Contracts.ImageItem">
             <summary>
             Contains uploaded image
@@ -193,6 +228,16 @@
             
             </summary>
             <param name="referenceId"></param>
+        </member>
+        <member name="T:Server.JwtConfig">
+            <summary>
+            JWT Configuration
+            </summary>
+        </member>
+        <member name="P:Server.JwtConfig.Secret">
+            <summary>
+            Secret string for signing JWT
+            </summary>
         </member>
         <member name="T:Server.Program">
             <summary>
