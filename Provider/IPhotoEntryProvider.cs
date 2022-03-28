@@ -9,6 +9,12 @@ namespace Provider
     public interface IPhotoEntryProvider
     {
         /// <summary>
+        /// Retreves the <see cref="PhotoEntry"/> with the given id
+        /// </summary>
+        /// <returns><see cref="PhotoEntry"/></returns>
+        public PhotoEntry GetPhotoEntry(int id);
+
+        /// <summary>
         /// Retreves a list of all the <see cref="PhotoEntry"/> in database
         /// </summary>
         /// <returns>Enumerable of <see cref="PhotoEntry"/></returns>

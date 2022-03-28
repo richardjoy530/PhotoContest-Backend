@@ -11,6 +11,16 @@
         PhotoEntry,
 
         /// <summary>
+        /// Photographer
+        /// </summary>
+        Photographer,
+
+        /// <summary>
+        /// ScoreDetail
+        /// </summary>
+        ScoreDetail,
+
+        /// <summary>
         /// File
         /// </summary>
         File,

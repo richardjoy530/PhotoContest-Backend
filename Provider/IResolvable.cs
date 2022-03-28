@@ -6,20 +6,22 @@
     public interface IResolvable
     {
         /// <summary>
-        /// Database integer Id
+        /// Indicates if the Id is resolved
         /// </summary>
-        public int Id { get; set; }
+        public bool IsResolved { get; set; }
 
         /// <summary>
         /// Resolve the integer id of the calling object
         /// </summary>
         /// <param name="mapper"></param>
-        public void ResolveId(IReferenceIdMapper mapper);
+        /// <param name="idType"></param>
+        public void ResolveIntegerId(IReferenceIdMapper mapper, IdType idType);
 
         /// <summary>
         /// Resolve the reference id of the calling object
         /// </summary>
         /// <param name="mapper"></param>
-        public void ResolveReferenceId(IReferenceIdMapper mapper);
+        /// <param name="idType"></param>
+        public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType);
     }
 }

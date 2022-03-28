@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Provider;
 using Server.Contracts;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Server.Controllers
 {
@@ -22,7 +24,7 @@ namespace Server.Controllers
         /// <param name="_referenceIdMapper"></param>
         public PhotoEntryController(
             IPhotoEntryProvider _photoEntryProvider,
-            IReferenceIdMapper _referenceIdMapper
+            IReferenceIdProvider _referenceIdMapper
             )
         {
             photoEntryProvider = _photoEntryProvider;
@@ -58,6 +60,20 @@ namespace Server.Controllers
         [HttpPost]
         public PhotoEntry AddPhotoEntry([FromBody] PhotoEntry photoEntry)
         {
+            if (string.IsNullOrWhiteSpace(photoEntry.ReferenceId))
+            {
+                photoEntry.ReferenceId = Guid.NewGuid().ToString();
+            }
+            else if (!Guid.TryParse(photoEntry.ReferenceId, out _))
+            {
+                throw new ValidationException($"Invalid {nameof(photoEntry.ReferenceId)}"); 
+            }
+
+            if (photoEntry.UploadedOn == null)
+            {
+                photoEntry.UploadedOn = DateTime.Now;
+            }
+
             return photoEntryProvider.AddPhotoEntry(photoEntry.ToModel()).ToContract();
         }
 
@@ -72,7 +88,7 @@ namespace Server.Controllers
         {
             if (referenceId != photoEntry.ReferenceId)
             {
-                // throw validation
+                throw new ValidationException($"{nameof(photoEntry.ReferenceId)} does not match within the request");
             }
             return photoEntryProvider.UpdatePhotoEntry(photoEntry.ToModel()).ToContract();
         }

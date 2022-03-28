@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Provider.Implementation</name>
+    </assembly>
+    <members>
+        <member name="T:Provider.Implementation.PhotoEntryProvider">
+            <summary>
+            Database access layer of PhotoEntry
+            </summary>
+        </member>
+        <member name="M:Provider.Implementation.PhotoEntryProvider.#ctor(System.Data.IDbConnection,Provider.IReferenceIdProvider)">
+            <summary>
+            Initializes a new instance of PhotoEntryProvider class
+            </summary>
+            <param name="_dbConnection"></param>
+            <param name="_referenceIdProvider"></param>
+        </member>
+        <member name="M:Provider.Implementation.PhotoEntryProvider.AddPhotoEntry(Provider.Models.PhotoEntry)">
+            <inheritdoc />
+        </member>
+        <member name="M:Provider.Implementation.PhotoEntryProvider.DeletePhotoEntry(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Provider.Implementation.PhotoEntryProvider.GetPhotoEntries">
+            <inheritdoc />
+        </member>
+        <member name="M:Provider.Implementation.PhotoEntryProvider.GetPhotoEntries(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Provider.Implementation.PhotoEntryProvider.GetPhotoEntry(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Provider.Implementation.PhotoEntryProvider.UpdatePhotoEntry(Provider.Models.PhotoEntry)">
+            <inheritdoc />
+        </member>
+        <member name="T:Provider.Implementation.ReferenceIdProvider">
+            <summary>
+            Mapps reference id to integer id from database.
+            </summary>
+        </member>
+        <member name="M:Provider.Implementation.ReferenceIdProvider.#ctor(System.Data.IDbConnection)">
+            <summary>
+            Initializes a new instance of ReferenceIdProvider class
+            </summary>
+            <param name="_dbConnection"></param>
+        </member>
+        <member name="M:Provider.Implementation.ReferenceIdProvider.GetIntegerId(System.String,Provider.IdType)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Provider.Implementation.ReferenceIdProvider.GetReferenceId(System.Int32,Provider.IdType)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Provider.Implementation.ReferenceIdProvider.InsertIdMap(System.Int32,System.String,Provider.IdType)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

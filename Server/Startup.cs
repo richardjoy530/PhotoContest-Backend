@@ -4,7 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Provider;
+using Provider.Implementation;
 using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
 
@@ -51,6 +55,11 @@ namespace Server
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Server", Version = "v1" });
                 c.IncludeXmlComments(XmlCommentsFilePath);
             });
+
+            services.AddSingleton<IDbConnection>(db => new SqlConnection(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddSingleton<IReferenceIdMapper, ReferenceIdProvider>();
+            services.AddSingleton<IReferenceIdProvider, ReferenceIdProvider>();
+            services.AddSingleton<IPhotoEntryProvider, PhotoEntryProvider>();
         }
 
         /// <summary>

@@ -6,9 +6,9 @@
     public class Photographer : IResolvable
     {
         /// <summary>
-        /// Reference Id of the phographer
+        /// Id details of the Photographer record
         /// </summary>
-        public string ReferenceId { get; set; }
+        public Id Id { get; set; }
 
         /// <summary>
         /// Name of the photographer
@@ -16,18 +16,20 @@
         public string UploaderName { get; set; }
 
         /// <inheritdoc />
-        public int Id { get; set; }
+        public bool IsResolved { get; set; }
 
         /// <inheritdoc />
-        public void ResolveId(IReferenceIdMapper mapper)
+        public void ResolveIntegerId(IReferenceIdMapper mapper, IdType idType = IdType.Photographer)
         {
-            Id = mapper.GetIntegerId(ReferenceId, IdType.PhotoEntry);
+            Id.ResolveIntegerId(mapper, idType);
+            IsResolved = true;
         }
 
         /// <inheritdoc />
-        public void ResolveReferenceId(IReferenceIdMapper mapper)
+        public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.Photographer)
         {
-            ReferenceId = mapper.GetReferenceId(Id, IdType.PhotoEntry);
+            Id.ResolveReferenceId(mapper, idType);
+            IsResolved = true;
         }
     }
 }
