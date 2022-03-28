@@ -4,6 +4,21 @@
         <name>Server</name>
     </assembly>
     <members>
+        <member name="T:Server.Contracts.ImageItem">
+            <summary>
+            Contains uploaded image
+            </summary>
+        </member>
+        <member name="P:Server.Contracts.ImageItem.ReferenceId">
+            <summary>
+            Reference id of the image
+            </summary>
+        </member>
+        <member name="P:Server.Contracts.ImageItem.Image">
+            <summary>
+            The image file
+            </summary>
+        </member>
         <member name="T:Server.Contracts.PhotoEntry">
             <summary>
             Contains the details of PhotoEntry
@@ -108,6 +123,30 @@
             <summary>
             Score of the referenced PhotoEnty
             </summary>
+        </member>
+        <member name="T:Server.Controllers.ImageController">
+            <summary>
+            Image Controller
+            </summary>
+        </member>
+        <member name="M:Server.Controllers.ImageController.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Initializes new Image Controller
+            </summary>
+            <param name="_webHostEnvironment"></param>
+        </member>
+        <member name="M:Server.Controllers.ImageController.SaveImage(Server.Contracts.ImageItem)">
+            <summary>
+            Api to save an image
+            </summary>
+            <param name="imageItem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Server.Controllers.ImageController.Get(System.String)">
+            <summary>
+            Gets image specified by the reference id
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Server.Controllers.PhotoEntryController">
             <summary>

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Provider;
 using Provider.Implementation;
+using Server.Controllers;
 using System;
 using System.Data;
 using System.Data.SqlClient;
