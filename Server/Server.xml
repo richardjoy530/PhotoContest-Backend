@@ -286,12 +286,11 @@
             PhotoEntry Controller
             </summary>
         </member>
-        <member name="M:Server.Controllers.PhotoEntryController.#ctor(Provider.IPhotoEntryProvider,Provider.IReferenceIdProvider)">
+        <member name="M:Server.Controllers.PhotoEntryController.#ctor(Provider.IProvider{Provider.Models.PhotoEntry})">
             <summary>
             Initilises a PhotoEntry Controller
             </summary>
             <param name="_photoEntryProvider"></param>
-            <param name="_referenceIdMapper"></param>
         </member>
         <member name="M:Server.Controllers.PhotoEntryController.GetAll">
             <summary>

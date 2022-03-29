@@ -4,6 +4,7 @@ using Server.Contracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Server.Controllers
 {
@@ -14,21 +15,15 @@ namespace Server.Controllers
     [ApiController]
     public class PhotoEntryController : ControllerBase
     {
-        private readonly IPhotoEntryProvider photoEntryProvider;
-        private readonly IReferenceIdMapper referenceIdMapper;
+        private readonly IProvider<Provider.Models.PhotoEntry> photoEntryProvider;
 
         /// <summary>
         /// Initilises a PhotoEntry Controller
         /// </summary>
         /// <param name="_photoEntryProvider"></param>
-        /// <param name="_referenceIdMapper"></param>
-        public PhotoEntryController(
-            IPhotoEntryProvider _photoEntryProvider,
-            IReferenceIdProvider _referenceIdMapper
-            )
+        public PhotoEntryController(IProvider<Provider.Models.PhotoEntry> _photoEntryProvider)
         {
-            photoEntryProvider = _photoEntryProvider;
-            referenceIdMapper = _referenceIdMapper;
+            photoEntryProvider = _photoEntryProvider ?? throw new ArgumentNullException(nameof(_photoEntryProvider));
         }
 
         /// <summary>
@@ -38,7 +33,7 @@ namespace Server.Controllers
         [HttpGet]
         public IEnumerable<PhotoEntry> GetAll()
         {
-            return photoEntryProvider.GetPhotoEntries().ToContract();
+            return photoEntryProvider.GetAll().ToContract();
         }
 
         /// <summary>
@@ -49,7 +44,7 @@ namespace Server.Controllers
         [HttpGet("{theme}")]
         public IEnumerable<PhotoEntry> GetAll(string theme)
         {
-            return photoEntryProvider.GetPhotoEntries(theme).ToContract();
+            return photoEntryProvider.GetAll().Where(o => o.Theme == theme).ToContract();
         }
 
         /// <summary>
@@ -66,7 +61,7 @@ namespace Server.Controllers
             }
             else if (!Guid.TryParse(photoEntry.ReferenceId, out _))
             {
-                throw new ValidationException($"Invalid {nameof(photoEntry.ReferenceId)}"); 
+                throw new ValidationException($"Invalid {nameof(photoEntry.ReferenceId)}");
             }
 
             if (photoEntry.UploadedOn == null)
@@ -74,7 +69,7 @@ namespace Server.Controllers
                 photoEntry.UploadedOn = DateTime.Now;
             }
 
-            return photoEntryProvider.AddPhotoEntry(photoEntry.ToModel()).ToContract();
+            return photoEntryProvider.Create(photoEntry.ToModel()).ToContract();
         }
 
         /// <summary>
@@ -90,7 +85,7 @@ namespace Server.Controllers
             {
                 throw new ValidationException($"{nameof(photoEntry.ReferenceId)} does not match within the request");
             }
-            return photoEntryProvider.UpdatePhotoEntry(photoEntry.ToModel()).ToContract();
+            return photoEntryProvider.Update(photoEntry.ToModel(), referenceId).ToContract();
         }
 
         /// <summary>
@@ -100,8 +95,7 @@ namespace Server.Controllers
         [HttpDelete("{referenceId}")]
         public void Delete(string referenceId)
         {
-            var id = referenceIdMapper.GetIntegerId(referenceId, IdType.PhotoEntry);
-            photoEntryProvider.DeletePhotoEntry(id);
+            photoEntryProvider.Delete(referenceId);
         }
     }
 }

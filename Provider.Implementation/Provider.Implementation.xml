@@ -9,53 +9,60 @@
             Database access layer of <see cref="T:Provider.Models.PhotoEntry"/>
             </summary>
         </member>
-        <member name="M:Provider.Implementation.PhotoEntryProvider.#ctor(System.Data.IDbConnection,Provider.IReferenceIdProvider)">
+        <member name="M:Provider.Implementation.PhotoEntryProvider.#ctor(System.Data.IDbConnection,Provider.IReferenceIdMapper)">
             <summary>
             Initializes a new instance of PhotoEntryProvider class
             </summary>
             <param name="_dbConnection"></param>
-            <param name="_referenceIdProvider"></param>
+            <param name="_referenceIdMapper"></param>
         </member>
-        <member name="M:Provider.Implementation.PhotoEntryProvider.AddPhotoEntry(Provider.Models.PhotoEntry)">
+        <member name="M:Provider.Implementation.PhotoEntryProvider.GetById(System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Provider.Implementation.PhotoEntryProvider.DeletePhotoEntry(System.Int32)">
+        <member name="M:Provider.Implementation.PhotoEntryProvider.GetAll">
             <inheritdoc />
         </member>
-        <member name="M:Provider.Implementation.PhotoEntryProvider.GetPhotoEntries">
+        <member name="M:Provider.Implementation.PhotoEntryProvider.Create(Provider.Models.PhotoEntry)">
+            <inheritdoc />
+        </member>
+        <member name="M:Provider.Implementation.PhotoEntryProvider.Update(Provider.Models.PhotoEntry,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Provider.Implementation.PhotoEntryProvider.Delete(System.String)">
             <inheritdoc />
         </member>
         <member name="M:Provider.Implementation.PhotoEntryProvider.GetPhotoEntries(System.String)">
-            <inheritdoc />
-        </member>
-        <member name="M:Provider.Implementation.PhotoEntryProvider.GetPhotoEntry(System.Int32)">
-            <inheritdoc />
-        </member>
-        <member name="M:Provider.Implementation.PhotoEntryProvider.UpdatePhotoEntry(Provider.Models.PhotoEntry)">
-            <inheritdoc />
+            <summary>
+            Retreves a list of all the <see cref="T:Provider.Models.PhotoEntry"/> in database with the given theme
+            </summary>
+            <param name="theme"/>
+            <returns>Enumerable of <see cref="T:Provider.Models.PhotoEntry"/></returns>
         </member>
         <member name="T:Provider.Implementation.PhotographerProvider">
             <summary>
             Database access layer of <see cref="T:Provider.Models.Photographer"/>
             </summary>
         </member>
-        <member name="M:Provider.Implementation.PhotographerProvider.#ctor(System.Data.IDbConnection,Provider.IReferenceIdProvider)">
+        <member name="M:Provider.Implementation.PhotographerProvider.#ctor(System.Data.IDbConnection,Provider.IReferenceIdMapper)">
             <summary>
             Initializes a new instance of PhotographerProvider class
             </summary>
             <param name="_dbConnection"></param>
-            <param name="_referenceIdProvider"></param>
+            <param name="_referenceIdMapper"></param>
         </member>
-        <member name="M:Provider.Implementation.PhotographerProvider.AddPhotographer(Provider.Models.Photographer)">
+        <member name="M:Provider.Implementation.PhotographerProvider.Create(Provider.Models.Photographer)">
             <inheritdoc/>
         </member>
-        <member name="M:Provider.Implementation.PhotographerProvider.DeletePhotographer(System.Int32)">
+        <member name="M:Provider.Implementation.PhotographerProvider.Delete(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:Provider.Implementation.PhotographerProvider.GetPhotographer(System.Int32)">
+        <member name="M:Provider.Implementation.PhotographerProvider.GetById(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:Provider.Implementation.PhotographerProvider.GetPhotographers">
+        <member name="M:Provider.Implementation.PhotographerProvider.GetAll">
+            <inheritdoc/>
+        </member>
+        <member name="M:Provider.Implementation.PhotographerProvider.Update(Provider.Models.Photographer,System.String)">
             <inheritdoc/>
         </member>
         <member name="T:Provider.Implementation.ReferenceIdProvider">

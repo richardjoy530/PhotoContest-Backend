@@ -1,7 +1,9 @@
-﻿namespace Provider
+﻿using Provider.Models;
+
+namespace Provider
 {
     /// <summary>
-    /// An interface for referenceId - integerId mapper
+    /// An interface for Data access of interger id and reference id from/into [dbo].[IdMap]
     /// </summary>
     public interface IReferenceIdMapper
     {
@@ -20,5 +22,12 @@
         /// <param name="idType"></param>
         /// <returns>String reperesentation of the GUID</returns>
         public string GetReferenceId(int id, IdType idType);
+        
+        /// <summary>
+        /// Inserts a map record into [dbo].[IdMap]
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="idType"></param>
+        public void InsertIdMap(Id id, IdType idType);
     }
 }

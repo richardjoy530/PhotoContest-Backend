@@ -9,7 +9,7 @@ namespace Provider.Implementation
     /// <summary>
     /// Mapps reference id to integer id from database.
     /// </summary>
-    public class ReferenceIdProvider : IReferenceIdProvider
+    public class ReferenceIdProvider : IReferenceIdMapper
     {
         private readonly string connectionString;
 

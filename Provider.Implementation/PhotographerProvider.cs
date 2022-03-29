@@ -10,19 +10,19 @@ namespace Provider.Implementation
     /// <summary>
     /// Database access layer of <see cref="Photographer"/>
     /// </summary>
-    public class PhotographerProvider : IPhotographerProvider
+    public class PhotographerProvider : IProvider<Photographer>
     {
         private readonly string connectionString;
-        private readonly IReferenceIdProvider referenceIdProvider;
+        private readonly IReferenceIdMapper referenceIdMapper;
 
         /// <summary>
         /// Initializes a new instance of PhotographerProvider class
         /// </summary>
         /// <param name="_dbConnection"></param>
-        /// <param name="_referenceIdProvider"></param>
+        /// <param name="_referenceIdMapper"></param>
         public PhotographerProvider(
             IDbConnection _dbConnection,
-            IReferenceIdProvider _referenceIdProvider
+            IReferenceIdMapper _referenceIdMapper
             )
         {
             if (_dbConnection is null)
@@ -31,11 +31,11 @@ namespace Provider.Implementation
             }
 
             connectionString = _dbConnection.ConnectionString;
-            referenceIdProvider = _referenceIdProvider ?? throw new ArgumentNullException(nameof(_referenceIdProvider));
+            referenceIdMapper = _referenceIdMapper ?? throw new ArgumentNullException(nameof(_referenceIdMapper));
         }
 
         /// <inheritdoc/>
-        public Photographer AddPhotographer(Photographer photographer)
+        public Photographer Create(Photographer photographer)
         {
             if (!Guid.TryParse(photographer.Id.ReferenceId, out _))
             {
@@ -59,24 +59,30 @@ namespace Provider.Implementation
                 reader.Read();
                 photographer.Id.IntegerId = reader.GetInt32(0);
             }
-            referenceIdProvider.InsertIdMap(photographer.Id, IdType.Photographer);
+            referenceIdMapper.InsertIdMap(photographer.Id, IdType.Photographer);
             return photographer;
         }
 
         /// <inheritdoc/>
-        public void DeletePhotographer(int id)
+        public void Delete(string referenceId)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public Photographer GetPhotographer(int id)
+        public Photographer GetById(string referenceId)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public IEnumerable<Photographer> GetPhotographers()
+        public IEnumerable<Photographer> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public Photographer Update(Photographer photographer, string referenceId)
         {
             throw new NotImplementedException();
         }

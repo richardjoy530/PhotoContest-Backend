@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Provider;
 using Provider.Implementation;
+using Provider.Models;
 using Server.Auth;
 using System;
 using System.Data;
@@ -56,8 +57,10 @@ namespace Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             // TODO: Configure JsonConverter for StringToEnumConvertion
             // TODO: Configure Swagger to use enum name instead of value
+            // TODO: Configure Swagger to use authentication throughout the endpoints
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Photocontest WebApi", Version = "v1" });
@@ -91,11 +94,11 @@ namespace Server
                 };
             });
 
-
+            // TODO: we are not making use of the IDbConnection find another way to inject conn string
             services.AddSingleton<IDbConnection>(db => new SqlConnection(Configuration.GetConnectionString("Connection")));
             services.AddSingleton<IReferenceIdMapper, ReferenceIdProvider>();
-            services.AddSingleton<IReferenceIdProvider, ReferenceIdProvider>();
-            services.AddSingleton<IPhotoEntryProvider, PhotoEntryProvider>();
+            services.AddSingleton<IProvider<PhotoEntry>, PhotoEntryProvider>();
+            services.AddSingleton<IProvider<Photographer>, PhotographerProvider>();
         }
 
         /// <summary>
