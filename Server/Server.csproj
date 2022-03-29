@@ -14,6 +14,14 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
 
+<!--Exclude the DB migration code form the EntityFramework for now. Not sure when we'll need this again-->
+  <ItemGroup>
+    <Compile Remove="Migrations\**" />
+    <Content Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.15" />

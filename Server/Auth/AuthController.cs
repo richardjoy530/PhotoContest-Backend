@@ -48,7 +48,7 @@ namespace Server.Auth
         /// <returns></returns>
         [HttpPost]
         [Route("token")]
-        public async Task<IActionResult> GetToken([FromBody] LoginModel model)
+        public async Task<IActionResult> GetToken([FromBody] LoginRequest model)
         {
             var user = await userManager.FindByNameAsync(model.Username);
             if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
@@ -84,13 +84,13 @@ namespace Server.Auth
         /// <returns></returns>
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest model)
         {
-            Response response;
+            AuthResponse response;
             var existingUser = await userManager.FindByNameAsync(model.Username);
             if (existingUser != null)
             {
-                response = new Response
+                response = new AuthResponse
                 {
                     Status = "Error",
                     Message = "User already exists"
@@ -108,7 +108,7 @@ namespace Server.Auth
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                response = new Response
+                response = new AuthResponse
                 {
                     Status = "Error",
                     Message = string.Join(',', result.Errors.Select(e => e.Description))
@@ -116,7 +116,7 @@ namespace Server.Auth
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
 
-            response = new Response
+            response = new AuthResponse
             {
                 Status = "Success",
                 Message = "User created successfully",
@@ -131,13 +131,13 @@ namespace Server.Auth
         /// <returns></returns>
         [HttpPost]
         [Route("register-admin")]
-        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
+        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterRequest model)
         {
-            Response response;
+            AuthResponse response;
             var userExists = await userManager.FindByNameAsync(model.Username);
             if (userExists != null)
             {
-                response = new Response
+                response = new AuthResponse
                 {
                     Status = "Error",
                     Message = "User already exists",
@@ -155,7 +155,7 @@ namespace Server.Auth
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                response = new Response
+                response = new AuthResponse
                 {
                     Status = "Error",
                     Message = string.Join(',', result.Errors.Select(e => e.Description))
@@ -167,7 +167,7 @@ namespace Server.Auth
             await userManager.AddToRoleAsync(user, UserRoles.Admin);
             await userManager.AddToRoleAsync(user, UserRoles.User);
 
-            response = new Response
+            response = new AuthResponse
             {
                 Status = "Success",
                 Message = "User created successfully"

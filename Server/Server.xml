@@ -4,6 +4,20 @@
         <name>Server</name>
     </assembly>
     <members>
+        <member name="T:Server.Auth.ApplicationDbContext">
+            <summary>
+            A helper for the data access of Microsoft.AspNetCore.Identity
+            </summary>
+        </member>
+        <member name="M:Server.Auth.ApplicationDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{Server.Auth.ApplicationDbContext})">
+            <summary>
+            Initializes a new ApplicationDbContext class
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:Server.Auth.ApplicationDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc/>
+        </member>
         <member name="T:Server.Auth.AuthController">
             <summary>
             Authentication controller
@@ -17,7 +31,7 @@
             <param name="_roleManager"></param>
             <param name="_configuration"></param>
         </member>
-        <member name="M:Server.Auth.AuthController.GetToken(Server.Auth.LoginModel)">
+        <member name="M:Server.Auth.AuthController.GetToken(Server.Auth.LoginRequest)">
             <summary>
             Generated a JWT token if the given credentials are valid
             </summary>
@@ -25,19 +39,92 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:Server.Auth.AuthController.Register(Server.Auth.RegisterModel)">
+        <member name="M:Server.Auth.AuthController.Register(Server.Auth.RegisterRequest)">
             <summary>
             
             </summary>
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:Server.Auth.AuthController.RegisterAdmin(Server.Auth.RegisterModel)">
+        <member name="M:Server.Auth.AuthController.RegisterAdmin(Server.Auth.RegisterRequest)">
             <summary>
             
             </summary>
             <param name="model"></param>
             <returns></returns>
+        </member>
+        <member name="T:Server.Auth.AuthResponse">
+            <summary>
+            Encapsulates response during auth
+            </summary>
+        </member>
+        <member name="P:Server.Auth.AuthResponse.Status">
+            <summary>
+            Status indicating if the request was succeusfull or errored
+            </summary>
+        </member>
+        <member name="P:Server.Auth.AuthResponse.Message">
+            <summary>
+            Message describing the response
+            </summary>
+        </member>
+        <member name="T:Server.Auth.LoginRequest">
+            <summary>
+            LoginRequest
+            </summary>
+        </member>
+        <member name="P:Server.Auth.LoginRequest.Username">
+            <summary>
+            Gets or Sets the Username
+            </summary>
+        </member>
+        <member name="P:Server.Auth.LoginRequest.Password">
+            <summary>
+            Gets or Sets thet Password
+            </summary>
+        </member>
+        <member name="T:Server.Auth.RegisterRequest">
+            <summary>
+            RegisterRequest
+            </summary>
+        </member>
+        <member name="P:Server.Auth.RegisterRequest.Username">
+            <summary>
+            Gets or Sets the Username
+            </summary>
+        </member>
+        <member name="P:Server.Auth.RegisterRequest.Email">
+            <summary>
+            Gets or Sets the Email Id
+            </summary>
+        </member>
+        <member name="P:Server.Auth.RegisterRequest.Password">
+            <summary>
+            Gets or Sets the password
+            </summary>
+        </member>
+        <member name="T:Server.Auth.UserRoles">
+            <summary>
+            Static class containing available user roles
+            </summary>
+        </member>
+        <member name="F:Server.Auth.UserRoles.Admin">
+            <summary>
+            Admin role
+            </summary>
+            <remarks>Will have all access</remarks>
+        </member>
+        <member name="F:Server.Auth.UserRoles.User">
+            <summary>
+            User role
+            </summary>
+            <remarks>Will have View access to all data, Write access to User data</remarks>
+        </member>
+        <member name="F:Server.Auth.UserRoles.Host">
+            <summary>
+            Host role
+            </summary>
+            <remarks>Will have all access to <see cref="T:Server.Contracts.PhotoTheme"/></remarks>
         </member>
         <member name="T:Server.Contracts.ImageItem">
             <summary>
