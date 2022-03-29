@@ -13,6 +13,7 @@ using Provider.Implementation;
 using Provider.Models;
 using Server.Auth;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -60,11 +61,33 @@ namespace Server
 
             // TODO: Configure JsonConverter for StringToEnumConvertion
             // TODO: Configure Swagger to use enum name instead of value
-            // TODO: Configure Swagger to use authentication throughout the endpoints
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Photocontest WebApi", Version = "v1" });
                 c.IncludeXmlComments(XmlCommentsFilePath);
+                c.AddSecurityDefinition("JWT authorization", new OpenApiSecurityScheme
+                {
+                    Description = "The provided token will be added in all the requests made through swagger. Use `/api/Auth/token` to get your token.",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    BearerFormat = "JWT",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "JWT authorization"
+                            }
+                        },
+                        new List<string>()
+                    }
+                });
             });
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection")));
