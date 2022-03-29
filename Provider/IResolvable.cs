@@ -1,7 +1,9 @@
-﻿namespace Provider
+﻿using Provider.Models;
+
+namespace Provider
 {
     /// <summary>
-    /// An interface for resolving 
+    /// An interface for resolving <see cref="Id"/>
     /// </summary>
     public interface IResolvable
     {

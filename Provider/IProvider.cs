@@ -5,7 +5,7 @@ namespace Provider
     /// <summary>
     /// An interface for all the basic data access operations
     /// </summary>
-    public interface IProvider<TModel> where TModel : class
+    public interface IProvider<TModel> where TModel : IDbModel
     {
         /// <summary>
         /// Retreves the <typeparamref name="TModel"/> with the given <paramref name="referenceId"/> from the database

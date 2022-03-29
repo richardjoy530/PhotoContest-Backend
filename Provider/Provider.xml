@@ -4,6 +4,11 @@
         <name>Provider</name>
     </assembly>
     <members>
+        <member name="T:Provider.IDbModel">
+            <summary>
+            An interface which must be implemented my all the model class that has a provider
+            </summary>
+        </member>
         <member name="T:Provider.IdType">
             <summary>
             Type of the asset for id look up
@@ -119,7 +124,7 @@
         </member>
         <member name="T:Provider.IResolvable">
             <summary>
-            An interface for resolving 
+            An interface for resolving <see cref="T:Provider.Models.Id"/>
             </summary>
         </member>
         <member name="P:Provider.IResolvable.IsResolved">

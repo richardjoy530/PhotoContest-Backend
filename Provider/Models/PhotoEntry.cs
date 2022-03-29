@@ -5,7 +5,7 @@ namespace Provider.Models
     /// <summary>
     /// Contains the details of PhotoEntry
     /// </summary>
-    public class PhotoEntry : IResolvable
+    public class PhotoEntry : IDbModel
     {
         /// <summary>
         /// Id details of the PhotoEntry record

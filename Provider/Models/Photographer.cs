@@ -3,7 +3,7 @@
     /// <summary>
     /// Contains details of Photographer
     /// </summary>
-    public class Photographer : IResolvable
+    public class Photographer : IDbModel
     {
         /// <summary>
         /// Id details of the Photographer record
