@@ -78,7 +78,7 @@ namespace Server.Auth
         }
 
         /// <summary>
-        /// 
+        /// Registers a new user to the contest application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -125,52 +125,33 @@ namespace Server.Auth
         }
 
         /// <summary>
-        /// 
+        /// Assigns <see cref="UserRoles"/> to a specified user
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="assignRequest"></param>
+        /// <returns>The caller must have <see cref="UserRoles.Admin"/></returns>
         [HttpPost]
-        [Route("register-admin")]
-        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterRequest model)
+        [Route("role")]
+        public async Task<IActionResult> Assign([FromBody] AssignRoleRequest assignRequest)
         {
             AuthResponse response;
-            var userExists = await userManager.FindByNameAsync(model.Username);
-            if (userExists != null)
+            var user = await userManager.FindByNameAsync(assignRequest.Username);
+            if (user == null)
             {
                 response = new AuthResponse
                 {
                     Status = "Error",
-                    Message = "User already exists",
-                };
-                return StatusCode(StatusCodes.Status500InternalServerError, response);
-            }
-
-            IdentityUser user = new()
-            {
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username
-            };
-
-            var result = await userManager.CreateAsync(user, model.Password);
-            if (!result.Succeeded)
-            {
-                response = new AuthResponse
-                {
-                    Status = "Error",
-                    Message = string.Join(',', result.Errors.Select(e => e.Description))
+                    Message = "User does not exists"
                 };
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
 
             await CreateRoles();
-            await userManager.AddToRoleAsync(user, UserRoles.Admin);
-            await userManager.AddToRoleAsync(user, UserRoles.User);
+            await AssignRoles(user, assignRequest.Roles);
 
             response = new AuthResponse
             {
                 Status = "Success",
-                Message = "User created successfully"
+                Message = "Role assigned successfully"
             };
             return Ok(response);
         }
@@ -190,17 +171,33 @@ namespace Server.Auth
         // TODO: do this somewhere else. this is a one time runnable function throughout the lifetime of the application.
         private async Task CreateRoles()
         {
-            if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
+            if (!await roleManager.RoleExistsAsync(UserRoles.Admin.ToString()))
             {
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin.ToString()));
             }
-            if (!await roleManager.RoleExistsAsync(UserRoles.User))
+            if (!await roleManager.RoleExistsAsync(UserRoles.User.ToString()))
             {
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+                await roleManager.CreateAsync(new IdentityRole(UserRoles.User.ToString()));
             }
-            if (!await roleManager.RoleExistsAsync(UserRoles.Host))
+            if (!await roleManager.RoleExistsAsync(UserRoles.Host.ToString()))
             {
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.Host));
+                await roleManager.CreateAsync(new IdentityRole(UserRoles.Host.ToString()));
+            }
+        }
+
+        private async Task AssignRoles(IdentityUser user, UserRoles roles)
+        {
+            if ((roles & UserRoles.Admin) == UserRoles.Admin)
+            {
+                await userManager.AddToRoleAsync(user, UserRoles.Admin.ToString());
+            }
+            if ((roles & UserRoles.User) == UserRoles.User)
+            {
+                await userManager.AddToRoleAsync(user, UserRoles.User.ToString());
+            }
+            if ((roles & UserRoles.Host) == UserRoles.Host)
+            {
+                await userManager.AddToRoleAsync(user, UserRoles.Host.ToString());
             }
         }
     }
