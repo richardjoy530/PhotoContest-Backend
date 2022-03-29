@@ -62,7 +62,7 @@ namespace Server
                 c.IncludeXmlComments(XmlCommentsFilePath);
             });
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TestConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection")));
             services.AddIdentity<IdentityUser, IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
@@ -90,7 +90,7 @@ namespace Server
             });
 
 
-            services.AddSingleton<IDbConnection>(db => new SqlConnection(Configuration.GetConnectionString("TestConnection")));
+            services.AddSingleton<IDbConnection>(db => new SqlConnection(Configuration.GetConnectionString("Connection")));
             services.AddSingleton<IReferenceIdMapper, ReferenceIdProvider>();
             services.AddSingleton<IReferenceIdProvider, ReferenceIdProvider>();
             services.AddSingleton<IPhotoEntryProvider, PhotoEntryProvider>();

@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{766939AF-AAF1-494F-8DB5-42F6F456C386}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Provider", "Provider\Provider.csproj", "{87F4F422-1B65-4112-B486-597ACD2670E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Provider", "Provider\Provider.csproj", "{87F4F422-1B65-4112-B486-597ACD2670E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Provider.Implementation", "Provider.Implementation\Provider.Implementation.csproj", "{7DCF51CD-5405-4315-AB0B-6E5F01B3462F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Provider.Implementation", "Provider.Implementation\Provider.Implementation.csproj", "{7DCF51CD-5405-4315-AB0B-6E5F01B3462F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

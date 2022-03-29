@@ -8,6 +8,11 @@
     <DocumentationFile>D:\Dev\PhotoContest\Provider.Implementation\Provider.Implementation.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\Dev\PhotoContest\Provider.Implementation\Provider.Implementation.xml</DocumentationFile>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
   </ItemGroup>

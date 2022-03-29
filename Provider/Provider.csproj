@@ -8,4 +8,9 @@
     <DocumentationFile>D:\Dev\PhotoContest\Provider\Provider.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\Dev\PhotoContest\Provider\Provider.xml</DocumentationFile>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+
 </Project>
