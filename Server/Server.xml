@@ -18,6 +18,22 @@
         <member name="M:Server.Auth.ApplicationDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc/>
         </member>
+        <member name="T:Server.Auth.AssignRoleRequest">
+            <summary>
+            Request to assign <see cref="T:Server.Auth.UserRoles"/> to a specific user
+            </summary>
+            <remarks>User with <see cref="F:Server.Auth.UserRoles.Admin"/> can only assign roles to other user</remarks>
+        </member>
+        <member name="P:Server.Auth.AssignRoleRequest.Roles">
+            <summary>
+            Gets or Sets the roles for a given <see cref="P:Server.Auth.AssignRoleRequest.Username"/>
+            </summary>
+        </member>
+        <member name="P:Server.Auth.AssignRoleRequest.Username">
+            <summary>
+            Username to whom the <see cref="P:Server.Auth.AssignRoleRequest.Roles"/> must be assigned to.
+            </summary>
+        </member>
         <member name="T:Server.Auth.AuthController">
             <summary>
             Authentication controller
@@ -41,17 +57,17 @@
         </member>
         <member name="M:Server.Auth.AuthController.Register(Server.Auth.RegisterRequest)">
             <summary>
-            
+            Registers a new user to the contest application
             </summary>
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:Server.Auth.AuthController.RegisterAdmin(Server.Auth.RegisterRequest)">
+        <member name="M:Server.Auth.AuthController.Assign(Server.Auth.AssignRoleRequest)">
             <summary>
-            
+            Assigns <see cref="T:Server.Auth.UserRoles"/> to a specified user
             </summary>
-            <param name="model"></param>
-            <returns></returns>
+            <param name="assignRequest"></param>
+            <returns>The caller must have <see cref="F:Server.Auth.UserRoles.Admin"/></returns>
         </member>
         <member name="T:Server.Auth.AuthResponse">
             <summary>
@@ -129,11 +145,6 @@
         <member name="T:Server.Contracts.ImageItem">
             <summary>
             Contains uploaded image
-            </summary>
-        </member>
-        <member name="P:Server.Contracts.ImageItem.ReferenceId">
-            <summary>
-            Reference id of the image
             </summary>
         </member>
         <member name="P:Server.Contracts.ImageItem.Image">

@@ -4,13 +4,14 @@ using System.Collections.Generic;
 namespace Provider
 {
     /// <summary>
-    /// An interface for fetching photo entry records
+    /// An interface for fetching <see cref="PhotoEntry"/> records
     /// </summary>
     public interface IPhotoEntryProvider
     {
         /// <summary>
         /// Retreves the <see cref="PhotoEntry"/> with the given id
         /// </summary>
+        /// <param name="id"/>
         /// <returns><see cref="PhotoEntry"/></returns>
         public PhotoEntry GetPhotoEntry(int id);
 

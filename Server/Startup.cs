@@ -56,9 +56,11 @@ namespace Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            // TODO: Configure JsonConverter for StringToEnumConvertion
+            // TODO: Configure Swagger to use enum name instead of value
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Server", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Photocontest WebApi", Version = "v1" });
                 c.IncludeXmlComments(XmlCommentsFilePath);
             });
 
@@ -109,7 +111,7 @@ namespace Server
             }
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Server v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1"));
 
             app.UseHttpsRedirection();
 

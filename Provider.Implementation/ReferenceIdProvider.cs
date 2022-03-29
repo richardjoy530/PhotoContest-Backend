@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Provider.Models;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
@@ -18,6 +19,11 @@ namespace Provider.Implementation
         /// <param name="_dbConnection"></param>
         public ReferenceIdProvider(IDbConnection _dbConnection)
         {
+            if (_dbConnection is null)
+            {
+                throw new ArgumentNullException(nameof(_dbConnection));
+            }
+
             connectionString = _dbConnection.ConnectionString;
         }
 
@@ -74,7 +80,7 @@ namespace Provider.Implementation
         }
 
         ///<inheritdoc/>
-        public void InsertIdMap(int id, string referenceId, IdType idType)
+        public void InsertIdMap(Id id, IdType idType)
         {
             using SqlConnection conncetion = new(connectionString);
             conncetion.Open();
@@ -89,8 +95,8 @@ namespace Provider.Implementation
             qs.Append("@IdType )");
             var sql = qs.ToString();
             using SqlCommand command = new(sql, conncetion);
-            command.Parameters.AddWithValue("@Id", id);
-            command.Parameters.AddWithValue("@ReferenceId", new Guid(referenceId));
+            command.Parameters.AddWithValue("@Id", id.IntegerId);
+            command.Parameters.AddWithValue("@ReferenceId", new Guid(id.ReferenceId));
             command.Parameters.AddWithValue("@IdType", (int)idType);
             command.ExecuteNonQuery();
         }

@@ -33,16 +33,16 @@ namespace Server.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveImage([FromForm] ImageItem imageItem)
         {
-            var path = Path.Combine(webHostEnvironment.ContentRootPath, "images/");
+            var path = Path.Combine(webHostEnvironment.ContentRootPath, "Images/");
 
-            imageItem.ReferenceId = Guid.NewGuid().ToString();
+            var referenceId = Guid.NewGuid().ToString();
 
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
 
-            using (var fileStream = new FileStream(Path.Combine(path, imageItem.ReferenceId), FileMode.Create))
+            using (var fileStream = new FileStream(Path.Combine(path, referenceId), FileMode.Create))
             {
                 await imageItem.Image.CopyToAsync(fileStream);
             }

@@ -8,13 +8,6 @@ namespace Server.Contracts
     /// </summary>
     public class ImageItem
     {
-#nullable enable
-        /// <summary>
-        /// Reference id of the image
-        /// </summary>
-        public string? ReferenceId { get; set; }
-#nullable disable
-
         /// <summary>
         /// The image file
         /// </summary>

@@ -29,15 +29,37 @@
             File
             </summary>
         </member>
+        <member name="T:Provider.IFileProvider">
+            <summary>
+            An interface for data access on files
+            </summary>
+        </member>
+        <member name="M:Provider.IFileProvider.UploadImage(Microsoft.AspNetCore.Http.IFormFile,System.String)">
+            <summary>
+            Saves the given file into the file system
+            </summary>
+            <param name="file"></param>
+            <param name="referenceId"></param>
+            <remarks>File will be saved in the File system of the Host server, the file location will be saved in database</remarks>
+            <returns>referenceId of the file</returns>
+        </member>
+        <member name="M:Provider.IFileProvider.GetFileDataInBytes(System.String)">
+            <summary>
+            Retrives the file contents as a byte[]
+            </summary>
+            <param name="referenceId"></param>
+            <returns></returns>
+        </member>
         <member name="T:Provider.IPhotoEntryProvider">
             <summary>
-            An interface for fetching photo entry records
+            An interface for fetching <see cref="T:Provider.Models.PhotoEntry"/> records
             </summary>
         </member>
         <member name="M:Provider.IPhotoEntryProvider.GetPhotoEntry(System.Int32)">
             <summary>
             Retreves the <see cref="T:Provider.Models.PhotoEntry"/> with the given id
             </summary>
+            <param name="id"/>
             <returns><see cref="T:Provider.Models.PhotoEntry"/></returns>
         </member>
         <member name="M:Provider.IPhotoEntryProvider.GetPhotoEntries">
@@ -73,6 +95,38 @@
             </summary>
             <param name="id"></param>
         </member>
+        <member name="T:Provider.IPhotographerProvider">
+            <summary>
+            An interface for fetching <see cref="T:Provider.Models.Photographer"/> recored
+            </summary>
+        </member>
+        <member name="M:Provider.IPhotographerProvider.GetPhotographer(System.Int32)">
+            <summary>
+            Retreves the <see cref="T:Provider.Models.Photographer"/> with the given id
+            </summary>
+            <param name="id"/>
+            <returns><see cref="T:Provider.Models.Photographer"/></returns>
+        </member>
+        <member name="M:Provider.IPhotographerProvider.GetPhotographers">
+            <summary>
+            Retreves a list of all the <see cref="T:Provider.Models.Photographer"/> in database
+            </summary>
+            <returns>Enumerable of <see cref="T:Provider.Models.Photographer"/></returns>
+        </member>
+        <member name="M:Provider.IPhotographerProvider.AddPhotographer(Provider.Models.Photographer)">
+            <summary>
+            Creates a new <see cref="T:Provider.Models.Photographer"/> in the database
+            </summary>
+            <param name="photographer"></param>
+            <returns>Created <see cref="T:Provider.Models.Photographer"/> from the database</returns>
+        </member>
+        <member name="M:Provider.IPhotographerProvider.DeletePhotographer(System.Int32)">
+            <summary>
+            Deletes the record of <see cref="T:Provider.Models.PhotoEntry"/> with the specified ID
+            </summary>
+            <remarks>Do not use this until its absolutely necessary. Since it can mess up the id mappings of other records</remarks>
+            <param name="id"></param>
+        </member>
         <member name="T:Provider.IReferenceIdMapper">
             <summary>
             An interface for referenceId - integerId mapper
@@ -99,12 +153,11 @@
             An interface for Dataaccess of interger id and reference id from/into [dbo].[IdMap]
             </summary>
         </member>
-        <member name="M:Provider.IReferenceIdProvider.InsertIdMap(System.Int32,System.String,Provider.IdType)">
+        <member name="M:Provider.IReferenceIdProvider.InsertIdMap(Provider.Models.Id,Provider.IdType)">
             <summary>
             Inserts a map record into [dbo].[IdMap]
             </summary>
             <param name="id"></param>
-            <param name="referenceId"></param>
             <param name="idType"></param>
         </member>
         <member name="T:Provider.IResolvable">

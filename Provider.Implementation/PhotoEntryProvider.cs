@@ -8,7 +8,7 @@ using System.Text;
 namespace Provider.Implementation
 {
     /// <summary>
-    /// Database access layer of PhotoEntry
+    /// Database access layer of <see cref="PhotoEntry"/>
     /// </summary>
     public class PhotoEntryProvider : IPhotoEntryProvider
     {
@@ -25,14 +25,18 @@ namespace Provider.Implementation
             IReferenceIdProvider _referenceIdProvider
             )
         {
+            if (_dbConnection is null)
+            {
+                throw new ArgumentNullException(nameof(_dbConnection));
+            }
+
             connectionString = _dbConnection.ConnectionString;
-            referenceIdProvider = _referenceIdProvider;
+            referenceIdProvider = _referenceIdProvider ?? throw new ArgumentNullException(nameof(_referenceIdProvider));
         }
 
         /// <inheritdoc />
         public PhotoEntry AddPhotoEntry(PhotoEntry photoEntry)
         {
-            int id;
             using (SqlConnection conncetion = new(connectionString))
             {
                 conncetion.Open();
@@ -55,11 +59,11 @@ namespace Provider.Implementation
                 command.Parameters.AddWithValue("@UploadedOn", photoEntry.UploadedOn);
                 using SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                id = reader.GetInt32(0);
+                photoEntry.Id.IntegerId = reader.GetInt32(0);
             }
 
-            referenceIdProvider.InsertIdMap(id, photoEntry.Id.ReferenceId, IdType.PhotoEntry);
-            return GetPhotoEntry(id);
+            referenceIdProvider.InsertIdMap(photoEntry.Id, IdType.PhotoEntry);
+            return GetPhotoEntry(photoEntry.Id.IntegerId);
         }
 
         /// <inheritdoc />

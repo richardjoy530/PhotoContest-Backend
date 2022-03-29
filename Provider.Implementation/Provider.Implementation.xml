@@ -6,7 +6,7 @@
     <members>
         <member name="T:Provider.Implementation.PhotoEntryProvider">
             <summary>
-            Database access layer of PhotoEntry
+            Database access layer of <see cref="T:Provider.Models.PhotoEntry"/>
             </summary>
         </member>
         <member name="M:Provider.Implementation.PhotoEntryProvider.#ctor(System.Data.IDbConnection,Provider.IReferenceIdProvider)">
@@ -34,6 +34,30 @@
         <member name="M:Provider.Implementation.PhotoEntryProvider.UpdatePhotoEntry(Provider.Models.PhotoEntry)">
             <inheritdoc />
         </member>
+        <member name="T:Provider.Implementation.PhotographerProvider">
+            <summary>
+            Database access layer of <see cref="T:Provider.Models.Photographer"/>
+            </summary>
+        </member>
+        <member name="M:Provider.Implementation.PhotographerProvider.#ctor(System.Data.IDbConnection,Provider.IReferenceIdProvider)">
+            <summary>
+            Initializes a new instance of PhotographerProvider class
+            </summary>
+            <param name="_dbConnection"></param>
+            <param name="_referenceIdProvider"></param>
+        </member>
+        <member name="M:Provider.Implementation.PhotographerProvider.AddPhotographer(Provider.Models.Photographer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Provider.Implementation.PhotographerProvider.DeletePhotographer(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Provider.Implementation.PhotographerProvider.GetPhotographer(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Provider.Implementation.PhotographerProvider.GetPhotographers">
+            <inheritdoc/>
+        </member>
         <member name="T:Provider.Implementation.ReferenceIdProvider">
             <summary>
             Mapps reference id to integer id from database.
@@ -51,7 +75,7 @@
         <member name="M:Provider.Implementation.ReferenceIdProvider.GetReferenceId(System.Int32,Provider.IdType)">
             <inheritdoc/>
         </member>
-        <member name="M:Provider.Implementation.ReferenceIdProvider.InsertIdMap(System.Int32,System.String,Provider.IdType)">
+        <member name="M:Provider.Implementation.ReferenceIdProvider.InsertIdMap(Provider.Models.Id,Provider.IdType)">
             <inheritdoc/>
         </member>
     </members>
