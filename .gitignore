@@ -363,3 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /Server/images
 /Server/Migrations
+Provider/Provider.xml
+Provider.Implementation/Provider.Implementation.xml
+Server/Server.xml
