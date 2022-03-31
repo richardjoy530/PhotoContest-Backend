@@ -3,7 +3,7 @@
     /// <summary>
     /// Contains voting details of a photographer
     /// </summary>
-    public class PhotographerVoteDetails : IResolvable
+    public class PhotographerVoteDetails : IDbModel
     {
         /// <summary>
         /// Details of the photographer whos voting details are encapsulated

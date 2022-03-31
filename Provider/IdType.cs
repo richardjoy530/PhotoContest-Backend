@@ -24,5 +24,10 @@
         /// File
         /// </summary>
         File,
+
+        /// <summary>
+        /// Theme
+        /// </summary>
+        Theme,
     }
 }

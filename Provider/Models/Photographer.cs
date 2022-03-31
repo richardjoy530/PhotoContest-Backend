@@ -6,7 +6,7 @@
     public class Photographer : IDbModel
     {
         /// <summary>
-        /// Id details of the Photographer record
+        /// Id details of the <see cref="Photographer"/> record
         /// </summary>
         public Id Id { get; set; }
 
