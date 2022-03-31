@@ -44,7 +44,7 @@ namespace Provider.Implementation
                 var qs = new StringBuilder();
                 qs.Append("SELECT ");
                 qs.Append("[Id], ");
-                qs.Append("[Theme], ");
+                qs.Append("[ThemeId], ");
                 qs.Append("[FileId], ");
                 qs.Append("[Caption], ");
                 qs.Append("[PhotographerId], ");
@@ -59,7 +59,7 @@ namespace Provider.Implementation
                 photoEntry = new PhotoEntry
                 {
                     Id = new Id { IntegerId = reader.GetInt32(0) },
-                    Theme = reader.GetString(1),
+                    Theme = new PhotoTheme { Id = new Id { IntegerId = reader.GetInt32(1) } },
                     FileId = new Id { IntegerId = reader.GetInt32(2) },
                     Caption = reader.GetString(3),
                     // TODO: Change this to go fetch the photographer.
@@ -95,7 +95,7 @@ namespace Provider.Implementation
                     var photoEntry = new PhotoEntry
                     {
                         Id = new Id { IntegerId = reader.GetInt32(0) },
-                        Theme = reader.GetString(1),
+                        Theme = new PhotoTheme { Id = new Id { IntegerId = reader.GetInt32(1) } },
                         FileId = new Id { IntegerId = reader.GetInt32(2) },
                         Caption = reader.GetString(3),
                         // Change this to go fetch the photographer.
@@ -216,7 +216,7 @@ namespace Provider.Implementation
                     var photoEntry = new PhotoEntry
                     {
                         Id = new Id { IntegerId = reader.GetInt32(0) },
-                        Theme = reader.GetString(1),
+                        Theme = new PhotoTheme { Id = new Id { IntegerId = reader.GetInt32(1) } },
                         FileId = new Id { IntegerId = reader.GetInt32(2) },
                         Caption = reader.GetString(3),
                         // Change this to go fetch the photographer.

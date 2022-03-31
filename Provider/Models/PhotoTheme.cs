@@ -26,16 +26,16 @@ namespace Provider.Models
         public bool IsResolved { get; set; }
 
         /// <inheritdoc/>
-        public void ResolveIntegerId(IReferenceIdMapper mapper, IdType idType)
+        public void ResolveIntegerId(IReferenceIdMapper mapper, IdType idType = IdType.Theme)
         {
-            Id.IntegerId = mapper.GetIntegerId(Id.ReferenceId, IdType.Theme);
+            Id.IntegerId = mapper.GetIntegerId(Id.ReferenceId, idType);
             IsResolved = true;
         }
 
         /// <inheritdoc/>
-        public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType)
+        public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.Theme)
         {
-            Id.ReferenceId = mapper.GetReferenceId(Id.IntegerId, IdType.Theme);
+            Id.ReferenceId = mapper.GetReferenceId(Id.IntegerId, idType);
             IsResolved = true;
         }
     }

@@ -24,7 +24,7 @@ namespace Server.Contracts
         /// Theme of the photo. This must correspond to <see cref="PhotoTheme"/>
         /// </summary>
         [Required]
-        public string Theme { get; set; }
+        public PhotoTheme Theme { get; set; }
 
         /// <summary>
         /// Reference Id of the associated photo. This should always be valid.

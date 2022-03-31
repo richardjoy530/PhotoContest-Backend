@@ -119,9 +119,13 @@ namespace Server
 
             // TODO: we are not making use of the IDbConnection find another way to inject conn string
             services.AddSingleton<IDbConnection>(db => new SqlConnection(Configuration.GetConnectionString("Connection")));
+            
             services.AddSingleton<IReferenceIdMapper, ReferenceIdProvider>();
             services.AddSingleton<IProvider<PhotoEntry>, PhotoEntryProvider>();
             services.AddSingleton<IProvider<Photographer>, PhotographerProvider>();
+            services.AddSingleton<IProvider<PhotographerVoteDetails>, PhotographerVoteDetailsProvider>();
+            services.AddSingleton<IProvider<PhotoTheme>, PhotoThemeProvider>();
+            services.AddSingleton<IProvider<ScoreDetail>, ScoreDetailProvider>();
         }
 
         /// <summary>

@@ -15,7 +15,7 @@ namespace Provider.Models
         /// <summary>
         /// Theme of the photo. This must correspond to <see cref="PhotoTheme"/>
         /// </summary>
-        public string Theme { get; set; }
+        public PhotoTheme Theme { get; set; }
 
         /// <summary>
         /// Details of the photographer who uploaded the photo
@@ -44,6 +44,7 @@ namespace Provider.Models
         public void ResolveIntegerId(IReferenceIdMapper mapper, IdType idType = IdType.PhotoEntry)
         {
             Id.ResolveIntegerId(mapper, idType);
+            Theme.ResolveIntegerId(mapper);
             FileId.ResolveIntegerId(mapper, IdType.File);
             IsResolved = true;
         }
@@ -52,6 +53,7 @@ namespace Provider.Models
         public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.PhotoEntry)
         {
             Id.ResolveReferenceId(mapper, idType);
+            Theme.ResolveReferenceId(mapper);
             FileId.ResolveReferenceId(mapper, IdType.File);
             IsResolved = true;
         }

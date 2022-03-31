@@ -59,6 +59,21 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="CreateSchema.sql" />
+    <Build Include="Create_Schema.sql" />
+    <Build Include="GetAll_PhotographerVoteDetails.sql" />
+    <Build Include="GetAll_PhotoEntry.sql" />
+    <Build Include="GetAll_Photographer.sql" />
+    <Build Include="GetAll_PhotoTheme.sql" />
+    <Build Include="GetAll_ScoreDetail.sql" />
+    <Build Include="GetAll_IdMap.sql" />
+    <Build Include="GetAll_FileMap.sql" />
+    <Build Include="Get_FileMap.sql" />
+    <Build Include="Insert_FileMap.sql" />
+    <Build Include="Update_FileMap.sql" />
+    <Build Include="Detele_FileMap.sql" />
+    <Build Include="Get_IdMap.sql" />
+    <Build Include="Insert_IdMap.sql" />
+    <Build Include="Delete_IdMap.sql" />
+    <Build Include="Get_PhotoEntry.sql" />
   </ItemGroup>
 </Project>

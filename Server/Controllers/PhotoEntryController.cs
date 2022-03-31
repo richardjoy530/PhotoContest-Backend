@@ -44,7 +44,7 @@ namespace Server.Controllers
         [HttpGet("{theme}")]
         public IEnumerable<PhotoEntry> GetAll(string theme)
         {
-            return photoEntryProvider.GetAll().Where(o => o.Theme == theme).ToContract();
+            return photoEntryProvider.GetAll().Where(o => o.Theme.Theme == theme).ToContract();
         }
 
         /// <summary>

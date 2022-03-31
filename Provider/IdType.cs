@@ -29,5 +29,10 @@
         /// Theme
         /// </summary>
         Theme,
+
+        /// <summary>
+        /// VotingDetail
+        /// </summary>
+        VotingDetail,
     }
 }

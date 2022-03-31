@@ -6,24 +6,34 @@
     public class PhotographerVoteDetails : IDbModel
     {
         /// <summary>
+        /// Id of the voting detail
+        /// </summary>
+        public Id Id { get; set; }
+
+        /// <summary>
         /// Details of the photographer whos voting details are encapsulated
         /// </summary>
         public Photographer Photographer { get; set; }
 
         /// <summary>
+        /// Theme details of the vote
+        /// </summary>
+        public PhotoTheme Theme { get; set; }
+
+        /// <summary>
         /// Id of the first voted <see cref="PhotoEntry"/>
         /// </summary>
-        public Id FirstVoteId { get; set; }
+        public PhotoEntry FirstVote { get; set; }
 
         /// <summary>
         /// Id of the second voted <see cref="PhotoEntry"/>
         /// </summary>
-        public Id SecondVoteId { get; set; }
+        public PhotoEntry SecondVote { get; set; }
 
         /// <summary>
         /// Id of the third voted <see cref="PhotoEntry"/>
         /// </summary>
-        public Id ThirdVoteId { get; set; }
+        public PhotoEntry ThirdVote { get; set; }
 
         /// <inheritdoc />
         public bool IsResolved { get; set; }
@@ -31,18 +41,24 @@
         /// <inheritdoc />
         public void ResolveIntegerId(IReferenceIdMapper mapper, IdType idType = IdType.PhotoEntry)
         {
-            FirstVoteId.ResolveIntegerId(mapper, idType);
-            SecondVoteId.ResolveIntegerId(mapper, idType);
-            ThirdVoteId.ResolveIntegerId(mapper, idType);
+            FirstVote.ResolveIntegerId(mapper);
+            SecondVote.ResolveIntegerId(mapper);
+            ThirdVote.ResolveIntegerId(mapper);
+            Photographer.ResolveIntegerId(mapper);
+            Theme.ResolveIntegerId(mapper);
+            Id.ResolveIntegerId(mapper, idType);
             IsResolved = true;
         }
 
         /// <inheritdoc />
         public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.PhotoEntry)
         {
-            FirstVoteId.ResolveReferenceId(mapper, idType);
-            SecondVoteId.ResolveReferenceId(mapper, idType);
-            ThirdVoteId.ResolveReferenceId(mapper, idType);
+            FirstVote.ResolveReferenceId(mapper);
+            SecondVote.ResolveReferenceId(mapper);
+            ThirdVote.ResolveReferenceId(mapper);
+            Photographer.ResolveReferenceId(mapper);
+            Theme.ResolveReferenceId(mapper);
+            Id.ResolveReferenceId(mapper, idType);
             IsResolved = true;
         }
     }

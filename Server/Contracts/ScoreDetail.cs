@@ -6,9 +6,14 @@
     public class ScoreDetail
     {
         /// <summary>
-        /// Reference Id of the PhotoEntry
+        /// ReferenceId
         /// </summary>
-        public string EntryId { get; set; }
+        public string ReferenceId { get; set; }
+
+        /// <summary>
+        /// PhotoEntry
+        /// </summary>
+        public PhotoEntry PhotoEntry { get; set; }
 
         /// <summary>
         /// Score of the referenced PhotoEnty

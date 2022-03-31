@@ -1,6 +1,5 @@
 ﻿using Server.Contracts;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Server
@@ -20,7 +19,7 @@ namespace Server
                 FileId = model.FileId.ReferenceId,
                 Photographer = model.Photographer.ToContract(),
                 ReferenceId = model.Id.ReferenceId,
-                Theme = model.Theme,
+                Theme = model.Theme.ToContract(),
                 UploadedOn = model.UploadedOn,
             };
         }
@@ -38,8 +37,8 @@ namespace Server
                 FileId = new Provider.Models.Id { ReferenceId = contract.ReferenceId },
                 Photographer = contract.Photographer.ToModel(),
                 Id = new Provider.Models.Id { ReferenceId = contract.ReferenceId },
-                Theme = contract.Theme,
-                UploadedOn = contract.UploadedOn ?? throw new ValidationException(),
+                Theme = contract.Theme.ToModel(),
+                UploadedOn = contract.UploadedOn ?? System.DateTime.MinValue,
             };
         }
 
@@ -92,6 +91,7 @@ namespace Server
             {
                 ContestDate = model.ContestDate,
                 Theme = model.Theme,
+                ReferenceId = model.Id.ReferenceId,
             };
         }
 
@@ -104,7 +104,7 @@ namespace Server
 
             return new Provider.Models.PhotoTheme
             {
-                ContestDate = contract.ContestDate,
+                ContestDate = contract.ContestDate ?? System.DateTime.MinValue,
                 Theme = contract.Theme,
             };
         }
@@ -118,10 +118,12 @@ namespace Server
 
             return new PhotographerVoteDetails
             {
-                FirstVoteId = model.FirstVoteId.ReferenceId,
+                ReferenceId = model.Id.ReferenceId,
+                FirstVote = model.FirstVote.ToContract(),
                 Photographer = model.Photographer.ToContract(),
-                SecondVoteId = model.SecondVoteId.ReferenceId,
-                ThirdVoteId = model.ThirdVoteId.ReferenceId,
+                SecondVote = model.SecondVote.ToContract(),
+                ThirdVote = model.ThirdVote.ToContract(),
+                Theme = model.Theme.ToContract(),
             };
         }
 
@@ -134,10 +136,12 @@ namespace Server
 
             return new Provider.Models.PhotographerVoteDetails
             {
-                FirstVoteId = new Provider.Models.Id { ReferenceId = contract.FirstVoteId },
+                Id = new Provider.Models.Id { ReferenceId = contract.ReferenceId },
+                FirstVote = contract.FirstVote.ToModel(),
                 Photographer = contract.Photographer.ToModel(),
-                SecondVoteId = new Provider.Models.Id { ReferenceId = contract.SecondVoteId },
-                ThirdVoteId = new Provider.Models.Id { ReferenceId = contract.ThirdVoteId },
+                SecondVote = contract.SecondVote.ToModel(),
+                ThirdVote = contract.ThirdVote.ToModel(),
+                Theme = contract.Theme.ToModel(),
             };
         }
 
@@ -150,8 +154,9 @@ namespace Server
 
             return new ScoreDetail
             {
-                EntryId = model.EntryId.ReferenceId,
+                PhotoEntry = model.PhotoEntry.ToContract(),
                 Score = model.Score,
+                ReferenceId = model.Id.ReferenceId,
             };
         }
 
@@ -164,8 +169,9 @@ namespace Server
 
             return new Provider.Models.ScoreDetail
             {
-                EntryId = new Provider.Models.Id { ReferenceId = contract.EntryId },
+                PhotoEntry = contract.PhotoEntry.ToModel(),
                 Score = contract.Score,
+                Id = new Provider.Models.Id { ReferenceId = contract.ReferenceId },
             };
         }
     }
