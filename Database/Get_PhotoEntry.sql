@@ -1,6 +1,16 @@
 ﻿CREATE PROCEDURE [dbo].[Get_PhotoEntry]
-	@param1 int = 0,
-	@param2 int
+	@Id int,
+	@ThemeId int,
+    @PhotographerId int
 AS
-	SELECT @param1, @param2
+	
+SELECT [Id]
+      ,[ThemeId]
+      ,[PhotographerId]
+      ,[FileId]
+      ,[Caption]
+      ,[UploadedOn]
+  FROM [dbo].[PhotoEntry]
+  WHERE [Id] = @Id OR [ThemeId] = @ThemeId OR [PhotographerId] = @PhotographerId
+
 RETURN 0
