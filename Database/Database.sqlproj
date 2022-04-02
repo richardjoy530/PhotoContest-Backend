@@ -75,5 +75,12 @@
     <Build Include="Insert_IdMap.sql" />
     <Build Include="Delete_IdMap.sql" />
     <Build Include="Get_PhotoEntry.sql" />
+    <Build Include="Insert_PhotoEntry.sql" />
+    <Build Include="Update_PhotoEntry.sql" />
+    <Build Include="Delete_PhotoEntry.sql" />
+    <Build Include="Get_Photographer.sql" />
+    <Build Include="Insert_Photographer.sql" />
+    <Build Include="Update_Photographer.sql" />
+    <Build Include="Detele_Photographer.sql" />
   </ItemGroup>
 </Project>
