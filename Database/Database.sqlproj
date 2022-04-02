@@ -82,5 +82,9 @@
     <Build Include="Insert_Photographer.sql" />
     <Build Include="Update_Photographer.sql" />
     <Build Include="Detele_Photographer.sql" />
+    <Build Include="Get_PhotographerVoteDetails.sql" />
+    <Build Include="Update_PhotoprapherVoteDetails.sql" />
+    <Build Include="Insert_PhotographerVoteDetails.sql" />
+    <Build Include="Delete_PhotographerVoteDetails.sql" />
   </ItemGroup>
 </Project>
