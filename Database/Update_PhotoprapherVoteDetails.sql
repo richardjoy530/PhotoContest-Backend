@@ -18,6 +18,6 @@ UPDATE [dbo].[PhotographerVoteDetails]
       ,[SecondId] =       CASE WHEN @SecondIdHasValue       = 1 THEN @SecondId       ELSE [SecondId]       END
       ,[ThirdId] =        CASE WHEN @ThirdIdHasValue        = 1 THEN [ThirdId]       ELSE [SecondId]       END
       ,[PhotographerId] = CASE WHEN @PhotographerIdHasValue = 1 THEN @PhotographerId ELSE [PhotographerId] END
-	WHERE [Id] = @Id
+ WHERE [Id] = @Id
 
 RETURN 0
