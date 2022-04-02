@@ -86,5 +86,13 @@
     <Build Include="Update_PhotoprapherVoteDetails.sql" />
     <Build Include="Insert_PhotographerVoteDetails.sql" />
     <Build Include="Delete_PhotographerVoteDetails.sql" />
+    <Build Include="Get_PhotoTheme.sql" />
+    <Build Include="Insert_PhotoTheme.sql" />
+    <Build Include="Update_PhotoTheme.sql" />
+    <Build Include="Delete_PhotoTheme.sql" />
+    <Build Include="Get_ScoreDetail.sql" />
+    <Build Include="Insert_ScoreDetail.sql" />
+    <Build Include="Update_ScoreDetail.sql" />
+    <Build Include="Detele_ScoreDetail.sql" />
   </ItemGroup>
 </Project>
