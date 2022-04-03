@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[Detele_FileMap]
-	@Id int
+	@Id int = NULL
 AS
 
-DELETE [dbo].[FileMap]
- WHERE [Id] = @Id
+DELETE FROM [dbo].[FileMap]
+	  WHERE [Id] = @Id
  
 RETURN 0

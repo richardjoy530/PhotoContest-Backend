@@ -3,9 +3,9 @@
 	@FilePath varchar(50) = NULL
 AS
 
-SELECT [Id]
-      ,[FilePath]
+SELECT [Id],
+	   [FilePath]
   FROM [dbo].[FileMap]
-  WHERE [Id] = @Id OR [FilePath] = @FilePath
+ WHERE [Id] = @Id OR [FilePath] = @FilePath
 
 RETURN 0
