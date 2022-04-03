@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[Delete_IdMap]
-	@ReferenceId uniqueidentifier
+	@ReferenceId uniqueidentifier = NULL
 AS
 
-DELETE [dbo].[IdMap]
- WHERE [ReferenceId] = @ReferenceId
+DELETE FROM	[dbo].[IdMap]
+	  WHERE [ReferenceId] = @ReferenceId
 
 RETURN 0

@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[Detele_ScoreDetail]
-	@Id	int
+	@Id	int = NULL
 AS
 
 DELETE FROM [dbo].[ScoreDetail]
-      WHERE [Id] = @Id
+	  WHERE [Id] = @Id
 
 RETURN 0
