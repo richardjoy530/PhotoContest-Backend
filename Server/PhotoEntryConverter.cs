@@ -68,11 +68,6 @@ namespace Server
 
         public static Provider.Models.Photographer ToModel(this Photographer contract)
         {
-            if (contract == null)
-            {
-                return null;
-            }
-
             return new Provider.Models.Photographer
             {
                 Id = new Provider.Models.Id { ReferenceId = contract.ReferenceId },
@@ -97,15 +92,11 @@ namespace Server
 
         public static Provider.Models.PhotoTheme ToModel(this PhotoTheme contract)
         {
-            if (contract == null)
-            {
-                return null;
-            }
-
             return new Provider.Models.PhotoTheme
             {
                 ContestDate = contract.ContestDate ?? System.DateTime.MinValue,
                 Theme = contract.Theme,
+                Id = new Provider.Models.Id { ReferenceId = contract.ReferenceId },
             };
         }
 

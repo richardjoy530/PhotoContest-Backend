@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[Insert_PhotoEntry]
-	@Id int,
+	@Id int OUTPUT,
 	@ThemeId int,
 	@PhotographerId int,
 	@FileId int,
@@ -8,19 +8,17 @@
 AS
 
 INSERT INTO [dbo].[PhotoEntry]
-           ([Id]
-           ,[ThemeId]
+           ([ThemeId]
            ,[PhotographerId]
            ,[FileId]
            ,[Caption]
            ,[UploadedOn])
-    OUTPUT [INSERTED].[Id]
-    VALUES (
-			@Id,
-			@ThemeId,
+    VALUES (@ThemeId,
 			@PhotographerId,
 			@FileId,
 			@Caption,
 			@UploadedOn)
+
+SELECT @Id = SCOPE_IDENTITY();
 
 RETURN 0

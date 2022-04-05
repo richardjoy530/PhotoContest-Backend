@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[Insert_ScoreDetail]
-	@Id         int,
+	@Id         int OUTPUT,
 	@EntryId    int,
 	@Score      int
 AS
@@ -8,10 +8,11 @@ INSERT INTO [dbo].[ScoreDetail]
            ([Id]
            ,[EntryId]
            ,[Score])
-     OUTPUT [INSERTED].[Id]
      VALUES
            (@Id
            ,@EntryId
            ,@Score)
+
+SELECT @Id = SCOPE_IDENTITY();
 
 RETURN 0

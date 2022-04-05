@@ -1,46 +1,46 @@
 ﻿CREATE TABLE dbo.FileMap ( 
-	Id                   int      NOT NULL,
-	FilePath             varchar(50)      NOT NULL,
-	CONSTRAINT pk_FileMap PRIMARY KEY  ( Id ) 
+	Id						int				NOT NULL	IDENTITY(1,1),
+	FilePath				varchar(50)		NOT NULL,
+	CONSTRAINT pk_FileMap	PRIMARY KEY		( Id ) 
  );
 GO
 
 CREATE TABLE dbo.IdMap ( 
-	ReferenceId          uniqueidentifier      NOT NULL,
-	Id                   int      NOT NULL,
-	IdType               int      NOT NULL,
+	ReferenceId          uniqueidentifier   NOT NULL,
+	Id                   int				NOT NULL,
+	IdType               int				NOT NULL,
 	CONSTRAINT pk_IdMap PRIMARY KEY  ( ReferenceId ) 
  );
 GO
 
 CREATE TABLE dbo.PhotoTheme ( 
-	Id                   int      NOT NULL,
-	Theme                varchar(50)      NOT NULL,
+	Id                   int	IDENTITY(1,1)		NOT NULL,
+	Theme                varchar(50)				NOT NULL,
 	ContestDate          date  DEFAULT getdate()    NOT NULL,
 	CONSTRAINT pk_PhotoTheme PRIMARY KEY  ( Id ) 
  );
 GO
 
 CREATE TABLE dbo.Photographer ( 
-	Id                   int      NOT NULL,
-	UploaderName         varchar(100)      NOT NULL,
+	Id                   int	IDENTITY(1,1)	NOT NULL,
+	UploaderName         varchar(100)			NOT NULL,
 	CONSTRAINT pk_Photographer PRIMARY KEY  ( Id ) 
  );
 GO
 
 CREATE TABLE dbo.PhotoEntry ( 
-	Id                   int      NOT NULL,
+	Id                   int      NOT NULL	IDENTITY(1,1),
 	ThemeId              int      NOT NULL,
 	PhotographerId       int      NOT NULL,
 	FileId               int      NOT NULL,
-	Caption              varchar(100)      NOT NULL,
+	Caption              varchar(100)						NOT NULL,
 	UploadedOn           datetime  DEFAULT sysdatetime()    NOT NULL,
 	CONSTRAINT pk_PhotoEntry PRIMARY KEY  ( Id ) 
  );
 GO
 
 CREATE TABLE dbo.PhotographerVoteDetails ( 
-	Id                   int      NOT NULL,
+	Id                   int      NOT NULL	IDENTITY(1,1),
 	ThemeId              int      NOT NULL,
 	PhotographerId       int      NOT NULL,
 	FirstId              int      NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE dbo.PhotographerVoteDetails (
 GO
 
 CREATE TABLE dbo.ScoreDetail ( 
-	Id                   int      NOT NULL,
+	Id                   int      NOT NULL	IDENTITY(1,1),
 	EntryId              int      NOT NULL,
 	Score                int  DEFAULT 0    NOT NULL,
 	CONSTRAINT pk_ScoreDetail PRIMARY KEY  ( Id ) 
