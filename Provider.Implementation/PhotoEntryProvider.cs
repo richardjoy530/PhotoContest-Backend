@@ -115,29 +115,18 @@ namespace Provider.Implementation
             using (SqlConnection conncetion = new(connectionString))
             {
                 conncetion.Open();
-                var qs = new StringBuilder();
-                qs.Append("INSERT INTO [dbo].[PhotoEntry] ( ");
-                qs.Append("[Theme], ");
-                qs.Append("[FileId], ");
-                qs.Append("[Caption], ");
-                qs.Append("[PhotographerId], ");
-                qs.Append("[UploadedOn] ");
-                qs.Append(") ");
-                qs.Append("OUTPUT [INSERTED].[Id] ");
-                qs.Append("Values (@Theme, @FileId, @Caption, @PhotographerId, @UploadedOn)");
-                var sql = qs.ToString();
-                using SqlCommand command = new(sql, conncetion);
-                command.Parameters.AddWithValue("@Theme", photoEntry.Theme);
-                command.Parameters.AddWithValue("@FileId", photoEntry.FileId.IntegerId);
-                command.Parameters.AddWithValue("@Caption", photoEntry.Caption);
-                command.Parameters.AddWithValue("@PhotographerId", photoEntry.Photographer.Id.IntegerId);
-                command.Parameters.AddWithValue("@UploadedOn", photoEntry.UploadedOn);
-                using SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
-                photoEntry.Id.IntegerId = reader.GetInt32(0);
+                using SqlCommand command = conncetion.CreateCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[Insert_PhotoEntry]";
+                command.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output; //Getting value from DB without querying
+                command.Parameters.Add(new SqlParameter("@ThemeId", photoEntry.Theme.Id.IntegerId));
+                command.Parameters.Add(new SqlParameter("@FileId", photoEntry.FileId.IntegerId));
+                command.Parameters.Add(new SqlParameter("@Caption", photoEntry.Caption));
+                command.Parameters.Add(new SqlParameter("@PhotographerId", photoEntry.Photographer.Id.IntegerId));
+                command.Parameters.Add(new SqlParameter("@UploadedOn", photoEntry.UploadedOn));
+                command.ExecuteNonQuery();
+                photoEntry.Id.IntegerId = Convert.ToInt32(command.Parameters["@Id"].Value); //Getting value from DB without querying
             }
-
-            referenceIdMapper.InsertIdMap(photoEntry.Id, IdType.PhotoEntry);
             return photoEntry;
         }
 

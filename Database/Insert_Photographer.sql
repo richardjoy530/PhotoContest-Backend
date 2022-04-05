@@ -1,14 +1,15 @@
 ﻿CREATE PROCEDURE [dbo].[Insert_Photographer]
-	@Id int = 0,
+	@Id int OUTPUT,
 	@UploaderName varchar(100)
 AS
 
 INSERT INTO [dbo].[Photographer]
            ([Id]
            ,[UploaderName])
-        OUTPUT [INSERTED].[Id]
         VALUES
            (@Id,
             @UploaderName)
+
+SELECT @Id = SCOPE_IDENTITY();
 
 RETURN 0

@@ -8,7 +8,6 @@ INSERT INTO [dbo].[IdMap]
            ([ReferenceId]
            ,[Id]
            ,[IdType])
-OUTPUT [INSERTED].[Id]
      VALUES
            (@ReferenceId
            ,@Id
