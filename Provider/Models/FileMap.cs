@@ -8,6 +8,24 @@ namespace Provider.Models
     public class FileMap : IDbModel
     {
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="referenceId"></param>
+        public FileMap(string referenceId)
+        {
+            Id = new Id { ReferenceId = referenceId };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="integerId"></param>
+        public FileMap(int integerId)
+        {
+            Id = new Id { IntegerId = integerId };
+        }
+
+        /// <summary>
         /// Id
         /// </summary>
         public Id Id { get; set; }
