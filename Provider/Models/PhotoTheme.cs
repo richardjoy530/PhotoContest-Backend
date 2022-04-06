@@ -8,6 +8,23 @@ namespace Provider.Models
     public class PhotoTheme : IDbModel
     {
         /// <summary>
+        /// 
+        /// </summary>
+        public PhotoTheme(string referenceId)
+        {
+            Id = new Id { ReferenceId = referenceId };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="integerId"></param>
+        public PhotoTheme(int integerId)
+        {
+            Id = new Id { IntegerId = integerId };
+        }
+
+        /// <summary>
         /// Id details of the <see cref="PhotoTheme"/> record
         /// </summary>
         public Id Id { get; set; }

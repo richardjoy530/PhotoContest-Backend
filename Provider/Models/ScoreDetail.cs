@@ -6,6 +6,24 @@
     public class ScoreDetail : IDbModel
     {
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="referenceId"></param>
+        public ScoreDetail(string referenceId)
+        {
+            Id = new Id { ReferenceId = referenceId };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="integerId"></param>
+        public ScoreDetail(int integerId)
+        {
+            Id = new Id { IntegerId = integerId };
+        }
+
+        /// <summary>
         /// Id of the score record
         /// </summary>
         public Id Id { get; set; }
