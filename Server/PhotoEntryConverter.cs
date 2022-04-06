@@ -31,12 +31,11 @@ namespace Server
                 return null;
             }
 
-            return new Provider.Models.PhotoEntry
+            return new Provider.Models.PhotoEntry(contract.ReferenceId)
             {
                 Caption = contract.Caption,
                 FileId = new Provider.Models.Id { ReferenceId = contract.ReferenceId },
                 Photographer = contract.Photographer.ToModel(),
-                Id = new Provider.Models.Id { ReferenceId = contract.ReferenceId },
                 Theme = contract.Theme.ToModel(),
                 UploadedOn = contract.UploadedOn ?? System.DateTime.MinValue,
             };
@@ -68,9 +67,8 @@ namespace Server
 
         public static Provider.Models.Photographer ToModel(this Photographer contract)
         {
-            return new Provider.Models.Photographer
+            return new Provider.Models.Photographer(contract.ReferenceId)
             {
-                Id = new Provider.Models.Id { ReferenceId = contract.ReferenceId },
                 UploaderName = contract.UploaderName,
             };
         }
@@ -92,11 +90,10 @@ namespace Server
 
         public static Provider.Models.PhotoTheme ToModel(this PhotoTheme contract)
         {
-            return new Provider.Models.PhotoTheme
+            return new Provider.Models.PhotoTheme(contract.ReferenceId)
             {
                 ContestDate = contract.ContestDate ?? System.DateTime.MinValue,
                 Theme = contract.Theme,
-                Id = new Provider.Models.Id { ReferenceId = contract.ReferenceId },
             };
         }
 
@@ -125,9 +122,8 @@ namespace Server
                 return null;
             }
 
-            return new Provider.Models.PhotographerVoteDetails
+            return new Provider.Models.PhotographerVoteDetails(contract.ReferenceId)
             {
-                Id = new Provider.Models.Id { ReferenceId = contract.ReferenceId },
                 FirstVote = contract.FirstVote.ToModel(),
                 Photographer = contract.Photographer.ToModel(),
                 SecondVote = contract.SecondVote.ToModel(),
@@ -158,11 +154,10 @@ namespace Server
                 return null;
             }
 
-            return new Provider.Models.ScoreDetail
+            return new Provider.Models.ScoreDetail(contract.ReferenceId)
             {
                 PhotoEntry = contract.PhotoEntry.ToModel(),
                 Score = contract.Score,
-                Id = new Provider.Models.Id { ReferenceId = contract.ReferenceId },
             };
         }
     }

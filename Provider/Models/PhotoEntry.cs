@@ -8,6 +8,24 @@ namespace Provider.Models
     public class PhotoEntry : IDbModel
     {
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="referenceId"></param>
+        public PhotoEntry(string referenceId)
+        {
+            Id = new Id { ReferenceId = referenceId };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="integerId"></param>
+        public PhotoEntry(int integerId)
+        {
+            Id = new Id { IntegerId = integerId };
+        }
+
+        /// <summary>
         /// Id details of the PhotoEntry record
         /// </summary>
         public Id Id { get; set; }

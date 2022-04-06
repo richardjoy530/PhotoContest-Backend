@@ -6,6 +6,23 @@
     public class PhotographerVoteDetails : IDbModel
     {
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="referenceId"></param>
+        public PhotographerVoteDetails(string referenceId)
+        {
+            Id = new Id { ReferenceId = referenceId };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="integerId"></param>
+        public PhotographerVoteDetails(int integerId)
+        {
+            Id = new Id { IntegerId = integerId };
+        }
+        /// <summary>
         /// Id of the voting detail
         /// </summary>
         public Id Id { get; set; }

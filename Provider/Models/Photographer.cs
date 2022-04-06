@@ -6,6 +6,24 @@
     public class Photographer : IDbModel
     {
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="referenceId"></param>
+        public Photographer(string referenceId)
+        {
+            Id = new Id { ReferenceId = referenceId };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="integerId"></param>
+        public Photographer(int integerId)
+        {
+            Id = new Id { IntegerId = integerId };
+        }
+
+        /// <summary>
         /// Id details of the <see cref="Photographer"/> record
         /// </summary>
         public Id Id { get; set; }
