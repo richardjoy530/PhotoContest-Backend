@@ -25,7 +25,7 @@ namespace Provider
         /// </summary>
         /// <param name="model"></param>
         /// <returns><typeparamref name="TModel"/></returns>
-        public TModel Create(TModel model);
+        public TModel Insert(TModel model);
 
         /// <summary>
         /// Updates <typeparamref name="TModel"/> by <paramref name="referenceId"/>

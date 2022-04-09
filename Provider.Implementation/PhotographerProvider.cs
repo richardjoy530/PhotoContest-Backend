@@ -35,7 +35,7 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc/>
-        public Photographer Create(Photographer photographer)
+        public Photographer Insert(Photographer photographer)
         {
             if (!Guid.TryParse(photographer.Id.ReferenceId, out _))
             {

@@ -14,6 +14,11 @@ namespace Provider.Implementation
     {
         private readonly string connectionString;
         private readonly IReferenceIdMapper referenceIdMapper;
+        private readonly string InsertProcedure = "[dbo].[Insert_PhotoEntry]";
+        private readonly string GetProcedure    = "[dbo].[Get_PhotoEntry]";
+        private readonly string GetAllProcedure = "[dbo].[GetAll_PhotoEntry]";
+        private readonly string UpdateProcedure = "[dbo].[Update_PhotoEntry]";
+        private readonly string DeleteProcedure = "[dbo].[Delete_PhotoEntry]";
 
         /// <summary>
         /// Initializes a new instance of PhotoEntryProvider class
@@ -43,19 +48,11 @@ namespace Provider.Implementation
                 conncetion.Open();
                 using SqlCommand command = conncetion.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "[dbo].[Get_PhotoEntry]";
-                command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceid, IdType.PhotoEntry)));
+                command.CommandText = GetProcedure;
+                command.Parameters.Add(new SqlParameter("@Id", 3));
                 using SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                photoEntry = new PhotoEntry(reader.GetInt32(0))
-                {
-                    Theme = new PhotoTheme(reader.GetInt32(1)),
-                    FileId = new Id { IntegerId = reader.GetInt32(2) },
-                    Caption = reader.GetString(3),
-                    // TODO: Change this to go fetch the photographer.
-                    Photographer = new Photographer(reader.GetInt32(4)),
-                    UploadedOn = reader.GetDateTime(5),
-                };
+                photoEntry = new PhotoEntry(reader);
             }
             photoEntry.ResolveReferenceId(referenceIdMapper);
             return photoEntry;
@@ -70,19 +67,11 @@ namespace Provider.Implementation
                 conncetion.Open();
                 using SqlCommand command = conncetion.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "[dbo].[GetAll_PhotoEntry]";
+                command.CommandText = GetAllProcedure;
                 using SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    var photoEntry = new PhotoEntry(reader.GetInt32(0))
-                    {
-                        Theme = new PhotoTheme(reader.GetInt32(1)),
-                        FileId = new Id { IntegerId = reader.GetInt32(2) },
-                        Caption = reader.GetString(3),
-                        // Change this to go fetch the photographer.
-                        Photographer = new Photographer(reader.GetInt32(4)),
-                        UploadedOn = reader.GetDateTime(5),
-                    };
+                    var photoEntry = new PhotoEntry(reader);
                     photoEntry.ResolveReferenceId(referenceIdMapper);
                     photoEntries.Add(photoEntry);
                 }
@@ -91,14 +80,14 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc />
-        public PhotoEntry Create(PhotoEntry photoEntry)
+        public PhotoEntry Insert(PhotoEntry photoEntry)
         {
             using (SqlConnection conncetion = new(connectionString))
             {
                 conncetion.Open();
                 using SqlCommand command = conncetion.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "[dbo].[Insert_PhotoEntry]";
+                command.CommandText = InsertProcedure;
                 command.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output; //Getting value from DB without querying
                 command.Parameters.Add(new SqlParameter("@ThemeId", photoEntry.Theme.Id.IntegerId));
                 command.Parameters.Add(new SqlParameter("@FileId", photoEntry.FileId.IntegerId));
@@ -119,7 +108,7 @@ namespace Provider.Implementation
                 conncetion.Open();
                 using SqlCommand command = conncetion.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "[dbo].[Insert_PhotoEntry]";
+                command.CommandText = UpdateProcedure;
                 command.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output; //Getting value from DB without querying
                 command.Parameters.Add(new SqlParameter("@Theme", photoEntry.Theme));
                 command.Parameters.Add(new SqlParameter("@FileId", photoEntry.FileId.IntegerId));
@@ -137,11 +126,10 @@ namespace Provider.Implementation
         {
             using SqlConnection conncetion = new(connectionString);
             conncetion.Open();
-            var qs = new StringBuilder();
-            qs.Append("DELETE FROM [dbo].[PhotoEntry] WHERE [Id]=@Id");
-            var sql = qs.ToString();
-            using SqlCommand command = new(sql, conncetion);
-            command.Parameters.AddWithValue("@Id", referenceIdMapper.GetIntegerId(referenceid, IdType.PhotoEntry));
+            using SqlCommand command = conncetion.CreateCommand();
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = DeleteProcedure;
+            command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceid, IdType.PhotoEntry)));
             command.ExecuteNonQuery();
         }
 
@@ -158,31 +146,13 @@ namespace Provider.Implementation
             using (SqlConnection conncetion = new(connectionString))
             {
                 conncetion.Open();
-                var qs = new StringBuilder();
-                qs.Append("SELECT ");
-                qs.Append("[Id], ");
-                qs.Append("[Theme], ");
-                qs.Append("[FileId], ");
-                qs.Append("[Caption], ");
-                qs.Append("[PhotographerId], ");
-                qs.Append("[UploadedOn] ");
-                qs.Append("FROM [dbo].[PhotoEntry] ");
-                qs.Append("WHERE [Theme]=@Theme ");
-                var sql = qs.ToString();
-                using SqlCommand command = new(sql, conncetion);
-                command.Parameters.AddWithValue("@Theme", theme);
+                using SqlCommand command = conncetion.CreateCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = GetAllProcedure; // TODO: bitmask conditions in get
                 using SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    var photoEntry = new PhotoEntry(reader.GetInt32(0))
-                    {
-                        Theme = new PhotoTheme(reader.GetInt32(1)),
-                        FileId = new Id { IntegerId = reader.GetInt32(2) },
-                        Caption = reader.GetString(3),
-                        // Change this to go fetch the photographer.
-                        Photographer = new Photographer(reader.GetInt32(4)),
-                        UploadedOn = reader.GetDateTime(5),
-                    };
+                    var photoEntry = new PhotoEntry(reader);
                     photoEntry.ResolveReferenceId(referenceIdMapper);
                     photoEntries.Add(photoEntry);
                 }

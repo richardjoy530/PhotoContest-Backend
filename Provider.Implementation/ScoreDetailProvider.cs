@@ -10,7 +10,7 @@ namespace Provider.Implementation
     public class ScoreDetailProvider : IProvider<ScoreDetail>
     {
         /// <inheritdoc/>
-        public ScoreDetail Create(ScoreDetail model)
+        public ScoreDetail Insert(ScoreDetail model)
         {
             throw new NotImplementedException();
         }

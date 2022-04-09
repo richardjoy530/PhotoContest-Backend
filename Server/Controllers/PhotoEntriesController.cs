@@ -4,7 +4,6 @@ using Server.Contracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace Server.Controllers
 {
@@ -13,7 +12,7 @@ namespace Server.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class PhotoEntryController : ControllerBase
+    public class PhotoEntriesController : ControllerBase
     {
         private readonly IProvider<Provider.Models.PhotoEntry> photoEntryProvider;
 
@@ -21,9 +20,19 @@ namespace Server.Controllers
         /// Initilises a PhotoEntry Controller
         /// </summary>
         /// <param name="_photoEntryProvider"></param>
-        public PhotoEntryController(IProvider<Provider.Models.PhotoEntry> _photoEntryProvider)
+        public PhotoEntriesController(IProvider<Provider.Models.PhotoEntry> _photoEntryProvider)
         {
             photoEntryProvider = _photoEntryProvider ?? throw new ArgumentNullException(nameof(_photoEntryProvider));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{referenceId}")]
+        public PhotoEntry GetById(string referenceId)
+        {
+            return photoEntryProvider.GetById(referenceId).ToContract();
         }
 
         /// <summary>
@@ -36,6 +45,7 @@ namespace Server.Controllers
             return photoEntryProvider.GetAll().ToContract();
         }
 
+        /* Implement when data conditional fetching support is added to provider
         /// <summary>
         /// 
         /// </summary>
@@ -46,6 +56,7 @@ namespace Server.Controllers
         {
             return photoEntryProvider.GetAll().Where(o => o.Theme.Theme == theme).ToContract();
         }
+        */
 
         /// <summary>
         /// 
@@ -53,7 +64,7 @@ namespace Server.Controllers
         /// <param name="photoEntry"></param>
         /// <returns></returns>
         [HttpPost]
-        public PhotoEntry AddPhotoEntry([FromBody] PhotoEntry photoEntry)
+        public PhotoEntry CreatePhotoEntry([FromBody] PhotoEntry photoEntry)
         {
             if (string.IsNullOrWhiteSpace(photoEntry.ReferenceId))
             {
@@ -69,7 +80,7 @@ namespace Server.Controllers
                 photoEntry.UploadedOn = DateTime.Now;
             }
 
-            return photoEntryProvider.Create(photoEntry.ToModel()).ToContract();
+            return photoEntryProvider.Insert(photoEntry.ToModel()).ToContract();
         }
 
         /// <summary>

@@ -12,7 +12,7 @@ namespace Server.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class ImageController : ControllerBase
+    public class ImagesController : ControllerBase
     {
         private readonly IWebHostEnvironment webHostEnvironment;
 
@@ -20,7 +20,7 @@ namespace Server.Controllers
         /// Initializes new Image Controller
         /// </summary>
         /// <param name="_webHostEnvironment"></param>
-        public ImageController(IWebHostEnvironment _webHostEnvironment)
+        public ImagesController(IWebHostEnvironment _webHostEnvironment)
         {
             webHostEnvironment = _webHostEnvironment;
         }
