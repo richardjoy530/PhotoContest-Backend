@@ -10,7 +10,7 @@ namespace Provider.Implementation
     public class PhotographerVoteDetailsProvider : IProvider<PhotographerVoteDetails>
     {
         /// <inheritdoc/>
-        public PhotographerVoteDetails Create(PhotographerVoteDetails model)
+        public PhotographerVoteDetails Insert(PhotographerVoteDetails model)
         {
             throw new NotImplementedException();
         }

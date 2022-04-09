@@ -10,7 +10,7 @@ namespace Provider.Implementation
     public class PhotoThemeProvider : IProvider<PhotoTheme>
     {
         /// <inheritdoc/>
-        public PhotoTheme Create(PhotoTheme model)
+        public PhotoTheme Insert(PhotoTheme model)
         {
             throw new NotImplementedException();
         }

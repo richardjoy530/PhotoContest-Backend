@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 
 namespace Provider.Models
 {
@@ -23,6 +24,21 @@ namespace Provider.Models
         public PhotoEntry(int integerId)
         {
             Id = new Id { IntegerId = integerId };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataRecord"></param>
+        public PhotoEntry(IDataRecord dataRecord)
+        {
+            Id = new Id { IntegerId = (int)dataRecord["Id"] };
+            Theme = new PhotoTheme((int)dataRecord["Id"]);
+            FileId = new Id { IntegerId = (int)dataRecord["FileId"] };
+            Caption = (string)dataRecord["Caption"];
+            // TODO: Change this to go fetch the photographer from cache.
+            Photographer = new Photographer((int)dataRecord["PhotographerId"]);
+            UploadedOn = (DateTime)dataRecord["UploadedOn"];
         }
 
         /// <summary>

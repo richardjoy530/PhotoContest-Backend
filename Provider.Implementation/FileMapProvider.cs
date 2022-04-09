@@ -6,7 +6,7 @@ namespace Provider.Implementation
 {
     public class FileMapProvider : IProvider<FileMap>
     {
-        public FileMap Create(FileMap model)
+        public FileMap Insert(FileMap model)
         {
             throw new NotImplementedException();
         }
