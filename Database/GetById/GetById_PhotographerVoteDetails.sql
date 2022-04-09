@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[GetAll_PhotographerVoteDetails]
+﻿CREATE PROCEDURE [dbo].[GetById_PhotographerVoteDetails]
+    @Id int
 AS
 
 SELECT [Id]
@@ -8,5 +9,6 @@ SELECT [Id]
       ,[SecondId]
       ,[ThirdId]
   FROM [dbo].[PhotographerVoteDetails]
+ WHERE [Id] = @Id
 
 RETURN 0

@@ -1,15 +1,15 @@
 ﻿CREATE PROCEDURE [dbo].[Update_PhotoprapherVoteDetails]
-	@Id                     int,
-    @ThemeId                int,
-    @PhotographerId         int,
-    @FirstId                int,
-    @SecondId               int,
-    @ThirdId                int,
-    @ThemeIdHasValue        bit = 1,
-    @PhotographerIdHasValue bit = 1,
-    @FirstIdHasValue        bit = 1,
-    @SecondIdHasValue       bit = 1,
-    @ThirdIdHasValue        bit = 1
+	@Id                     int = NULL,
+    @ThemeId                int = NULL,
+    @PhotographerId         int = NULL,
+    @FirstId                int = NULL,
+    @SecondId               int = NULL,
+    @ThirdId                int = NULL,
+    @ThemeIdHasValue        bit = 0,
+    @PhotographerIdHasValue bit = 0,
+    @FirstIdHasValue        bit = 0,
+    @SecondIdHasValue       bit = 0,
+    @ThirdIdHasValue        bit = 0
 AS
 
 UPDATE [dbo].[PhotographerVoteDetails]

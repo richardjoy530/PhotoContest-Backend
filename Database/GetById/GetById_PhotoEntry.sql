@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[GetAll_PhotoEntry]
+﻿CREATE PROCEDURE [dbo].[GetById_PhotoEntry]
+    @Id int
 AS
 
 SELECT [Id]
@@ -8,5 +9,6 @@ SELECT [Id]
       ,[Caption]
       ,[UploadedOn]
   FROM [dbo].[PhotoEntry]
+ WHERE [Id] = @Id
   
 RETURN 0

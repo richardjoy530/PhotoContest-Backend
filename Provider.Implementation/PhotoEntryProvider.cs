@@ -15,8 +15,8 @@ namespace Provider.Implementation
         private readonly string connectionString;
         private readonly IReferenceIdMapper referenceIdMapper;
         private readonly string InsertProcedure = "[dbo].[Insert_PhotoEntry]";
-        private readonly string GetProcedure    = "[dbo].[Get_PhotoEntry]";
-        private readonly string GetAllProcedure = "[dbo].[GetAll_PhotoEntry]";
+        private readonly string GetByIdProcedure    = "[dbo].[GetById_PhotoEntry]";
+        private readonly string GetProcedure = "[dbo].[Get_PhotoEntry]";
         private readonly string UpdateProcedure = "[dbo].[Update_PhotoEntry]";
         private readonly string DeleteProcedure = "[dbo].[Delete_PhotoEntry]";
 
@@ -48,7 +48,7 @@ namespace Provider.Implementation
                 conncetion.Open();
                 using SqlCommand command = conncetion.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = GetProcedure;
+                command.CommandText = GetByIdProcedure;
                 command.Parameters.Add(new SqlParameter("@Id", 3));
                 using SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
@@ -67,7 +67,7 @@ namespace Provider.Implementation
                 conncetion.Open();
                 using SqlCommand command = conncetion.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = GetAllProcedure;
+                command.CommandText = GetProcedure;
                 using SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -148,7 +148,7 @@ namespace Provider.Implementation
                 conncetion.Open();
                 using SqlCommand command = conncetion.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = GetAllProcedure; // TODO: bitmask conditions in get
+                command.CommandText = GetProcedure; // TODO: bitmask conditions in get
                 using SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {

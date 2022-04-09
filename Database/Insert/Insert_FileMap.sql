@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[Insert_FileMap]
-	@Id int OUTPUT,
-	@FilePath varchar(50)
+	@Id         int OUTPUT,
+	@FilePath   varchar(50)
 AS
 
 INSERT INTO [dbo].[FileMap]
