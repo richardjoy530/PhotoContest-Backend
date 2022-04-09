@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Server.Auth
+namespace WebApi.Auth
 {
     /// <summary>
-    /// LoginRequest
+    /// RegisterRequest
     /// </summary>
-    public class LoginRequest
+    public class RegisterRequest
     {
         /// <summary>
         /// Gets or Sets the Username
@@ -14,7 +14,14 @@ namespace Server.Auth
         public string Username { get; set; }
 
         /// <summary>
-        /// Gets or Sets thet Password
+        /// Gets or Sets the Email Id
+        /// </summary>
+        [EmailAddress]
+        [Required(ErrorMessage = "Email is required")]
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or Sets the password
         /// </summary>
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }

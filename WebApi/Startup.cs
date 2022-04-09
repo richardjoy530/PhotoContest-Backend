@@ -11,7 +11,7 @@ using Microsoft.OpenApi.Models;
 using Provider;
 using Provider.Implementation;
 using Provider.Models;
-using Server.Auth;
+using WebApi.Auth;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,7 +20,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace Server
+namespace WebApi
 {
     /// <summary>
     /// The <see cref="Startup"/> class configures services and the app's request pipeline.

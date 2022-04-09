@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace Server.Contracts
+namespace WebApi.Contracts
 {
     /// <summary>
     /// Contains uploaded image

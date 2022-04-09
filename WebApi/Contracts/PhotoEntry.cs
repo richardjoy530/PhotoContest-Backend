@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Server.Contracts
+namespace WebApi.Contracts
 {
     /// <summary>
     /// Contains the details of PhotoEntry

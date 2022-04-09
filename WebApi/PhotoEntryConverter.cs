@@ -1,8 +1,8 @@
-﻿using Server.Contracts;
+﻿using WebApi.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Server
+namespace WebApi
 {
     internal static class Converter
     {

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Server.Contracts;
+using WebApi.Contracts;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Server.Controllers
+namespace WebApi.Controllers
 {
     /// <summary>
     /// Image Controller
