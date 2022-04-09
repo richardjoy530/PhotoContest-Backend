@@ -1,9 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[Update_PhotoTheme]
-	@Id						int,
-	@Theme					varchar(50),
-	@ContestDate			datetime,
-	@ThemeHasValue			bit,
-	@ContestDateHasValue	bit
+	@Id						int			= NULL,
+	@Theme					varchar(50)	= NULL,
+	@ContestDate			datetime	= NULL,
+	@ThemeHasValue			bit	= 0,
+	@ContestDateHasValue	bit = 0
 AS
 
 UPDATE [dbo].[PhotoTheme]

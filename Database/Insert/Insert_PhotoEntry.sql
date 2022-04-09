@@ -1,10 +1,10 @@
 ﻿CREATE PROCEDURE [dbo].[Insert_PhotoEntry]
-	@Id int OUTPUT,
-	@ThemeId int,
-	@PhotographerId int,
-	@FileId int,
-	@Caption varchar(100),
-	@UploadedOn datetime
+	@Id				int OUTPUT,
+	@ThemeId		int,
+	@PhotographerId	int,
+	@FileId			int,
+	@Caption		varchar(100),
+	@UploadedOn		datetime
 AS
 
 INSERT INTO [dbo].[PhotoEntry]
