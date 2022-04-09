@@ -1,4 +1,4 @@
-﻿namespace Server.Contracts
+﻿namespace WebApi.Contracts
 {
     /// <summary>
     /// Contains voting details of a photographer

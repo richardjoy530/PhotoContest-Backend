@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <StartupObject>Server.Program</StartupObject>
+    <StartupObject>WebApi.Program</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Dev\PhotoContest\Server\Server.xml</DocumentationFile>
+    <DocumentationFile>D:\Dev\PhotoContest\WebApi\WebApi.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>D:\Dev\PhotoContest\Server\Server.xml</DocumentationFile>
+    <DocumentationFile>D:\Dev\PhotoContest\WebApi\WebApi.xml</DocumentationFile>
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
 

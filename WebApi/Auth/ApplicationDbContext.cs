@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Server.Auth
+namespace WebApi.Auth
 {
     /// <summary>
     /// A helper for the data access of Microsoft.AspNetCore.Identity

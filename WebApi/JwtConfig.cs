@@ -1,4 +1,4 @@
-﻿namespace Server
+﻿namespace WebApi
 {
     /// <summary>
     /// JWT Configuration

@@ -361,8 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/Server/images
-/Server/Migrations
+/WebApi/images
+/WebApi/Migrations
 Provider/Provider.xml
 Provider.Implementation/Provider.Implementation.xml
-Server/Server.xml
+WebApi/WebApi.xml

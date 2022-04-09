@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.Auth
+namespace WebApi.Auth
 {
     /// <summary>
     /// Authentication controller

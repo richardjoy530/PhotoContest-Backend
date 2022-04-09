@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Provider;
-using Server.Contracts;
+using WebApi.Contracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Server.Controllers
+namespace WebApi.Controllers
 {
     /// <summary>
     /// PhotoEntry Controller

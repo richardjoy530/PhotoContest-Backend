@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Server.Contracts
+namespace WebApi.Contracts
 {
     /// <summary>
     /// Contains details of PhotoTheme

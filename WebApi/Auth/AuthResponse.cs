@@ -1,4 +1,4 @@
-﻿namespace Server.Auth
+﻿namespace WebApi.Auth
 {
     /// <summary>
     /// Encapsulates response during auth
