@@ -8,15 +8,13 @@
 AS
 
 INSERT INTO [dbo].[PhotographerVoteDetails]
-           ([Id]
-           ,[ThemeId]
+           ([ThemeId]
            ,[PhotographerId]
            ,[FirstId]
            ,[SecondId]
            ,[ThirdId])
      VALUES
-           (@Id
-           ,@ThemeId
+           (@ThemeId
            ,@PhotographerId
            ,@FirstId
            ,@SecondId

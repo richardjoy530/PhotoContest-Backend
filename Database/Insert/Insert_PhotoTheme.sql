@@ -5,12 +5,10 @@
 AS
 
 INSERT INTO [dbo].[PhotoTheme]
-           ([Id]
-           ,[Theme]
+           ([Theme]
            ,[ContestDate])
      VALUES
-           (@Id
-           ,@Theme
+           (@Theme
            ,@ContestDate)
 
 SELECT @Id = SCOPE_IDENTITY();
