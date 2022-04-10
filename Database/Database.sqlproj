@@ -86,7 +86,7 @@
     <Build Include="Update\Update_PhotoTheme.sql" />
     <Build Include="Update\Update_ScoreDetail.sql" />
     <Build Include="GetById\GetById_FileMap.sql" />
-    <Build Include="GetById\GetById_IdMap.sql" />
+    <Build Include="GetById\GetId_IdMap.sql" />
     <Build Include="GetById\GetById_PhotoEntry.sql" />
     <Build Include="GetById\GetById_Photographer.sql" />
     <Build Include="GetById\GetById_PhotographerVoteDetails.sql" />
@@ -99,5 +99,6 @@
     <Build Include="Get\Get_PhotographerVoteDetails.sql" />
     <Build Include="Get\Get_PhotoTheme.sql" />
     <Build Include="Get\Get_ScoreDetail.sql" />
+    <Build Include="GetById\GetRef_IdMap.sql" />
   </ItemGroup>
 </Project>

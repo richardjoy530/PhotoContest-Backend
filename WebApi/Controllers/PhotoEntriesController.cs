@@ -4,6 +4,7 @@ using WebApi.Contracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace WebApi.Controllers
 {
@@ -45,7 +46,6 @@ namespace WebApi.Controllers
             return photoEntryProvider.GetAll().ToContract();
         }
 
-        /* Implement when data conditional fetching support is added to provider
         /// <summary>
         /// 
         /// </summary>
@@ -56,7 +56,6 @@ namespace WebApi.Controllers
         {
             return photoEntryProvider.GetAll().Where(o => o.Theme.Theme == theme).ToContract();
         }
-        */
 
         /// <summary>
         /// 

@@ -2,7 +2,6 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace Provider.Implementation
 {
@@ -12,6 +11,11 @@ namespace Provider.Implementation
     public class ReferenceIdProvider : IReferenceIdMapper
     {
         private readonly string connectionString;
+        private readonly string InsertProcedure = "[dbo].[Insert_IdMap]";
+        private readonly string GetIdProcedure = "[dbo].[GetId_IdMap]";
+        private readonly string GetRefProcedure = "[dbo].[GetRef_IdMap]";
+        private readonly string GetProcedure = "[dbo].[Get_IdMap]";
+        private readonly string DeleteProcedure = "[dbo].[Delete_IdMap]";
 
         /// <summary>
         /// Initializes a new instance of ReferenceIdProvider class
@@ -28,55 +32,32 @@ namespace Provider.Implementation
         }
 
         ///<inheritdoc/>
-        public int GetIntegerId(string referenceId, IdType idType)
+        public int GetIntegerId(string referenceId)
         {
-            int id;
-            using (SqlConnection conncetion = new(connectionString))
-            {
-                conncetion.Open();
-                var qs = new StringBuilder();
-                qs.Append("SELECT ");
-                qs.Append("[Id], ");
-                qs.Append("FROM [dbo].[IdMap] ");
-                qs.Append("WHERE ");
-                qs.Append("[ReferenceId]=@ReferenceId ");
-                qs.Append("AND ");
-                qs.Append("[IdType]=@IdType ");
-                var sql = qs.ToString();
-                using SqlCommand command = new(sql, conncetion);
-                command.Parameters.AddWithValue("@ReferenceId", new Guid(referenceId));
-                command.Parameters.AddWithValue("@IdType", (int)idType);
-                using SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
-                id = reader.GetInt32(0);
-            }
-            return id;
+            using SqlConnection conncetion = new(connectionString);
+            conncetion.Open();
+            using SqlCommand command = conncetion.CreateCommand();
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = GetIdProcedure;
+            command.Parameters.Add(new SqlParameter("@ReferenceId", referenceId));
+            command.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
+            command.ExecuteNonQuery();
+            return Convert.ToInt32(command.Parameters["@Id"].Value);
         }
 
         ///<inheritdoc/>
         public string GetReferenceId(int id, IdType idType)
         {
-            string referenceId;
-            using (SqlConnection conncetion = new(connectionString))
-            {
-                conncetion.Open();
-                var qs = new StringBuilder();
-                qs.Append("SELECT ");
-                qs.Append("[ReferenceId] ");
-                qs.Append("FROM [dbo].[IdMap] ");
-                qs.Append("WHERE ");
-                qs.Append("[Id]=@Id ");
-                qs.Append("AND ");
-                qs.Append("[IdType]=@IdType ");
-                var sql = qs.ToString();
-                using SqlCommand command = new(sql, conncetion);
-                command.Parameters.AddWithValue("@Id", id);
-                command.Parameters.AddWithValue("@IdType", (int)idType);
-                using SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
-                referenceId = reader.GetGuid(0).ToString();
-            }
-            return referenceId;
+            using SqlConnection conncetion = new(connectionString);
+            conncetion.Open();
+            using SqlCommand command = conncetion.CreateCommand();
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = GetRefProcedure;
+            command.Parameters.Add(new SqlParameter("@Id", id));
+            command.Parameters.Add(new SqlParameter("@IdType", (int)idType));
+            command.Parameters.Add("@ReferenceId", SqlDbType.UniqueIdentifier).Direction = ParameterDirection.Output;
+            command.ExecuteNonQuery();
+            return command.Parameters["@ReferenceId"].Value.ToString();
         }
 
         ///<inheritdoc/>
@@ -84,20 +65,12 @@ namespace Provider.Implementation
         {
             using SqlConnection conncetion = new(connectionString);
             conncetion.Open();
-            var qs = new StringBuilder();
-            qs.Append("INSERT INTO [dbo].[IdMap] (");
-            qs.Append("[Id], ");
-            qs.Append("[ReferenceId], ");
-            qs.Append("[IdType] ");
-            qs.Append(") VALUES ( ");
-            qs.Append("@Id, ");
-            qs.Append("@ReferenceId, ");
-            qs.Append("@IdType )");
-            var sql = qs.ToString();
-            using SqlCommand command = new(sql, conncetion);
-            command.Parameters.AddWithValue("@Id", id.IntegerId);
-            command.Parameters.AddWithValue("@ReferenceId", new Guid(id.ReferenceId));
-            command.Parameters.AddWithValue("@IdType", (int)idType);
+            using SqlCommand command = conncetion.CreateCommand();
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = InsertProcedure;
+            command.Parameters.Add(new SqlParameter("@Id", id.IntegerId));
+            command.Parameters.Add(new SqlParameter("@ReferenceId", id.ReferenceId));
+            command.Parameters.Add(new SqlParameter("@IdType", (int)idType));
             command.ExecuteNonQuery();
         }
     }

@@ -16,8 +16,8 @@ namespace Provider
         /// Resolve the integer id of the calling object
         /// </summary>
         /// <param name="mapper"></param>
-        /// <param name="idType"></param>
-        public void ResolveIntegerId(IReferenceIdMapper mapper, IdType idType);
+        /// 
+        public void ResolveIntegerId(IReferenceIdMapper mapper);
 
         /// <summary>
         /// Resolve the reference id of the calling object

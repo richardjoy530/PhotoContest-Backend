@@ -43,9 +43,9 @@ namespace Provider.Models
         public bool IsResolved { get; set; }
 
         /// <inheritdoc/>
-        public void ResolveIntegerId(IReferenceIdMapper mapper, IdType idType = IdType.Theme)
+        public void ResolveIntegerId(IReferenceIdMapper mapper)
         {
-            Id.IntegerId = mapper.GetIntegerId(Id.ReferenceId, idType);
+            Id.IntegerId = mapper.GetIntegerId(Id.ReferenceId);
             IsResolved = true;
         }
 

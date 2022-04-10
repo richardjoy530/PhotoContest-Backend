@@ -75,11 +75,11 @@ namespace Provider.Models
         public bool IsResolved { get; set; }
 
         /// <inheritdoc />
-        public void ResolveIntegerId(IReferenceIdMapper mapper, IdType idType = IdType.PhotoEntry)
+        public void ResolveIntegerId(IReferenceIdMapper mapper)
         {
-            Id.ResolveIntegerId(mapper, idType);
+            Id.ResolveIntegerId(mapper);
             Theme.ResolveIntegerId(mapper);
-            FileId.ResolveIntegerId(mapper, IdType.File);
+            FileId.ResolveIntegerId(mapper);
             IsResolved = true;
         }
 
