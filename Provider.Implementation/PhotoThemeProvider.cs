@@ -34,7 +34,7 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc/>
-        public PhotoTheme Update(PhotoTheme model, string referenceId)
+        public void Update(PhotoTheme model, string referenceId)
         {
             throw new NotImplementedException();
         }

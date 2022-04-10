@@ -19,6 +19,8 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using Core;
+using Core.Implementation;
 
 namespace WebApi
 {
@@ -31,6 +33,11 @@ namespace WebApi
         /// Configuration
         /// </summary>
         public IConfiguration Configuration { get; }
+
+        /// <summary>
+        /// WebHostEnvironment
+        /// </summary>
+        public IWebHostEnvironment WebHostEnvironment { get; }
 
         private static string XmlCommentsFilePath
         {
@@ -46,9 +53,11 @@ namespace WebApi
         /// Initialises a <see cref="Startup"/> class
         /// </summary>
         /// <param name="configuration"></param>
-        public Startup(IConfiguration configuration)
+        /// <param name="webHostEnvironment"></param>
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
-            Configuration = configuration;
+            Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            WebHostEnvironment = webHostEnvironment ?? throw new ArgumentNullException(nameof(webHostEnvironment));
         }
 
         /// <summary>
@@ -121,6 +130,14 @@ namespace WebApi
             services.AddSingleton<IDbConnection>(db => new SqlConnection(Configuration.GetConnectionString("Connection")));
             
             services.AddSingleton<IReferenceIdMapper, ReferenceIdProvider>();
+            if (WebHostEnvironment.IsDevelopment())
+            {
+                services.AddSingleton<IFileService, SystemFileService>();
+            }
+            else
+            {
+                services.AddSingleton<IFileService, AzureBlobService>();
+            }
             services.AddSingleton<IProvider<PhotoEntry>, PhotoEntryProvider>();
             services.AddSingleton<IProvider<Photographer>, PhotographerProvider>();
             services.AddSingleton<IProvider<PhotographerVoteDetails>, PhotographerVoteDetailsProvider>();

@@ -9,6 +9,11 @@ namespace WebApi.Contracts
     public class ImageItem
     {
         /// <summary>
+        /// Unique Id assigned to this asset
+        /// </summary>
+        public string ReferenceId { get; set; }
+
+        /// <summary>
         /// The image file
         /// </summary>
         [Required]

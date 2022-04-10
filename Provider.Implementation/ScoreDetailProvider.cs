@@ -34,7 +34,7 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc/>
-        public ScoreDetail Update(ScoreDetail model, string referenceId)
+        public void Update(ScoreDetail model, string referenceId)
         {
             throw new NotImplementedException();
         }
