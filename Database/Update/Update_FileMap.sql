@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[Update_FileMap]
-	@Id int,
-	@FilePath varchar(50)
+    @Id       int,
+    @FilePath varchar(50)
 AS
 
 
