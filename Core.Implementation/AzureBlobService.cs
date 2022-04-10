@@ -11,7 +11,7 @@ namespace Core.Implementation
         private readonly IConfiguration configuration;
         private readonly BlobContainerClient containerClient;
 
-        private const string CONTAINER = "Photos";
+        private const string CONTAINER = "photos";
 
         public AzureBlobService(IConfiguration _configuration)
         {
