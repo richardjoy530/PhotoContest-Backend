@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[Update_Photographer]
-	@Id int,
-	@UploaderName varchar(100)
+    @Id           int,
+    @UploaderName varchar(100)
 AS
 
 UPDATE [dbo].[Photographer]

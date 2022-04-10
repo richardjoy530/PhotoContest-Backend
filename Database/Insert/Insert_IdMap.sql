@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[Insert_IdMap]
-	@Id             int,
-	@ReferenceId    uniqueidentifier,
+    @Id             int,
+    @ReferenceId    uniqueidentifier,
     @IdType         int
 AS
 

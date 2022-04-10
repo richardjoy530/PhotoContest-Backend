@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[Get_PhotographerVoteDetails]
-	@Id                     int = NULL,
+    @Id                     int = NULL,
     @ThemeId                int = NULL,
     @PhotographerId         int = NULL,
     @FirstId                int = NULL,
