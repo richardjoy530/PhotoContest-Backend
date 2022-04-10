@@ -95,7 +95,9 @@ namespace WebApi.Controllers
             {
                 throw new ValidationException($"{nameof(photoEntry.ReferenceId)} does not match within the request");
             }
-            return photoEntryProvider.Update(photoEntry.ToModel(), referenceId).ToContract();
+
+            photoEntryProvider.Update(photoEntry.ToModel(), referenceId);
+            return photoEntryProvider.GetById(referenceId).ToContract();
         }
 
         /// <summary>

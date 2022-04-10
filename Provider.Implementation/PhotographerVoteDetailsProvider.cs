@@ -34,7 +34,7 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc/>
-        public PhotographerVoteDetails Update(PhotographerVoteDetails model, string referenceId)
+        public void Update(PhotographerVoteDetails model, string referenceId)
         {
             throw new NotImplementedException();
         }

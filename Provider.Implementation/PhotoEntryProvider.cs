@@ -99,24 +99,20 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc />
-        public PhotoEntry Update(PhotoEntry photoEntry, string referenceId)
+        public void Update(PhotoEntry photoEntry, string referenceId)
         {
-            using (SqlConnection conncetion = new(connectionString))
-            {
-                conncetion.Open();
-                using SqlCommand command = conncetion.CreateCommand();
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = UpdateProcedure;
-                command.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output; //Getting value from DB without querying
-                command.Parameters.Add(new SqlParameter("@Theme", photoEntry.Theme));
-                command.Parameters.Add(new SqlParameter("@FileId", photoEntry.FileId.IntegerId));
-                command.Parameters.Add(new SqlParameter("@Caption", photoEntry.Caption));
-                command.Parameters.Add(new SqlParameter("@PhotographerId", photoEntry.Photographer.Id.IntegerId));
-                command.Parameters.Add(new SqlParameter("@UploadedOn", photoEntry.UploadedOn));
-                command.ExecuteNonQuery();
-                photoEntry.Id.IntegerId = Convert.ToInt32(command.Parameters["@Id"].Value); //Getting value from DB without querying
-            }
-            return photoEntry;
+            using SqlConnection conncetion = new(connectionString);
+            conncetion.Open();
+            using SqlCommand command = conncetion.CreateCommand();
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = UpdateProcedure;
+            command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceId)));
+            command.Parameters.Add(new SqlParameter("@Theme", photoEntry.Theme));
+            command.Parameters.Add(new SqlParameter("@FileId", photoEntry.FileId.IntegerId));
+            command.Parameters.Add(new SqlParameter("@Caption", photoEntry.Caption));
+            command.Parameters.Add(new SqlParameter("@PhotographerId", photoEntry.Photographer.Id.IntegerId));
+            command.Parameters.Add(new SqlParameter("@UploadedOn", photoEntry.UploadedOn));
+            command.ExecuteNonQuery();
         }
 
         /// <inheritdoc />

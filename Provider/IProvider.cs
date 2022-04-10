@@ -32,8 +32,7 @@ namespace Provider
         /// </summary>
         /// <param name="model"></param>
         /// <param name="referenceId"></param>
-        /// <returns><typeparamref name="TModel"/></returns>
-        public TModel Update(TModel model, string referenceId);
+        public void Update(TModel model, string referenceId);
 
         /// <summary>
         /// Deletes the record of <typeparamref name="TModel"/> with <paramref name="referenceId"/>

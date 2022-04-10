@@ -82,7 +82,7 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc/>
-        public Photographer Update(Photographer photographer, string referenceId)
+        public void Update(Photographer photographer, string referenceId)
         {
             throw new NotImplementedException();
         }

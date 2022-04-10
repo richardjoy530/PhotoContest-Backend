@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 
 namespace Provider.Models
 {
@@ -23,6 +24,16 @@ namespace Provider.Models
         public FileMap(int integerId)
         {
             Id = new Id { IntegerId = integerId };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataRecord"></param>
+        public FileMap(IDataRecord dataRecord)
+        {
+            Id = new Id { IntegerId = (int)dataRecord["Id"] };
+            FilePath = (string)dataRecord["FilePath"];
         }
 
         /// <summary>
