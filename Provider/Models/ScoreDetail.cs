@@ -42,9 +42,9 @@
         public bool IsResolved { get; set; }
 
         /// <inheritdoc />
-        public void ResolveIntegerId(IReferenceIdMapper mapper, IdType idType = IdType.ScoreDetail)
+        public void ResolveIntegerId(IReferenceIdMapper mapper)
         {
-            Id.ResolveIntegerId(mapper, idType);
+            Id.ResolveIntegerId(mapper);
             PhotoEntry.ResolveIntegerId(mapper);
             IsResolved = true;
         }

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace Provider.Implementation
 {
@@ -15,7 +14,7 @@ namespace Provider.Implementation
         private readonly string connectionString;
         private readonly IReferenceIdMapper referenceIdMapper;
         private readonly string InsertProcedure = "[dbo].[Insert_PhotoEntry]";
-        private readonly string GetByIdProcedure    = "[dbo].[GetById_PhotoEntry]";
+        private readonly string GetByIdProcedure = "[dbo].[GetById_PhotoEntry]";
         private readonly string GetProcedure = "[dbo].[Get_PhotoEntry]";
         private readonly string UpdateProcedure = "[dbo].[Update_PhotoEntry]";
         private readonly string DeleteProcedure = "[dbo].[Delete_PhotoEntry]";
@@ -40,7 +39,7 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc />
-        public PhotoEntry GetById(string referenceid)
+        public PhotoEntry GetById(string referenceId)
         {
             PhotoEntry photoEntry;
             using (SqlConnection conncetion = new(connectionString))
@@ -49,12 +48,11 @@ namespace Provider.Implementation
                 using SqlCommand command = conncetion.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = GetByIdProcedure;
-                command.Parameters.Add(new SqlParameter("@Id", 3));
+                command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceId)));
                 using SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
                 photoEntry = new PhotoEntry(reader);
             }
-            photoEntry.ResolveReferenceId(referenceIdMapper);
             return photoEntry;
         }
 
@@ -122,14 +120,14 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc />
-        public void Delete(string referenceid)
+        public void Delete(string referenceId)
         {
             using SqlConnection conncetion = new(connectionString);
             conncetion.Open();
             using SqlCommand command = conncetion.CreateCommand();
             command.CommandType = CommandType.StoredProcedure;
             command.CommandText = DeleteProcedure;
-            command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceid, IdType.PhotoEntry)));
+            command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceId)));
             command.ExecuteNonQuery();
         }
 

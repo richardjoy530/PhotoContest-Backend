@@ -41,9 +41,9 @@ namespace Provider.Models
         public bool IsResolved { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         /// <inheritdoc/>
-        public void ResolveIntegerId(IReferenceIdMapper mapper, IdType idType = IdType.File)
+        public void ResolveIntegerId(IReferenceIdMapper mapper)
         {
-            Id.IntegerId = mapper.GetIntegerId(Id.ReferenceId, idType);
+            Id.IntegerId = mapper.GetIntegerId(Id.ReferenceId);
             IsResolved = true;
         }
 

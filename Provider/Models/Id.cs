@@ -19,9 +19,9 @@
         public bool IsResolved { get; set; }
 
         ///<inheritdoc/>
-        public void ResolveIntegerId(IReferenceIdMapper mapper, IdType idType)
+        public void ResolveIntegerId(IReferenceIdMapper mapper)
         {
-            IntegerId = mapper.GetIntegerId(ReferenceId, idType);
+            IntegerId = mapper.GetIntegerId(ReferenceId);
             IsResolved = true;
         }
 

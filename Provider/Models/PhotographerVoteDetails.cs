@@ -56,14 +56,14 @@
         public bool IsResolved { get; set; }
 
         /// <inheritdoc />
-        public void ResolveIntegerId(IReferenceIdMapper mapper, IdType idType = IdType.PhotoEntry)
+        public void ResolveIntegerId(IReferenceIdMapper mapper)
         {
             FirstVote.ResolveIntegerId(mapper);
             SecondVote.ResolveIntegerId(mapper);
             ThirdVote.ResolveIntegerId(mapper);
             Photographer.ResolveIntegerId(mapper);
             Theme.ResolveIntegerId(mapper);
-            Id.ResolveIntegerId(mapper, idType);
+            Id.ResolveIntegerId(mapper);
             IsResolved = true;
         }
 
