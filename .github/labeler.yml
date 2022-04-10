@@ -1,0 +1,11 @@
+sensitive:
+- WebApi/appsettings.Development.json
+- WebApi/appsettings.Production.json
+- WebApi/appsettings.Test.json
+- WebApi/appsettings.json
+
+database:
+- Database/**/*
+
+ci:
+- .github/**/*
