@@ -4,11 +4,9 @@
 AS
 
 INSERT INTO [dbo].[Photographer]
-           ([Id]
-           ,[UploaderName])
+           ([UploaderName])
         VALUES
-           (@Id,
-            @UploaderName)
+           (@UploaderName)
 
 SELECT @Id = SCOPE_IDENTITY();
 

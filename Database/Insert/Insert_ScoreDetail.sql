@@ -5,12 +5,10 @@
 AS
 
 INSERT INTO [dbo].[ScoreDetail]
-           ([Id]
-           ,[EntryId]
+           ([EntryId]
            ,[Score])
      VALUES
-           (@Id
-           ,@EntryId
+           (@EntryId
            ,@Score)
 
 SELECT @Id = SCOPE_IDENTITY();

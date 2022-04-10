@@ -4,11 +4,9 @@
 AS
 
 INSERT INTO [dbo].[FileMap]
-           ([Id]
-           ,[FilePath])
+           ([FilePath])
      VALUES
-           (@Id
-           ,@FilePath)
+           (@FilePath)
 
 SELECT @Id = SCOPE_IDENTITY();
 

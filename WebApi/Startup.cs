@@ -143,6 +143,7 @@ namespace WebApi
             services.AddSingleton<IProvider<PhotographerVoteDetails>, PhotographerVoteDetailsProvider>();
             services.AddSingleton<IProvider<PhotoTheme>, PhotoThemeProvider>();
             services.AddSingleton<IProvider<ScoreDetail>, ScoreDetailProvider>();
+            services.AddSingleton<IProvider<FileMap>, FileMapProvider>();
         }
 
         /// <summary>
@@ -155,6 +156,10 @@ namespace WebApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseHsts();
             }
 
             app.UseSwagger();
