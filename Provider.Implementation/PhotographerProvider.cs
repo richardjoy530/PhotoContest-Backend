@@ -14,6 +14,11 @@ namespace Provider.Implementation
     {
         private readonly string connectionString;
         private readonly IReferenceIdMapper referenceIdMapper;
+        private readonly string InsertProcedure = "[dbo].[Insert_Photographer]";
+        private readonly string GetByIdProcedure = "[dbo].[GetById_Photographer]";
+        private readonly string GetProcedure = "[dbo].[Get_Photographer]";
+        private readonly string UpdateProcedure = "[dbo].[Update_Photographer]";
+        private readonly string DeleteProcedure = "[dbo].[Delete_Photographer]";
 
         /// <summary>
         /// Initializes a new instance of PhotographerProvider class
@@ -37,54 +42,82 @@ namespace Provider.Implementation
         /// <inheritdoc/>
         public Photographer Insert(Photographer photographer)
         {
-            if (!Guid.TryParse(photographer.Id.ReferenceId, out _))
-            {
-                photographer.Id.ReferenceId = Guid.NewGuid().ToString();
-            }
-
             using (SqlConnection conncetion = new(connectionString))
             {
                 conncetion.Open();
-                var qs = new StringBuilder();
-                qs.Append("INSERT INTO [dbo].[Photographer] (");
-                qs.Append("[UploaderName] ");
-                qs.Append(") ");
-                qs.Append("OUTPUT [INSERTED].[Id] ");
-                qs.Append("VALUES ( ");
-                qs.Append("@UploaderName )");
-                var sql = qs.ToString();
-                using SqlCommand command = new(sql, conncetion);
-                command.Parameters.AddWithValue("@UploaderName", photographer.UploaderName);
-                using SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
-                photographer.Id.IntegerId = reader.GetInt32(0);
+                using SqlCommand command = conncetion.CreateCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = InsertProcedure;
+                command.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
+                command.Parameters.Add(new SqlParameter("@UploaderName", photographer.UploaderName));
+                command.ExecuteNonQuery();
+                photographer.Id.IntegerId = Convert.ToInt32(command.Parameters["@Id"].Value);
             }
-            referenceIdMapper.InsertIdMap(photographer.Id, IdType.Photographer);
             return photographer;
         }
 
         /// <inheritdoc/>
         public void Delete(string referenceId)
         {
-            throw new NotImplementedException();
+            using SqlConnection conncetion = new(connectionString);
+            conncetion.Open();
+            using SqlCommand command = conncetion.CreateCommand();
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = DeleteProcedure;
+            command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceId)));
+            command.ExecuteNonQuery();
         }
 
         /// <inheritdoc/>
         public Photographer GetById(string referenceId)
         {
-            throw new NotImplementedException();
+            Photographer photographer;
+            using (SqlConnection conncetion = new(connectionString))
+            {
+                conncetion.Open();
+                using SqlCommand command = conncetion.CreateCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = GetByIdProcedure;
+                command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceId)));
+                using SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                photographer = new Photographer(reader);
+            }
+            return photographer;
         }
 
         /// <inheritdoc/>
         public IEnumerable<Photographer> GetAll()
         {
-            throw new NotImplementedException();
+            var photographers = new List<Photographer>();
+            using (SqlConnection conncetion = new(connectionString))
+            {
+                conncetion.Open();
+                using SqlCommand command = conncetion.CreateCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = GetProcedure;
+                using SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var photographer = new Photographer(reader);
+                    photographer.ResolveReferenceId(referenceIdMapper);
+                    photographers.Add(photographer);
+                }
+            }
+            return photographers;
         }
 
         /// <inheritdoc/>
         public void Update(Photographer photographer, string referenceId)
         {
-            throw new NotImplementedException();
+            using SqlConnection conncetion = new(connectionString);
+            conncetion.Open();
+            using SqlCommand command = conncetion.CreateCommand();
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = UpdateProcedure;
+            command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceId)));
+            command.Parameters.Add(new SqlParameter("@UploaderName", photographer.UploaderName));
+            command.ExecuteNonQuery();
         }
     }
 }

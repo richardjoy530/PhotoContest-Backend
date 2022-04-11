@@ -1,4 +1,6 @@
-﻿namespace Provider.Models
+﻿using System.Data;
+
+namespace Provider.Models
 {
     /// <summary>
     /// Contains details of Photographer
@@ -21,6 +23,15 @@
         public Photographer(int integerId)
         {
             Id = new Id { IntegerId = integerId };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Photographer(IDataRecord dataRecord)
+        {
+            Id = new Id { IntegerId = (int)dataRecord["Id"] };
+            UploaderName = (string)dataRecord["UploaderName"];
         }
 
         /// <summary>
