@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Dev\PhotoContest\Provider.Implementation\Provider.Implementation.xml</DocumentationFile>
+    <DocumentationFile>Provider.Implementation.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>D:\Dev\PhotoContest\Provider.Implementation\Provider.Implementation.xml</DocumentationFile>
+    <DocumentationFile>Provider.Implementation.xml</DocumentationFile>
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
 
