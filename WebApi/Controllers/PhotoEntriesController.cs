@@ -52,7 +52,7 @@ namespace WebApi.Controllers
         /// <param name="theme"></param>
         /// <returns></returns>
         [HttpGet("{theme}")]
-        public IEnumerable<PhotoEntry> GetAll(string theme)
+        public IEnumerable<PhotoEntry> GetAllByTheme(string theme)
         {
             return photoEntryProvider.GetAll().Where(o => o.Theme.Theme == theme).ToContract();
         }
