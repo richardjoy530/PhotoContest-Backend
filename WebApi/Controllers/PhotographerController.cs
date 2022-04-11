@@ -19,10 +19,10 @@ namespace WebApi.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="photographerProvider"></param>
-        public PhotographerController(IProvider<Provider.Models.Photographer> photographerProvider)
+        /// <param name="_photographerProvider"></param>
+        public PhotographerController(IProvider<Provider.Models.Photographer> _photographerProvider)
         {
-            this.photographerProvider = photographerProvider ?? throw new ArgumentNullException(nameof(photographerProvider));
+            photographerProvider = _photographerProvider ?? throw new ArgumentNullException(nameof(_photographerProvider));
         }
 
         /// <summary>
