@@ -107,6 +107,16 @@ namespace WebApi
             };
         }
 
+        public static IEnumerable<PhotoTheme> ToContract(this IEnumerable<Provider.Models.PhotoTheme> model)
+        {
+            return model?.Select(ToContract).ToArray() ?? Enumerable.Empty<PhotoTheme>();
+        }
+
+        public static IEnumerable<Provider.Models.PhotoTheme> ToModel(this IEnumerable<PhotoTheme> model)
+        {
+            return model?.Select(ToModel).ToArray() ?? Enumerable.Empty<Provider.Models.PhotoTheme>();
+        }
+
         public static PhotographerVoteDetails ToContract(this Provider.Models.PhotographerVoteDetails model)
         {
             if (model == null)
