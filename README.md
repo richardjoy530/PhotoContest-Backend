@@ -21,3 +21,5 @@ An ASP .Net WebApi application which hosts the backend of PhotoContest
 ![image](https://user-images.githubusercontent.com/11271119/162605285-a08b70ab-7ed1-4b04-b4b5-e9c4dd6e8cb8.png)
 - Read through the steps, it should be self explanatory
 - Note: name of the database should be the same as the name given in [appsettings.Development.json](https://github.com/richardjoy530/PhotoContest-Backend/blob/master/WebApi/appsettings.Development.json)
+
+## Further information documented in the [Wiki Tab](https://github.com/richardjoy530/PhotoContest-Backend/wiki)
