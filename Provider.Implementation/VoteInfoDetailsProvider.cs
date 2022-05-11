@@ -5,12 +5,12 @@ using System.Collections.Generic;
 namespace Provider.Implementation
 {
     /// <summary>
-    /// Database access layer of <see cref="PhotographerVoteDetails"/>
+    /// Database access layer of <see cref="VoteInfo"/>
     /// </summary>
-    public class PhotographerVoteDetailsProvider : IProvider<PhotographerVoteDetails>
+    public class VoteInfoDetailsProvider : IProvider<VoteInfo>
     {
         /// <inheritdoc/>
-        public PhotographerVoteDetails Insert(PhotographerVoteDetails model)
+        public VoteInfo Insert(VoteInfo model)
         {
             throw new NotImplementedException();
         }
@@ -22,19 +22,19 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc/>
-        public IEnumerable<PhotographerVoteDetails> GetAll()
+        public IEnumerable<VoteInfo> GetAll()
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public PhotographerVoteDetails GetById(string referenceId)
+        public VoteInfo GetById(string referenceId)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void Update(PhotographerVoteDetails model, string referenceId)
+        public void Update(VoteInfo model, string referenceId)
         {
             throw new NotImplementedException();
         }

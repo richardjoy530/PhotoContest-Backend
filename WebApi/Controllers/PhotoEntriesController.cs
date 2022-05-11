@@ -9,19 +9,19 @@ using System.Linq;
 namespace WebApi.Controllers
 {
     /// <summary>
-    /// PhotoEntry Controller
+    /// Submission Controller
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class PhotoEntriesController : ControllerBase
     {
-        private readonly IProvider<Provider.Models.PhotoEntry> photoEntryProvider;
+        private readonly IProvider<Provider.Models.Submission> photoEntryProvider;
 
         /// <summary>
-        /// Initilises a PhotoEntry Controller
+        /// Initilises a Submission Controller
         /// </summary>
         /// <param name="_photoEntryProvider"></param>
-        public PhotoEntriesController(IProvider<Provider.Models.PhotoEntry> _photoEntryProvider)
+        public PhotoEntriesController(IProvider<Provider.Models.Submission> _photoEntryProvider)
         {
             photoEntryProvider = _photoEntryProvider ?? throw new ArgumentNullException(nameof(_photoEntryProvider));
         }
@@ -31,7 +31,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("{referenceId}")]
-        public PhotoEntry GetById(string referenceId)
+        public Submission GetById(string referenceId)
         {
             return photoEntryProvider.GetById(referenceId).ToContract();
         }
@@ -41,7 +41,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IEnumerable<PhotoEntry> GetAll()
+        public IEnumerable<Submission> GetAll()
         {
             return photoEntryProvider.GetAll().ToContract();
         }
@@ -52,7 +52,7 @@ namespace WebApi.Controllers
         /// <param name="theme"></param>
         /// <returns></returns>
         [HttpGet("{theme}")]
-        public IEnumerable<PhotoEntry> GetAllByTheme(string theme)
+        public IEnumerable<Submission> GetAllByTheme(string theme)
         {
             return photoEntryProvider.GetAll().Where(o => o.Theme.Theme == theme).ToContract();
         }
@@ -63,7 +63,7 @@ namespace WebApi.Controllers
         /// <param name="photoEntry"></param>
         /// <returns></returns>
         [HttpPost]
-        public PhotoEntry CreatePhotoEntry([FromBody] PhotoEntry photoEntry)
+        public Submission CreatePhotoEntry([FromBody] Submission photoEntry)
         {
             if (string.IsNullOrWhiteSpace(photoEntry.ReferenceId))
             {
@@ -89,7 +89,7 @@ namespace WebApi.Controllers
         /// <param name="photoEntry"></param>
         /// <returns></returns>
         [HttpPut("{referenceId}")]
-        public PhotoEntry UpdatePhotoEntry(string referenceId, [FromBody] PhotoEntry photoEntry)
+        public Submission UpdatePhotoEntry(string referenceId, [FromBody] Submission photoEntry)
         {
             if (referenceId != photoEntry.ReferenceId)
             {

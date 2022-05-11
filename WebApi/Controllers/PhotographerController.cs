@@ -14,13 +14,13 @@ namespace WebApi.Controllers
     [ApiController]
     public class PhotographerController : ControllerBase
     {
-        private readonly IProvider<Provider.Models.Photographer> photographerProvider;
+        private readonly IProvider<Provider.Models.User> photographerProvider;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="_photographerProvider"></param>
-        public PhotographerController(IProvider<Provider.Models.Photographer> _photographerProvider)
+        public PhotographerController(IProvider<Provider.Models.User> _photographerProvider)
         {
             photographerProvider = _photographerProvider ?? throw new ArgumentNullException(nameof(_photographerProvider));
         }
@@ -31,7 +31,7 @@ namespace WebApi.Controllers
         /// <param name="referenceId"></param>
         /// <returns></returns>
         [HttpGet("{referenceId}")]
-        public Photographer GetById(string referenceId)
+        public User GetById(string referenceId)
         {
             return photographerProvider.GetById(referenceId).ToContract();
         }
@@ -41,7 +41,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet()]
-        public IEnumerable<Photographer> GetAll()
+        public IEnumerable<User> GetAll()
         {
             return photographerProvider.GetAll().ToContract();
         }
@@ -52,7 +52,7 @@ namespace WebApi.Controllers
         /// <param name="photographer"></param>
         /// <returns></returns>
         [HttpPost]
-        public Photographer CreatePhotographer([FromBody] Photographer photographer)
+        public User CreatePhotographer([FromBody] User photographer)
         {
             if (string.IsNullOrWhiteSpace(photographer.ReferenceId))
             {
@@ -73,7 +73,7 @@ namespace WebApi.Controllers
         /// <param name="photographer"></param>
         /// <returns></returns>
         [HttpPut("{referenceId}")]
-        public Photographer UpdatePhotographer(string referenceId, [FromBody] Photographer photographer)
+        public User UpdatePhotographer(string referenceId, [FromBody] User photographer)
         {
             if (referenceId != photographer.ReferenceId)
             {

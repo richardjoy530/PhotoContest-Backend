@@ -3,15 +3,15 @@
 namespace Provider.Models
 {
     /// <summary>
-    /// Contains details of Photographer
+    /// Contains details of User
     /// </summary>
-    public class Photographer : IDbModel
+    public class User : IDbModel
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="referenceId"></param>
-        public Photographer(string referenceId)
+        public User(string referenceId)
         {
             Id = new Id { ReferenceId = referenceId };
         }
@@ -20,7 +20,7 @@ namespace Provider.Models
         /// 
         /// </summary>
         /// <param name="integerId"></param>
-        public Photographer(int integerId)
+        public User(int integerId)
         {
             Id = new Id { IntegerId = integerId };
         }
@@ -28,14 +28,14 @@ namespace Provider.Models
         /// <summary>
         /// 
         /// </summary>
-        public Photographer(IDataRecord dataRecord)
+        public User(IDataRecord dataRecord)
         {
             Id = new Id { IntegerId = (int)dataRecord["Id"] };
             UploaderName = (string)dataRecord["UploaderName"];
         }
 
         /// <summary>
-        /// Id details of the <see cref="Photographer"/> record
+        /// Id details of the <see cref="User"/> record
         /// </summary>
         public Id Id { get; set; }
 
@@ -55,7 +55,7 @@ namespace Provider.Models
         }
 
         /// <inheritdoc />
-        public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.Photographer)
+        public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.User)
         {
             Id.ResolveReferenceId(mapper, idType);
             IsResolved = true;

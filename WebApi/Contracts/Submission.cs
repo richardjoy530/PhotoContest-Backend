@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 namespace WebApi.Contracts
 {
     /// <summary>
-    /// Contains the details of PhotoEntry
+    /// Contains the details of Submission
     /// </summary>
-    public class PhotoEntry
+    public class Submission
     {
 #nullable enable
         /// <summary>
@@ -17,14 +17,14 @@ namespace WebApi.Contracts
         /// <summary>
         /// Details of the photographer who uploaded the photo
         /// </summary>
-        public Photographer? Photographer { get; set; }
+        public User? Photographer { get; set; }
 #nullable disable
 
         /// <summary>
-        /// Theme of the photo. This must correspond to <see cref="PhotoTheme"/>
+        /// Contest of the photo. This must correspond to <see cref="Contest"/>
         /// </summary>
         [Required]
-        public PhotoTheme Theme { get; set; }
+        public Contest Theme { get; set; }
 
         /// <summary>
         /// Reference Id of the associated photo. This should always be valid.

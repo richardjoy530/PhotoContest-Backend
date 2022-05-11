@@ -29,9 +29,9 @@
         public Id Id { get; set; }
 
         /// <summary>
-        /// Id of the PhotoEntry
+        /// Id of the Submission
         /// </summary>
-        public PhotoEntry PhotoEntry { get; set; }
+        public Submission PhotoEntry { get; set; }
 
         /// <summary>
         /// Score of the referenced PhotoEnty

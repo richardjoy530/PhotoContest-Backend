@@ -1,9 +1,9 @@
 ﻿namespace WebApi.Contracts
 {
     /// <summary>
-    /// Contains details of Photographer
+    /// Contains details of User
     /// </summary>
-    public class Photographer
+    public class User
     {
         /// <summary>
         /// Reference Id of the phographer

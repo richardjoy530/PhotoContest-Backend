@@ -7,9 +7,9 @@ using System.Data.SqlClient;
 namespace Provider.Implementation
 {
     /// <summary>
-    /// Database access layer of <see cref="PhotoTheme"/>
+    /// Database access layer of <see cref="Contest"/>
     /// </summary>
-    public class PhotoThemeProvider : IProvider<PhotoTheme>
+    public class ContestProvider : IProvider<Contest>
     {
         private readonly string connectionString;
         private readonly IReferenceIdMapper referenceIdMapper;
@@ -20,11 +20,11 @@ namespace Provider.Implementation
         private readonly string DeleteProcedure = "[dbo].[Delete_Photographer]";
 
         /// <summary>
-        /// Initializes a new instance of PhotoThemeProvider class
+        /// Initializes a new instance of ContestProvider class
         /// </summary>
         /// <param name="_dbConnection"></param>
         /// <param name="_referenceIdMapper"></param>
-        public PhotoThemeProvider(
+        public ContestProvider(
             IDbConnection _dbConnection,
             IReferenceIdMapper _referenceIdMapper
             )
@@ -39,7 +39,7 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc/>
-        public PhotoTheme Insert(PhotoTheme photographer)
+        public Contest Insert(Contest photographer)
         {
             using (SqlConnection conncetion = new(connectionString))
             {
@@ -48,8 +48,8 @@ namespace Provider.Implementation
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = InsertProcedure;
                 command.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
-                command.Parameters.Add(new SqlParameter("@Theme", photographer.Theme));
-                command.Parameters.Add(new SqlParameter("@ContestDate", photographer.ContestDate));
+                command.Parameters.Add(new SqlParameter("@Contest", photographer.Theme));
+                command.Parameters.Add(new SqlParameter("@EndDate", photographer.EndDate));
                 command.ExecuteNonQuery();
                 photographer.Id.IntegerId = Convert.ToInt32(command.Parameters["@Id"].Value);
             }
@@ -69,9 +69,9 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc/>
-        public PhotoTheme GetById(string referenceId)
+        public Contest GetById(string referenceId)
         {
-            PhotoTheme photographer;
+            Contest photographer;
             using (SqlConnection conncetion = new(connectionString))
             {
                 conncetion.Open();
@@ -81,15 +81,15 @@ namespace Provider.Implementation
                 command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceId)));
                 using SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                photographer = new PhotoTheme(reader);
+                photographer = new Contest(reader);
             }
             return photographer;
         }
 
         /// <inheritdoc/>
-        public IEnumerable<PhotoTheme> GetAll()
+        public IEnumerable<Contest> GetAll()
         {
-            var photographers = new List<PhotoTheme>();
+            var photographers = new List<Contest>();
             using (SqlConnection conncetion = new(connectionString))
             {
                 conncetion.Open();
@@ -99,7 +99,7 @@ namespace Provider.Implementation
                 using SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    var photographer = new PhotoTheme(reader);
+                    var photographer = new Contest(reader);
                     photographer.ResolveReferenceId(referenceIdMapper);
                     photographers.Add(photographer);
                 }
@@ -108,7 +108,7 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc/>
-        public void Update(PhotoTheme photographer, string referenceId)
+        public void Update(Contest photographer, string referenceId)
         {
             using SqlConnection conncetion = new(connectionString);
             conncetion.Open();
@@ -116,8 +116,8 @@ namespace Provider.Implementation
             command.CommandType = CommandType.StoredProcedure;
             command.CommandText = UpdateProcedure;
             command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceId)));
-            command.Parameters.Add(new SqlParameter("@Theme", photographer.Theme));
-            command.Parameters.Add(new SqlParameter("@ContestDate", photographer.ContestDate));
+            command.Parameters.Add(new SqlParameter("@Contest", photographer.Theme));
+            command.Parameters.Add(new SqlParameter("@EndDate", photographer.EndDate));
             command.ExecuteNonQuery();
         }
     }

@@ -14,13 +14,13 @@ namespace WebApi.Controllers
     [ApiController]
     public class PhotoThemeController : ControllerBase
     {
-        private readonly IProvider<Provider.Models.PhotoTheme> photoThemeProvider;
+        private readonly IProvider<Provider.Models.Contest> photoThemeProvider;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="_photoThemeProvider"></param>
-        public PhotoThemeController(IProvider<Provider.Models.PhotoTheme> _photoThemeProvider)
+        public PhotoThemeController(IProvider<Provider.Models.Contest> _photoThemeProvider)
         {
             photoThemeProvider = _photoThemeProvider ?? throw new System.ArgumentNullException(nameof(_photoThemeProvider));
         }
@@ -31,7 +31,7 @@ namespace WebApi.Controllers
         /// <param name="referenceId"></param>
         /// <returns></returns>
         [HttpGet("{referenceId}")]
-        public PhotoTheme GetById(string referenceId)
+        public Contest GetById(string referenceId)
         {
             return photoThemeProvider.GetById(referenceId).ToContract();
         }
@@ -41,7 +41,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet()]
-        public IEnumerable<PhotoTheme> GetAll()
+        public IEnumerable<Contest> GetAll()
         {
             return photoThemeProvider.GetAll().ToContract();
         }
@@ -52,7 +52,7 @@ namespace WebApi.Controllers
         /// <param name="photoTheme"></param>
         /// <returns></returns>
         [HttpPost]
-        public PhotoTheme CreatePhotographer([FromBody] PhotoTheme photoTheme)
+        public Contest CreatePhotographer([FromBody] Contest photoTheme)
         {
             if (string.IsNullOrWhiteSpace(photoTheme.ReferenceId))
             {
@@ -73,7 +73,7 @@ namespace WebApi.Controllers
         /// <param name="photoTheme"></param>
         /// <returns></returns>
         [HttpPut("{referenceId}")]
-        public PhotoTheme UpdatePhotographer(string referenceId, [FromBody] PhotoTheme photoTheme)
+        public Contest UpdatePhotographer(string referenceId, [FromBody] Contest photoTheme)
         {
             if (referenceId != photoTheme.ReferenceId)
             {

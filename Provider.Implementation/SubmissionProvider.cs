@@ -7,9 +7,9 @@ using System.Data.SqlClient;
 namespace Provider.Implementation
 {
     /// <summary>
-    /// Database access layer of <see cref="PhotoEntry"/>
+    /// Database access layer of <see cref="Submission"/>
     /// </summary>
-    public class PhotoEntryProvider : IProvider<PhotoEntry>
+    public class SubmissionProvider : IProvider<Submission>
     {
         private readonly string connectionString;
         private readonly IReferenceIdMapper referenceIdMapper;
@@ -20,11 +20,11 @@ namespace Provider.Implementation
         private readonly string DeleteProcedure = "[dbo].[Delete_PhotoEntry]";
 
         /// <summary>
-        /// Initializes a new instance of PhotoEntryProvider class
+        /// Initializes a new instance of SubmissionProvider class
         /// </summary>
         /// <param name="_dbConnection"></param>
         /// <param name="_referenceIdMapper"></param>
-        public PhotoEntryProvider(
+        public SubmissionProvider(
             IDbConnection _dbConnection,
             IReferenceIdMapper _referenceIdMapper
             )
@@ -39,9 +39,9 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc />
-        public PhotoEntry GetById(string referenceId)
+        public Submission GetById(string referenceId)
         {
-            PhotoEntry photoEntry;
+            Submission photoEntry;
             using (SqlConnection conncetion = new(connectionString))
             {
                 conncetion.Open();
@@ -51,15 +51,15 @@ namespace Provider.Implementation
                 command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceId)));
                 using SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                photoEntry = new PhotoEntry(reader);
+                photoEntry = new Submission(reader);
             }
             return photoEntry;
         }
 
         /// <inheritdoc />
-        public IEnumerable<PhotoEntry> GetAll()
+        public IEnumerable<Submission> GetAll()
         {
-            var photoEntries = new List<PhotoEntry>();
+            var photoEntries = new List<Submission>();
             using (SqlConnection conncetion = new(connectionString))
             {
                 conncetion.Open();
@@ -69,7 +69,7 @@ namespace Provider.Implementation
                 using SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    var photoEntry = new PhotoEntry(reader);
+                    var photoEntry = new Submission(reader);
                     photoEntry.ResolveReferenceId(referenceIdMapper);
                     photoEntries.Add(photoEntry);
                 }
@@ -78,7 +78,7 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc />
-        public PhotoEntry Insert(PhotoEntry photoEntry)
+        public Submission Insert(Submission photoEntry)
         {
             using (SqlConnection conncetion = new(connectionString))
             {
@@ -99,7 +99,7 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc />
-        public void Update(PhotoEntry photoEntry, string referenceId)
+        public void Update(Submission photoEntry, string referenceId)
         {
             using SqlConnection conncetion = new(connectionString);
             conncetion.Open();
@@ -107,7 +107,7 @@ namespace Provider.Implementation
             command.CommandType = CommandType.StoredProcedure;
             command.CommandText = UpdateProcedure;
             command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceId)));
-            command.Parameters.Add(new SqlParameter("@Theme", photoEntry.Theme));
+            command.Parameters.Add(new SqlParameter("@Contest", photoEntry.Theme));
             command.Parameters.Add(new SqlParameter("@FileId", photoEntry.FileId.IntegerId));
             command.Parameters.Add(new SqlParameter("@Caption", photoEntry.Caption));
             command.Parameters.Add(new SqlParameter("@PhotographerId", photoEntry.Photographer.Id.IntegerId));
@@ -128,15 +128,15 @@ namespace Provider.Implementation
         }
 
         /// <summary>
-        /// Retreves a list of all the <see cref="PhotoEntry"/> in database with the given theme
+        /// Retreves a list of all the <see cref="Submission"/> in database with the given theme
         /// </summary>
         /// <param name="theme"/>
-        /// <returns>Enumerable of <see cref="PhotoEntry"/></returns>
+        /// <returns>Enumerable of <see cref="Submission"/></returns>
 #pragma warning disable IDE0051 // Remove unused private members
-        private IEnumerable<PhotoEntry> GetPhotoEntries(string theme)
+        private IEnumerable<Submission> GetPhotoEntries(string theme)
 #pragma warning restore IDE0051 // Remove unused private members
         {
-            var photoEntries = new List<PhotoEntry>();
+            var photoEntries = new List<Submission>();
             using (SqlConnection conncetion = new(connectionString))
             {
                 conncetion.Open();
@@ -146,7 +146,7 @@ namespace Provider.Implementation
                 using SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    var photoEntry = new PhotoEntry(reader);
+                    var photoEntry = new Submission(reader);
                     photoEntry.ResolveReferenceId(referenceIdMapper);
                     photoEntries.Add(photoEntry);
                 }

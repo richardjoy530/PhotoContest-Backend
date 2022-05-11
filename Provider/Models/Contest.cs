@@ -4,14 +4,14 @@ using System.Data;
 namespace Provider.Models
 {
     /// <summary>
-    /// Contains details of PhotoTheme
+    /// Contains details of Contest
     /// </summary>
-    public class PhotoTheme : IDbModel
+    public class Contest : IDbModel
     {
         /// <summary>
         /// 
         /// </summary>
-        public PhotoTheme(string referenceId)
+        public Contest(string referenceId)
         {
             Id = new Id { ReferenceId = referenceId };
         }
@@ -20,7 +20,7 @@ namespace Provider.Models
         /// 
         /// </summary>
         /// <param name="integerId"></param>
-        public PhotoTheme(int integerId)
+        public Contest(int integerId)
         {
             Id = new Id { IntegerId = integerId };
         }
@@ -29,27 +29,27 @@ namespace Provider.Models
         /// 
         /// </summary>
         /// <param name="dataRecord"></param>
-        public PhotoTheme(IDataRecord dataRecord)
+        public Contest(IDataRecord dataRecord)
         {
             Id = new Id { IntegerId = (int)dataRecord["Id"] };
-            Theme = (string)dataRecord["Theme"];
-            ContestDate = (DateTime)dataRecord["ContestDate"];
+            Theme = (string)dataRecord["Contest"];
+            EndDate = (DateTime)dataRecord["EndDate"];
         }
 
         /// <summary>
-        /// Id details of the <see cref="PhotoTheme"/> record
+        /// Id details of the <see cref="Contest"/> record
         /// </summary>
         public Id Id { get; set; }
 
         /// <summary>
-        /// Theme of the photo contest
+        /// Contest of the photo contest
         /// </summary>
         public string Theme { get; set; }
 
         /// <summary>
         /// Date of the contest
         /// </summary>
-        public DateTime ContestDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         /// <inheritdoc/>
         public bool IsResolved { get; set; }
@@ -62,7 +62,7 @@ namespace Provider.Models
         }
 
         /// <inheritdoc/>
-        public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.Theme)
+        public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.Contest)
         {
             Id.ReferenceId = mapper.GetReferenceId(Id.IntegerId, idType);
             IsResolved = true;

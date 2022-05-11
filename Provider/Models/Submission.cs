@@ -4,15 +4,15 @@ using System.Data;
 namespace Provider.Models
 {
     /// <summary>
-    /// Contains the details of PhotoEntry
+    /// Contains the details of Submission
     /// </summary>
-    public class PhotoEntry : IDbModel
+    public class Submission : IDbModel
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="referenceId"></param>
-        public PhotoEntry(string referenceId)
+        public Submission(string referenceId)
         {
             Id = new Id { ReferenceId = referenceId };
         }
@@ -21,7 +21,7 @@ namespace Provider.Models
         /// 
         /// </summary>
         /// <param name="integerId"></param>
-        public PhotoEntry(int integerId)
+        public Submission(int integerId)
         {
             Id = new Id { IntegerId = integerId };
         }
@@ -30,31 +30,31 @@ namespace Provider.Models
         /// 
         /// </summary>
         /// <param name="dataRecord"></param>
-        public PhotoEntry(IDataRecord dataRecord)
+        public Submission(IDataRecord dataRecord)
         {
             Id = new Id { IntegerId = (int)dataRecord["Id"] };
-            Theme = new PhotoTheme((int)dataRecord["Id"]);
+            Theme = new Contest((int)dataRecord["Id"]);
             FileId = new Id { IntegerId = (int)dataRecord["FileId"] };
             Caption = (string)dataRecord["Caption"];
             // TODO: Change this to go fetch the photographer from cache.
-            Photographer = new Photographer((int)dataRecord["PhotographerId"]);
+            Photographer = new User((int)dataRecord["PhotographerId"]);
             UploadedOn = (DateTime)dataRecord["UploadedOn"];
         }
 
         /// <summary>
-        /// Id details of the PhotoEntry record
+        /// Id details of the Submission record
         /// </summary>
         public Id Id { get; set; }
 
         /// <summary>
-        /// Theme of the photo. This must correspond to <see cref="PhotoTheme"/>
+        /// Contest of the photo. This must correspond to <see cref="Contest"/>
         /// </summary>
-        public PhotoTheme Theme { get; set; }
+        public Contest Theme { get; set; }
 
         /// <summary>
         /// Details of the photographer who uploaded the photo
         /// </summary>
-        public Photographer Photographer { get; set; }
+        public User Photographer { get; set; }
 
         /// <summary>
         /// Id details of the associated photo. This should always be valid.
@@ -84,7 +84,7 @@ namespace Provider.Models
         }
 
         /// <inheritdoc />
-        public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.PhotoEntry)
+        public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.Submission)
         {
             Id.ResolveReferenceId(mapper, idType);
             Theme.ResolveReferenceId(mapper);

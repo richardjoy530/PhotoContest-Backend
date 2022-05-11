@@ -7,9 +7,9 @@ using System.Data.SqlClient;
 namespace Provider.Implementation
 {
     /// <summary>
-    /// Database access layer of <see cref="Photographer"/>
+    /// Database access layer of <see cref="User"/>
     /// </summary>
-    public class PhotographerProvider : IProvider<Photographer>
+    public class UserProvider : IProvider<User>
     {
         private readonly string connectionString;
         private readonly IReferenceIdMapper referenceIdMapper;
@@ -20,11 +20,11 @@ namespace Provider.Implementation
         private readonly string DeleteProcedure = "[dbo].[Delete_Photographer]";
 
         /// <summary>
-        /// Initializes a new instance of PhotographerProvider class
+        /// Initializes a new instance of UserProvider class
         /// </summary>
         /// <param name="_dbConnection"></param>
         /// <param name="_referenceIdMapper"></param>
-        public PhotographerProvider(
+        public UserProvider(
             IDbConnection _dbConnection,
             IReferenceIdMapper _referenceIdMapper
             )
@@ -39,7 +39,7 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc/>
-        public Photographer Insert(Photographer photographer)
+        public User Insert(User photographer)
         {
             using (SqlConnection conncetion = new(connectionString))
             {
@@ -68,9 +68,9 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc/>
-        public Photographer GetById(string referenceId)
+        public User GetById(string referenceId)
         {
-            Photographer photographer;
+            User photographer;
             using (SqlConnection conncetion = new(connectionString))
             {
                 conncetion.Open();
@@ -80,15 +80,15 @@ namespace Provider.Implementation
                 command.Parameters.Add(new SqlParameter("@Id", referenceIdMapper.GetIntegerId(referenceId)));
                 using SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                photographer = new Photographer(reader);
+                photographer = new User(reader);
             }
             return photographer;
         }
 
         /// <inheritdoc/>
-        public IEnumerable<Photographer> GetAll()
+        public IEnumerable<User> GetAll()
         {
-            var photographers = new List<Photographer>();
+            var photographers = new List<User>();
             using (SqlConnection conncetion = new(connectionString))
             {
                 conncetion.Open();
@@ -98,7 +98,7 @@ namespace Provider.Implementation
                 using SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    var photographer = new Photographer(reader);
+                    var photographer = new User(reader);
                     photographer.ResolveReferenceId(referenceIdMapper);
                     photographers.Add(photographer);
                 }
@@ -107,7 +107,7 @@ namespace Provider.Implementation
         }
 
         /// <inheritdoc/>
-        public void Update(Photographer photographer, string referenceId)
+        public void Update(User photographer, string referenceId)
         {
             using SqlConnection conncetion = new(connectionString);
             conncetion.Open();

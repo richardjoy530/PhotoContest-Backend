@@ -49,7 +49,7 @@ namespace Provider.Models
         /// <summary>
         /// 
         /// </summary>
-        public bool IsResolved { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool IsResolved { get; set; }
 
         /// <inheritdoc/>
         public void ResolveIntegerId(IReferenceIdMapper mapper)

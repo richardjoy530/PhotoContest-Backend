@@ -3,9 +3,9 @@
 namespace WebApi.Contracts
 {
     /// <summary>
-    /// Contains details of PhotoTheme
+    /// Contains details of Contest
     /// </summary>
-    public class PhotoTheme
+    public class Contest
     {
 #nullable enable
         /// <summary>
@@ -15,13 +15,13 @@ namespace WebApi.Contracts
 #nullable disable
 
         /// <summary>
-        /// Theme of the photo contest
+        /// Contest of the photo contest
         /// </summary>
         public string Theme { get; set; }
 
         /// <summary>
         /// Date of the contest
         /// </summary>
-        public DateTime? ContestDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

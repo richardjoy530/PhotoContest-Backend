@@ -6,14 +6,14 @@
     public enum IdType
     {
         /// <summary>
-        /// PhotoEntry
+        /// Submission
         /// </summary>
-        PhotoEntry,
+        Submission,
 
         /// <summary>
-        /// Photographer
+        /// User
         /// </summary>
-        Photographer,
+        User,
 
         /// <summary>
         /// ScoreDetail
@@ -26,13 +26,13 @@
         File,
 
         /// <summary>
-        /// Theme
+        /// Contest
         /// </summary>
-        Theme,
+        Contest,
 
         /// <summary>
-        /// VotingDetail
+        /// VoteInfo
         /// </summary>
-        VotingDetail,
+        VoteInfo,
     }
 }

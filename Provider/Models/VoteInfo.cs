@@ -3,13 +3,13 @@
     /// <summary>
     /// Contains voting details of a photographer
     /// </summary>
-    public class PhotographerVoteDetails : IDbModel
+    public class VoteInfo : IDbModel
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="referenceId"></param>
-        public PhotographerVoteDetails(string referenceId)
+        public VoteInfo(string referenceId)
         {
             Id = new Id { ReferenceId = referenceId };
         }
@@ -18,7 +18,7 @@
         /// 
         /// </summary>
         /// <param name="integerId"></param>
-        public PhotographerVoteDetails(int integerId)
+        public VoteInfo(int integerId)
         {
             Id = new Id { IntegerId = integerId };
         }
@@ -30,27 +30,27 @@
         /// <summary>
         /// Details of the photographer whos voting details are encapsulated
         /// </summary>
-        public Photographer Photographer { get; set; }
+        public User Photographer { get; set; }
 
         /// <summary>
-        /// Theme details of the vote
+        /// Contest details of the vote
         /// </summary>
-        public PhotoTheme Theme { get; set; }
+        public Contest Contest { get; set; }
 
         /// <summary>
-        /// Id of the first voted <see cref="PhotoEntry"/>
+        /// Id of the first voted <see cref="Submission"/>
         /// </summary>
-        public PhotoEntry FirstVote { get; set; }
+        public Submission FirstPick { get; set; }
 
         /// <summary>
-        /// Id of the second voted <see cref="PhotoEntry"/>
+        /// Id of the second voted <see cref="Submission"/>
         /// </summary>
-        public PhotoEntry SecondVote { get; set; }
+        public Submission SecondPick { get; set; }
 
         /// <summary>
-        /// Id of the third voted <see cref="PhotoEntry"/>
+        /// Id of the third voted <see cref="Submission"/>
         /// </summary>
-        public PhotoEntry ThirdVote { get; set; }
+        public Submission ThirdPick { get; set; }
 
         /// <inheritdoc />
         public bool IsResolved { get; set; }
@@ -58,23 +58,23 @@
         /// <inheritdoc />
         public void ResolveIntegerId(IReferenceIdMapper mapper)
         {
-            FirstVote.ResolveIntegerId(mapper);
-            SecondVote.ResolveIntegerId(mapper);
-            ThirdVote.ResolveIntegerId(mapper);
+            FirstPick.ResolveIntegerId(mapper);
+            SecondPick.ResolveIntegerId(mapper);
+            ThirdPick.ResolveIntegerId(mapper);
             Photographer.ResolveIntegerId(mapper);
-            Theme.ResolveIntegerId(mapper);
+            Contest.ResolveIntegerId(mapper);
             Id.ResolveIntegerId(mapper);
             IsResolved = true;
         }
 
         /// <inheritdoc />
-        public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.PhotoEntry)
+        public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.Submission)
         {
-            FirstVote.ResolveReferenceId(mapper);
-            SecondVote.ResolveReferenceId(mapper);
-            ThirdVote.ResolveReferenceId(mapper);
+            FirstPick.ResolveReferenceId(mapper);
+            SecondPick.ResolveReferenceId(mapper);
+            ThirdPick.ResolveReferenceId(mapper);
             Photographer.ResolveReferenceId(mapper);
-            Theme.ResolveReferenceId(mapper);
+            Contest.ResolveReferenceId(mapper);
             Id.ResolveReferenceId(mapper, idType);
             IsResolved = true;
         }

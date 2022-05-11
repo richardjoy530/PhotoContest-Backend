@@ -11,9 +11,9 @@
         public string ReferenceId { get; set; }
 
         /// <summary>
-        /// PhotoEntry
+        /// Submission
         /// </summary>
-        public PhotoEntry PhotoEntry { get; set; }
+        public Submission PhotoEntry { get; set; }
 
         /// <summary>
         /// Score of the referenced PhotoEnty

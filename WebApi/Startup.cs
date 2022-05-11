@@ -138,10 +138,10 @@ namespace WebApi
             {
                 services.AddSingleton<IFileService, AzureBlobService>();
             }
-            services.AddSingleton<IProvider<PhotoEntry>, PhotoEntryProvider>();
-            services.AddSingleton<IProvider<Photographer>, PhotographerProvider>();
-            services.AddSingleton<IProvider<PhotographerVoteDetails>, PhotographerVoteDetailsProvider>();
-            services.AddSingleton<IProvider<PhotoTheme>, PhotoThemeProvider>();
+            services.AddSingleton<IProvider<Submission>, SubmissionProvider>();
+            services.AddSingleton<IProvider<User>, UserProvider>();
+            services.AddSingleton<IProvider<VoteInfo>, VoteInfoDetailsProvider>();
+            services.AddSingleton<IProvider<Contest>, ContestProvider>();
             services.AddSingleton<IProvider<ScoreDetail>, ScoreDetailProvider>();
             services.AddSingleton<IProvider<FileMap>, FileMapProvider>();
         }

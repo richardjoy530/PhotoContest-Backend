@@ -22,7 +22,7 @@ namespace WebApi.Auth
         /// <summary>
         /// Host role
         /// </summary>
-        /// <remarks>Will have all access to <see cref="PhotoTheme"/></remarks>
+        /// <remarks>Will have all access to <see cref="Contest"/></remarks>
         Host = 0x0110,
     }
 }
