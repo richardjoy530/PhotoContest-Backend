@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Provider
+namespace PhotoContest
 {
     /// <summary>
     /// An interface for data access on files

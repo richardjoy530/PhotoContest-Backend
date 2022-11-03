@@ -1,10 +1,11 @@
-﻿using Provider.Models;
+﻿using PhotoContest;
+using PhotoContest.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Provider.Implementation
+namespace PhotoContest.Implementation
 {
     /// <summary>
     /// 

@@ -1,9 +1,9 @@
-﻿using Provider.Models;
+﻿using PhotoContest.Models;
 using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Provider.Implementation
+namespace PhotoContest.Implementation
 {
     /// <summary>
     /// Mapps reference id to integer id from database.

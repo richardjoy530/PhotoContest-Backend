@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Provider
+namespace PhotoContest
 {
     /// <summary>
     /// An interface for all the basic data access operations
@@ -26,7 +26,7 @@ namespace Provider
         /// <param name="model"></param>
         /// <returns><typeparamref name="TModel"/></returns>
         public TModel Insert(TModel model);
-
+        
         /// <summary>
         /// Updates <typeparamref name="TModel"/> by <paramref name="referenceId"/>
         /// </summary>

@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Host</name>
+    </assembly>
+    <members>
+        <member name="T:WebApi.Auth.ApplicationDbContext">
+            <summary>
+            A helper for the data access of Microsoft.AspNetCore.Identity
+            </summary>
+        </member>
+        <member name="M:WebApi.Auth.ApplicationDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{WebApi.Auth.ApplicationDbContext})">
+            <summary>
+            Initializes a new ApplicationDbContext class
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:WebApi.Auth.ApplicationDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="T:WebApi.Auth.AssignRoleRequest">
+            <summary>
+            Request to assign <see cref="T:WebApi.Auth.UserRoles"/> to a specific user
+            </summary>
+            <remarks>User with <see cref="F:WebApi.Auth.UserRoles.Admin"/> can only assign roles to other user</remarks>
+        </member>
+        <member name="P:WebApi.Auth.AssignRoleRequest.Roles">
+            <summary>
+            Gets or Sets the roles for a given <see cref="P:WebApi.Auth.AssignRoleRequest.Username"/>
+            </summary>
+        </member>
+        <member name="P:WebApi.Auth.AssignRoleRequest.Username">
+            <summary>
+            Username to whom the <see cref="P:WebApi.Auth.AssignRoleRequest.Roles"/> must be assigned to.
+            </summary>
+        </member>
+        <member name="T:WebApi.Auth.AuthController">
+            <summary>
+            Authentication controller
+            </summary>
+        </member>
+        <member name="M:WebApi.Auth.AuthController.#ctor(Microsoft.AspNetCore.Identity.UserManager{Microsoft.AspNetCore.Identity.IdentityUser},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole},Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes new instance of AuthController
+            </summary>
+            <param name="_userManager"></param>
+            <param name="_roleManager"></param>
+            <param name="_configuration"></param>
+        </member>
+        <member name="M:WebApi.Auth.AuthController.GetToken(WebApi.Auth.LoginRequest)">
+            <summary>
+            Generated a JWT token if the given credentials are valid
+            </summary>
+            <remarks>Use this as a Bearer token in Authentication header of the HTTP requests</remarks>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Auth.AuthController.Register(WebApi.Auth.RegisterRequest)">
+            <summary>
+            Registers a new user to the contest application
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Auth.AuthController.Assign(WebApi.Auth.AssignRoleRequest)">
+            <summary>
+            Assigns <see cref="T:WebApi.Auth.UserRoles"/> to a specified user
+            </summary>
+            <param name="assignRequest"></param>
+            <returns>The caller must have <see cref="F:WebApi.Auth.UserRoles.Admin"/></returns>
+        </member>
+        <member name="T:WebApi.Auth.AuthResponse">
+            <summary>
+            Encapsulates response during auth
+            </summary>
+        </member>
+        <member name="P:WebApi.Auth.AuthResponse.Status">
+            <summary>
+            Status indicating if the request was succeusfull or errored
+            </summary>
+        </member>
+        <member name="P:WebApi.Auth.AuthResponse.Message">
+            <summary>
+            Message describing the response
+            </summary>
+        </member>
+        <member name="T:WebApi.Auth.LoginRequest">
+            <summary>
+            LoginRequest
+            </summary>
+        </member>
+        <member name="P:WebApi.Auth.LoginRequest.Username">
+            <summary>
+            Gets or Sets the Username
+            </summary>
+        </member>
+        <member name="P:WebApi.Auth.LoginRequest.Password">
+            <summary>
+            Gets or Sets thet Password
+            </summary>
+        </member>
+        <member name="T:WebApi.Auth.RegisterRequest">
+            <summary>
+            RegisterRequest
+            </summary>
+        </member>
+        <member name="P:WebApi.Auth.RegisterRequest.Username">
+            <summary>
+            Gets or Sets the Username
+            </summary>
+        </member>
+        <member name="P:WebApi.Auth.RegisterRequest.Email">
+            <summary>
+            Gets or Sets the Email Id
+            </summary>
+        </member>
+        <member name="P:WebApi.Auth.RegisterRequest.Password">
+            <summary>
+            Gets or Sets the password
+            </summary>
+        </member>
+        <member name="T:WebApi.Auth.UserRoles">
+            <summary>
+            Static class containing available user roles
+            </summary>
+        </member>
+        <member name="F:WebApi.Auth.UserRoles.Admin">
+            <summary>
+            Admin role
+            </summary>
+            <remarks>Will have all access</remarks>
+        </member>
+        <member name="F:WebApi.Auth.UserRoles.User">
+            <summary>
+            User role
+            </summary>
+            <remarks>Will have View access to all data, Write access to User data</remarks>
+        </member>
+        <member name="F:WebApi.Auth.UserRoles.Host">
+            <summary>
+            Host role
+            </summary>
+            <remarks>Will have all access to <see cref="!:PhotoTheme"/></remarks>
+        </member>
+        <member name="T:WebApi.JwtConfig">
+            <summary>
+            JWT Configuration
+            </summary>
+        </member>
+        <member name="P:WebApi.JwtConfig.Secret">
+            <summary>
+            Secret string for signing JWT
+            </summary>
+        </member>
+        <member name="T:WebApi.Program">
+            <summary>
+            Program class
+            </summary>
+        </member>
+        <member name="M:WebApi.Program.Main(System.String[])">
+            <summary>
+            Entry function
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:WebApi.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Creates a <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Startup">
+            <summary>
+            The <see cref="T:WebApi.Startup"/> class configures services and the app's request pipeline.
+            </summary>
+        </member>
+        <member name="P:WebApi.Startup.Configuration">
+            <summary>
+            Configuration
+            </summary>
+        </member>
+        <member name="P:WebApi.Startup.WebHostEnvironment">
+            <summary>
+            WebHostEnvironment
+            </summary>
+        </member>
+        <member name="M:WebApi.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Initialises a <see cref="T:WebApi.Startup"/> class
+            </summary>
+            <param name="configuration"></param>
+            <param name="webHostEnvironment"></param>
+        </member>
+        <member name="M:WebApi.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:WebApi.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
+</doc>

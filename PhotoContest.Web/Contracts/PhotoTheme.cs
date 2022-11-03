@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebApi.Contracts
+namespace PhotoContest.Web.Contracts
 {
     /// <summary>
     /// Contains details of PhotoTheme

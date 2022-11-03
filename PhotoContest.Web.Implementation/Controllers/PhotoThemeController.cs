@@ -1,28 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Provider;
+using PhotoContest.Web.Contracts;
+using PhotoContest.Web.Controllers;
+using PhotoContest.Web.Converter;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using WebApi.Contracts;
 
-namespace WebApi.Controllers
+namespace PhotoContest.Web.Implementation.Controllers
 {
     /// <summary>
     /// PhotoThemeController
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class PhotoThemeController : ControllerBase
+    public class PhotoThemeController : ControllerBase, IPhotoThemeController
     {
-        private readonly IProvider<Provider.Models.PhotoTheme> photoThemeProvider;
+        private readonly IProvider<Models.PhotoTheme> photoThemeProvider;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="_photoThemeProvider"></param>
-        public PhotoThemeController(IProvider<Provider.Models.PhotoTheme> _photoThemeProvider)
+        public PhotoThemeController(IProvider<Models.PhotoTheme> _photoThemeProvider)
         {
-            photoThemeProvider = _photoThemeProvider ?? throw new System.ArgumentNullException(nameof(_photoThemeProvider));
+            photoThemeProvider = _photoThemeProvider ?? throw new ArgumentNullException(nameof(_photoThemeProvider));
         }
 
         /// <summary>

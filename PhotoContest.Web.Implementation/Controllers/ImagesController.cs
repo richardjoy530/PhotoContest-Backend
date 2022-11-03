@@ -1,22 +1,22 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using WebApi.Contracts;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Core;
-using Provider;
-using Provider.Models;
 using System.ComponentModel.DataAnnotations;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
+using PhotoContest.Models;
+using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+using PhotoContest.Web.Contracts;
+using PhotoContest.Web.Controllers;
 
-namespace WebApi.Controllers
+namespace PhotoContest.Web.Implementation.Controllers
 {
     /// <summary>
     /// Image Controller
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class ImagesController : ControllerBase
+    public class ImagesController : ControllerBase, IImagesController
     {
         private readonly IFileService fileService;
         private readonly IProvider<FileMap> fileMapProvider;
@@ -52,7 +52,7 @@ namespace WebApi.Controllers
             }
 
             var fileMap = new FileMap(imageItem.ReferenceId) { FilePath = imageItem.Image.FileName };
-            
+
             fileMapProvider.Insert(fileMap);
             using (Stream stream = imageItem.Image.OpenReadStream())
             {

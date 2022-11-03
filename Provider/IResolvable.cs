@@ -1,6 +1,6 @@
-﻿using Provider.Models;
+﻿using PhotoContest.Models;
 
-namespace Provider
+namespace PhotoContest
 {
     /// <summary>
     /// An interface for resolving <see cref="Id"/>

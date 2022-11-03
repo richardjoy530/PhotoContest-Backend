@@ -1,4 +1,4 @@
-﻿namespace Provider.Models
+﻿namespace PhotoContest.Models
 {
     /// <summary>
     /// Class encapsulates ids

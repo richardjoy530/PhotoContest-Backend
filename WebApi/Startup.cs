@@ -8,9 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Provider;
-using Provider.Implementation;
-using Provider.Models;
+using PhotoContest;
+using PhotoContest.Implementation;
 using WebApi.Auth;
 using System;
 using System.Collections.Generic;
@@ -19,8 +18,6 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using Core;
-using Core.Implementation;
 
 namespace WebApi
 {
@@ -129,21 +126,9 @@ namespace WebApi
             // TODO: we are not making use of the IDbConnection find another way to inject conn string
             services.AddSingleton<IDbConnection>(db => new SqlConnection(Configuration.GetConnectionString("Connection")));
             
-            services.AddSingleton<IReferenceIdMapper, ReferenceIdProvider>();
-            if (WebHostEnvironment.IsDevelopment())
-            {
-                services.AddSingleton<IFileService, SystemFileService>();
-            }
-            else
-            {
-                services.AddSingleton<IFileService, AzureBlobService>();
-            }
-            services.AddSingleton<IProvider<PhotoEntry>, PhotoEntryProvider>();
-            services.AddSingleton<IProvider<Photographer>, PhotographerProvider>();
-            services.AddSingleton<IProvider<PhotographerVoteDetails>, PhotographerVoteDetailsProvider>();
-            services.AddSingleton<IProvider<PhotoTheme>, PhotoThemeProvider>();
-            services.AddSingleton<IProvider<ScoreDetail>, ScoreDetailProvider>();
-            services.AddSingleton<IProvider<FileMap>, FileMapProvider>();
+            PhotoContest.Web.Implementation.DependancyInjection.ConfigureServices(services);
+            PhotoContest.Implementation.DependancyInjection.ConfigureServices(services, WebHostEnvironment.IsDevelopment());
+
         }
 
         /// <summary>

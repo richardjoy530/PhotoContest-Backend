@@ -1,12 +1,12 @@
-﻿using WebApi.Contracts;
+﻿using PhotoContest.Web.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WebApi
+namespace PhotoContest.Web.Converter
 {
-    internal static class Converter
+    internal static class PhotoEntryConverter
     {
-        public static PhotoEntry ToContract(this Provider.Models.PhotoEntry model)
+        public static PhotoEntry ToContract(this Models.PhotoEntry model)
         {
             if (model == null)
             {
@@ -24,34 +24,34 @@ namespace WebApi
             };
         }
 
-        public static Provider.Models.PhotoEntry ToModel(this PhotoEntry contract)
+        public static Models.PhotoEntry ToModel(this PhotoEntry contract)
         {
             if (contract == null)
             {
                 return null;
             }
 
-            return new Provider.Models.PhotoEntry(contract.ReferenceId)
+            return new Models.PhotoEntry(contract.ReferenceId)
             {
                 Caption = contract.Caption,
-                FileId = new Provider.Models.Id { ReferenceId = contract.ReferenceId },
+                FileId = new Models.Id { ReferenceId = contract.ReferenceId },
                 Photographer = contract.Photographer.ToModel(),
                 Theme = contract.Theme.ToModel(),
                 UploadedOn = contract.UploadedOn ?? System.DateTime.MinValue,
             };
         }
 
-        public static IEnumerable<PhotoEntry> ToContract(this IEnumerable<Provider.Models.PhotoEntry> model)
+        public static IEnumerable<PhotoEntry> ToContract(this IEnumerable<Models.PhotoEntry> model)
         {
             return model?.Select(ToContract).ToArray() ?? Enumerable.Empty<PhotoEntry>();
         }
 
-        public static IEnumerable<Provider.Models.PhotoEntry> ToModel(this IEnumerable<PhotoEntry> model)
+        public static IEnumerable<Models.PhotoEntry> ToModel(this IEnumerable<PhotoEntry> model)
         {
-            return model?.Select(ToModel).ToArray() ?? Enumerable.Empty<Provider.Models.PhotoEntry>();
+            return model?.Select(ToModel).ToArray() ?? Enumerable.Empty<Models.PhotoEntry>();
         }
 
-        public static Photographer ToContract(this Provider.Models.Photographer model)
+        public static Photographer ToContract(this Models.Photographer model)
         {
             if (model == null)
             {
@@ -65,25 +65,25 @@ namespace WebApi
             };
         }
 
-        public static Provider.Models.Photographer ToModel(this Photographer contract)
+        public static Models.Photographer ToModel(this Photographer contract)
         {
-            return new Provider.Models.Photographer(contract.ReferenceId)
+            return new Models.Photographer(contract.ReferenceId)
             {
                 UploaderName = contract.UploaderName,
             };
         }
 
-        public static IEnumerable<Photographer> ToContract(this IEnumerable<Provider.Models.Photographer> model)
+        public static IEnumerable<Photographer> ToContract(this IEnumerable<Models.Photographer> model)
         {
             return model?.Select(ToContract).ToArray() ?? Enumerable.Empty<Photographer>();
         }
 
-        public static IEnumerable<Provider.Models.Photographer> ToModel(this IEnumerable<Photographer> model)
+        public static IEnumerable<Models.Photographer> ToModel(this IEnumerable<Photographer> model)
         {
-            return model?.Select(ToModel).ToArray() ?? Enumerable.Empty<Provider.Models.Photographer>();
+            return model?.Select(ToModel).ToArray() ?? Enumerable.Empty<Models.Photographer>();
         }
 
-        public static PhotoTheme ToContract(this Provider.Models.PhotoTheme model)
+        public static PhotoTheme ToContract(this Models.PhotoTheme model)
         {
             if (model == null)
             {
@@ -98,26 +98,26 @@ namespace WebApi
             };
         }
 
-        public static Provider.Models.PhotoTheme ToModel(this PhotoTheme contract)
+        public static Models.PhotoTheme ToModel(this PhotoTheme contract)
         {
-            return new Provider.Models.PhotoTheme(contract.ReferenceId)
+            return new Models.PhotoTheme(contract.ReferenceId)
             {
                 ContestDate = contract.ContestDate ?? System.DateTime.MinValue,
                 Theme = contract.Theme,
             };
         }
 
-        public static IEnumerable<PhotoTheme> ToContract(this IEnumerable<Provider.Models.PhotoTheme> model)
+        public static IEnumerable<PhotoTheme> ToContract(this IEnumerable<Models.PhotoTheme> model)
         {
             return model?.Select(ToContract).ToArray() ?? Enumerable.Empty<PhotoTheme>();
         }
 
-        public static IEnumerable<Provider.Models.PhotoTheme> ToModel(this IEnumerable<PhotoTheme> model)
+        public static IEnumerable<Models.PhotoTheme> ToModel(this IEnumerable<PhotoTheme> model)
         {
-            return model?.Select(ToModel).ToArray() ?? Enumerable.Empty<Provider.Models.PhotoTheme>();
+            return model?.Select(ToModel).ToArray() ?? Enumerable.Empty<Models.PhotoTheme>();
         }
 
-        public static PhotographerVoteDetails ToContract(this Provider.Models.PhotographerVoteDetails model)
+        public static PhotographerVoteDetails ToContract(this Models.PhotographerVoteDetails model)
         {
             if (model == null)
             {
@@ -135,14 +135,14 @@ namespace WebApi
             };
         }
 
-        public static Provider.Models.PhotographerVoteDetails ToModel(this PhotographerVoteDetails contract)
+        public static Models.PhotographerVoteDetails ToModel(this PhotographerVoteDetails contract)
         {
             if (contract == null)
             {
                 return null;
             }
 
-            return new Provider.Models.PhotographerVoteDetails(contract.ReferenceId)
+            return new Models.PhotographerVoteDetails(contract.ReferenceId)
             {
                 FirstVote = contract.FirstVote.ToModel(),
                 Photographer = contract.Photographer.ToModel(),
@@ -152,7 +152,7 @@ namespace WebApi
             };
         }
 
-        public static ScoreDetail ToContract(this Provider.Models.ScoreDetail model)
+        public static ScoreDetail ToContract(this Models.ScoreDetail model)
         {
             if (model == null)
             {
@@ -167,14 +167,14 @@ namespace WebApi
             };
         }
 
-        public static Provider.Models.ScoreDetail ToContract(this ScoreDetail contract)
+        public static Models.ScoreDetail ToContract(this ScoreDetail contract)
         {
             if (contract == null)
             {
                 return null;
             }
 
-            return new Provider.Models.ScoreDetail(contract.ReferenceId)
+            return new Models.ScoreDetail(contract.ReferenceId)
             {
                 PhotoEntry = contract.PhotoEntry.ToModel(),
                 Score = contract.Score,

@@ -1,6 +1,4 @@
-﻿using WebApi.Contracts;
-
-namespace WebApi.Auth
+﻿namespace WebApi.Auth
 {
     /// <summary>
     /// Static class containing available user roles

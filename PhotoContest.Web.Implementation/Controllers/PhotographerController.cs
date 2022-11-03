@@ -1,26 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Provider;
+using PhotoContest.Web.Contracts;
+using PhotoContest.Web.Controllers;
+using PhotoContest.Web.Converter;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using WebApi.Contracts;
 
-namespace WebApi.Controllers
+namespace PhotoContest.Web.Implementation.Controllers
 {
     /// <summary>
     /// PhotographerController
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class PhotographerController : ControllerBase
+    public class PhotographerController : ControllerBase, IPhotographerController
     {
-        private readonly IProvider<Provider.Models.Photographer> photographerProvider;
+        private readonly IProvider<Models.Photographer> photographerProvider;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="_photographerProvider"></param>
-        public PhotographerController(IProvider<Provider.Models.Photographer> _photographerProvider)
+        public PhotographerController(IProvider<Models.Photographer> _photographerProvider)
         {
             photographerProvider = _photographerProvider ?? throw new ArgumentNullException(nameof(_photographerProvider));
         }

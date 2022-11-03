@@ -1,4 +1,4 @@
-﻿namespace Provider
+﻿namespace PhotoContest
 {
     /// <summary>
     /// Type of the asset for id look up

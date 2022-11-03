@@ -1,4 +1,4 @@
-﻿namespace WebApi.Contracts
+﻿namespace PhotoContest.Web.Contracts
 {
     /// <summary>
     /// Contains voting details of a photographer

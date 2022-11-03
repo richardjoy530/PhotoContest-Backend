@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace Provider.Models
+namespace PhotoContest.Models
 {
     /// <summary>
     /// Contains details of PhotoTheme
