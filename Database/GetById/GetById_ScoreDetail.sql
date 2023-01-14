@@ -3,9 +3,8 @@
 AS
 
 SELECT [Id]
-      ,[EntryId]
-      ,[Score]
-  FROM [dbo].[ScoreDetail]
- WHERE [Id] = @Id
-
-RETURN 0
+        , [EntryId]
+        , [Score]
+FROM [dbo].[ScoreDetail]
+WHERE [Id] = @Id
+    RETURN 0

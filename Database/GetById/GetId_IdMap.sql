@@ -4,7 +4,6 @@
 AS
 
 SELECT @Id = [Id]
-  FROM [dbo].[IdMap]
- WHERE [ReferenceId] = @ReferenceId
-
-RETURN 0
+FROM [dbo].[IdMap]
+WHERE [ReferenceId] = @ReferenceId
+    RETURN 0

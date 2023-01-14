@@ -4,7 +4,6 @@
 AS
 
 UPDATE [dbo].[Photographer]
-   SET [UploaderName] = @UploaderName
- WHERE [Id] = @Id
-
-RETURN 0
+SET [UploaderName] = @UploaderName
+WHERE [Id] = @Id
+    RETURN 0

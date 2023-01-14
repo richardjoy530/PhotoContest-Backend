@@ -1,23 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿#region
 
-namespace WebApi.Controllers
+using Microsoft.AspNetCore.Mvc;
+
+#endregion
+
+namespace WebApi.Controllers;
+
+/// <summary>
+/// </summary>
+[Route("")]
+[ApiController]
+[ApiExplorerSettings(IgnoreApi = true)]
+public class RedirectionController : ControllerBase
 {
     /// <summary>
-    /// 
     /// </summary>
-    [Route("")]
-    [ApiController]
-    [ApiExplorerSettings(IgnoreApi = true)]
-    public class RedirectionController : ControllerBase
+    /// <returns></returns>
+    [HttpGet]
+    public IActionResult RedirectToSwagger()
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public IActionResult RedirectToSwagger()
-        {
-            return RedirectPermanent("swagger");
-        }
+        return RedirectPermanent("swagger");
     }
 }

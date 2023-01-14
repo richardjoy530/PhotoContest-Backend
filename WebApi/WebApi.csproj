@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <StartupObject>WebApi.Program</StartupObject>
+        <ApplicationIcon/>
+        <Win32Resource/>
+        <RootNamespace>WebApi</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DocumentationFile>bin\Debug\WebApi.xml</DocumentationFile>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DocumentationFile>bin\Release\WebApi.xml</DocumentationFile>
+        <OutputPath>bin\Release\</OutputPath>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <!--Exclude the DB migration code form the EntityFramework for now. Not sure when we'll need this again-->
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.13"/>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.13"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.13"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.13">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\PhotoContest.Web.Implementation\PhotoContest.Web.Implementation.csproj"/>
+        <ProjectReference Include="..\PhotoContest.Implementation\PhotoContest.Implementation.csproj"/>
+    </ItemGroup>
+
+    <ProjectExtensions>
+        <VisualStudio>
+            <UserProperties appsettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings.json"/>
+        </VisualStudio>
+    </ProjectExtensions>
+
+</Project>

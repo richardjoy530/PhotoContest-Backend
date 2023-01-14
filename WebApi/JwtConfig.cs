@@ -1,13 +1,12 @@
-﻿namespace WebApi
+﻿namespace WebApi;
+
+/// <summary>
+///     JWT Configuration
+/// </summary>
+public class JwtConfig
 {
     /// <summary>
-    /// JWT Configuration
+    ///     Secret string for signing JWT
     /// </summary>
-    public class JwtConfig
-    {
-        /// <summary>
-        /// Secret string for signing JWT
-        /// </summary>
-        public string Secret { get; set; }
-    }
+    public string Secret { get; set; }
 }

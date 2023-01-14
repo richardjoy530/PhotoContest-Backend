@@ -5,7 +5,6 @@ AS
 
 
 UPDATE [dbo].[FileMap]
-   SET [FilePath] = @FilePath
- WHERE [Id] = @Id
-
-RETURN 0
+SET [FilePath] = @FilePath
+WHERE [Id] = @Id
+    RETURN 0
