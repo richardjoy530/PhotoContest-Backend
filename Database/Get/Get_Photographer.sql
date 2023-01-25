@@ -6,9 +6,12 @@
 AS
 
 SELECT [Id]
-      ,[UploaderName]
-  FROM [dbo].[Photographer]
-  WHERE (@CheckId           = 1 AND [Id] = @Id)                     OR (@CheckId            = 0)
-  AND   (@CheckUploaderName = 1 AND [UploaderName] = @UploaderName) OR (@CheckUploaderName  = 0)
-
-RETURN 0
+        , [UploaderName]
+FROM [dbo].[Photographer]
+WHERE (@CheckId = 1
+  AND [Id] = @Id)
+   OR (@CheckId = 0)
+  AND (@CheckUploaderName = 1
+  AND [UploaderName] = @UploaderName)
+   OR (@CheckUploaderName = 0)
+    RETURN 0

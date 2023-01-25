@@ -1,184 +1,169 @@
-﻿using PhotoContest.Web.Contracts;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using PhotoContest.Models;
+using PhotoEntry = PhotoContest.Web.Contracts.PhotoEntry;
+using Photographer = PhotoContest.Web.Contracts.Photographer;
+using PhotographerVoteDetails = PhotoContest.Web.Contracts.PhotographerVoteDetails;
+using PhotoTheme = PhotoContest.Web.Contracts.PhotoTheme;
+using ScoreDetail = PhotoContest.Web.Contracts.ScoreDetail;
 
-namespace PhotoContest.Web.Converter
+#endregion
+
+namespace PhotoContest.Web.Implementation.Converters;
+
+internal static class PhotoEntryConverter
 {
-    internal static class PhotoEntryConverter
+    public static PhotoEntry ToContract(this Models.PhotoEntry model)
     {
-        public static PhotoEntry ToContract(this Models.PhotoEntry model)
+        if (model == null) return null;
+
+        return new PhotoEntry
         {
-            if (model == null)
-            {
-                return null;
-            }
+            Caption = model.Caption,
+            FileId = model.FileId.ReferenceId,
+            Photographer = model.Photographer.ToContract(),
+            ReferenceId = model.Id.ReferenceId,
+            Theme = model.Theme.ToContract(),
+            UploadedOn = model.UploadedOn
+        };
+    }
 
-            return new PhotoEntry
-            {
-                Caption = model.Caption,
-                FileId = model.FileId.ReferenceId,
-                Photographer = model.Photographer.ToContract(),
-                ReferenceId = model.Id.ReferenceId,
-                Theme = model.Theme.ToContract(),
-                UploadedOn = model.UploadedOn,
-            };
-        }
+    public static Models.PhotoEntry ToModel(this PhotoEntry contract)
+    {
+        if (contract == null) return null;
 
-        public static Models.PhotoEntry ToModel(this PhotoEntry contract)
+        return new Models.PhotoEntry(contract.ReferenceId)
         {
-            if (contract == null)
-            {
-                return null;
-            }
+            Caption = contract.Caption,
+            FileId = new Id {ReferenceId = contract.ReferenceId},
+            Photographer = contract.Photographer.ToModel(),
+            Theme = contract.Theme.ToModel(),
+            UploadedOn = contract.UploadedOn ?? DateTime.MinValue
+        };
+    }
 
-            return new Models.PhotoEntry(contract.ReferenceId)
-            {
-                Caption = contract.Caption,
-                FileId = new Models.Id { ReferenceId = contract.ReferenceId },
-                Photographer = contract.Photographer.ToModel(),
-                Theme = contract.Theme.ToModel(),
-                UploadedOn = contract.UploadedOn ?? System.DateTime.MinValue,
-            };
-        }
+    public static IEnumerable<PhotoEntry> ToContract(this IEnumerable<Models.PhotoEntry> model)
+    {
+        return model?.Select(ToContract).ToArray() ?? Enumerable.Empty<PhotoEntry>();
+    }
 
-        public static IEnumerable<PhotoEntry> ToContract(this IEnumerable<Models.PhotoEntry> model)
+    public static IEnumerable<Models.PhotoEntry> ToModel(this IEnumerable<PhotoEntry> model)
+    {
+        return model?.Select(ToModel).ToArray() ?? Enumerable.Empty<Models.PhotoEntry>();
+    }
+
+    public static Photographer ToContract(this Models.Photographer model)
+    {
+        if (model == null) return null;
+
+        return new Photographer
         {
-            return model?.Select(ToContract).ToArray() ?? Enumerable.Empty<PhotoEntry>();
-        }
+            ReferenceId = model.Id.ReferenceId,
+            UploaderName = model.UploaderName
+        };
+    }
 
-        public static IEnumerable<Models.PhotoEntry> ToModel(this IEnumerable<PhotoEntry> model)
+    public static Models.Photographer ToModel(this Photographer contract)
+    {
+        return new Models.Photographer(contract.ReferenceId)
         {
-            return model?.Select(ToModel).ToArray() ?? Enumerable.Empty<Models.PhotoEntry>();
-        }
+            UploaderName = contract.UploaderName
+        };
+    }
 
-        public static Photographer ToContract(this Models.Photographer model)
+    public static IEnumerable<Photographer> ToContract(this IEnumerable<Models.Photographer> model)
+    {
+        return model?.Select(ToContract).ToArray() ?? Enumerable.Empty<Photographer>();
+    }
+
+    public static IEnumerable<Models.Photographer> ToModel(this IEnumerable<Photographer> model)
+    {
+        return model?.Select(ToModel).ToArray() ?? Enumerable.Empty<Models.Photographer>();
+    }
+
+    public static PhotoTheme ToContract(this Models.PhotoTheme model)
+    {
+        if (model == null) return null;
+
+        return new PhotoTheme
         {
-            if (model == null)
-            {
-                return null;
-            }
+            ContestDate = model.ContestDate,
+            Theme = model.Theme,
+            ReferenceId = model.Id.ReferenceId
+        };
+    }
 
-            return new Photographer
-            {
-                ReferenceId = model.Id.ReferenceId,
-                UploaderName = model.UploaderName,
-            };
-        }
-
-        public static Models.Photographer ToModel(this Photographer contract)
+    public static Models.PhotoTheme ToModel(this PhotoTheme contract)
+    {
+        return new Models.PhotoTheme(contract.ReferenceId)
         {
-            return new Models.Photographer(contract.ReferenceId)
-            {
-                UploaderName = contract.UploaderName,
-            };
-        }
+            ContestDate = contract.ContestDate ?? DateTime.MinValue,
+            Theme = contract.Theme
+        };
+    }
 
-        public static IEnumerable<Photographer> ToContract(this IEnumerable<Models.Photographer> model)
+    public static IEnumerable<PhotoTheme> ToContract(this IEnumerable<Models.PhotoTheme> model)
+    {
+        return model?.Select(ToContract).ToArray() ?? Enumerable.Empty<PhotoTheme>();
+    }
+
+    public static IEnumerable<Models.PhotoTheme> ToModel(this IEnumerable<PhotoTheme> model)
+    {
+        return model?.Select(ToModel).ToArray() ?? Enumerable.Empty<Models.PhotoTheme>();
+    }
+
+    public static PhotographerVoteDetails ToContract(this Models.PhotographerVoteDetails model)
+    {
+        if (model == null) return null;
+
+        return new PhotographerVoteDetails
         {
-            return model?.Select(ToContract).ToArray() ?? Enumerable.Empty<Photographer>();
-        }
+            ReferenceId = model.Id.ReferenceId,
+            FirstVote = model.FirstVote.ToContract(),
+            Photographer = model.Photographer.ToContract(),
+            SecondVote = model.SecondVote.ToContract(),
+            ThirdVote = model.ThirdVote.ToContract(),
+            Theme = model.Theme.ToContract()
+        };
+    }
 
-        public static IEnumerable<Models.Photographer> ToModel(this IEnumerable<Photographer> model)
+    public static Models.PhotographerVoteDetails ToModel(this PhotographerVoteDetails contract)
+    {
+        if (contract == null) return null;
+
+        return new Models.PhotographerVoteDetails(contract.ReferenceId)
         {
-            return model?.Select(ToModel).ToArray() ?? Enumerable.Empty<Models.Photographer>();
-        }
+            FirstVote = contract.FirstVote.ToModel(),
+            Photographer = contract.Photographer.ToModel(),
+            SecondVote = contract.SecondVote.ToModel(),
+            ThirdVote = contract.ThirdVote.ToModel(),
+            Theme = contract.Theme.ToModel()
+        };
+    }
 
-        public static PhotoTheme ToContract(this Models.PhotoTheme model)
+    public static ScoreDetail ToContract(this Models.ScoreDetail model)
+    {
+        if (model == null) return null;
+
+        return new ScoreDetail
         {
-            if (model == null)
-            {
-                return null;
-            }
+            PhotoEntry = model.PhotoEntry.ToContract(),
+            Score = model.Score,
+            ReferenceId = model.Id.ReferenceId
+        };
+    }
 
-            return new PhotoTheme
-            {
-                ContestDate = model.ContestDate,
-                Theme = model.Theme,
-                ReferenceId = model.Id.ReferenceId,
-            };
-        }
+    public static Models.ScoreDetail ToContract(this ScoreDetail contract)
+    {
+        if (contract == null) return null;
 
-        public static Models.PhotoTheme ToModel(this PhotoTheme contract)
+        return new Models.ScoreDetail(contract.ReferenceId)
         {
-            return new Models.PhotoTheme(contract.ReferenceId)
-            {
-                ContestDate = contract.ContestDate ?? System.DateTime.MinValue,
-                Theme = contract.Theme,
-            };
-        }
-
-        public static IEnumerable<PhotoTheme> ToContract(this IEnumerable<Models.PhotoTheme> model)
-        {
-            return model?.Select(ToContract).ToArray() ?? Enumerable.Empty<PhotoTheme>();
-        }
-
-        public static IEnumerable<Models.PhotoTheme> ToModel(this IEnumerable<PhotoTheme> model)
-        {
-            return model?.Select(ToModel).ToArray() ?? Enumerable.Empty<Models.PhotoTheme>();
-        }
-
-        public static PhotographerVoteDetails ToContract(this Models.PhotographerVoteDetails model)
-        {
-            if (model == null)
-            {
-                return null;
-            }
-
-            return new PhotographerVoteDetails
-            {
-                ReferenceId = model.Id.ReferenceId,
-                FirstVote = model.FirstVote.ToContract(),
-                Photographer = model.Photographer.ToContract(),
-                SecondVote = model.SecondVote.ToContract(),
-                ThirdVote = model.ThirdVote.ToContract(),
-                Theme = model.Theme.ToContract(),
-            };
-        }
-
-        public static Models.PhotographerVoteDetails ToModel(this PhotographerVoteDetails contract)
-        {
-            if (contract == null)
-            {
-                return null;
-            }
-
-            return new Models.PhotographerVoteDetails(contract.ReferenceId)
-            {
-                FirstVote = contract.FirstVote.ToModel(),
-                Photographer = contract.Photographer.ToModel(),
-                SecondVote = contract.SecondVote.ToModel(),
-                ThirdVote = contract.ThirdVote.ToModel(),
-                Theme = contract.Theme.ToModel(),
-            };
-        }
-
-        public static ScoreDetail ToContract(this Models.ScoreDetail model)
-        {
-            if (model == null)
-            {
-                return null;
-            }
-
-            return new ScoreDetail
-            {
-                PhotoEntry = model.PhotoEntry.ToContract(),
-                Score = model.Score,
-                ReferenceId = model.Id.ReferenceId,
-            };
-        }
-
-        public static Models.ScoreDetail ToContract(this ScoreDetail contract)
-        {
-            if (contract == null)
-            {
-                return null;
-            }
-
-            return new Models.ScoreDetail(contract.ReferenceId)
-            {
-                PhotoEntry = contract.PhotoEntry.ToModel(),
-                Score = contract.Score,
-            };
-        }
+            PhotoEntry = contract.PhotoEntry.ToModel(),
+            Score = contract.Score
+        };
     }
 }

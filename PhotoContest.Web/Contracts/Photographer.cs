@@ -1,18 +1,17 @@
-﻿namespace PhotoContest.Web.Contracts
+﻿namespace PhotoContest.Web.Contracts;
+
+/// <summary>
+///     Contains details of Photographer
+/// </summary>
+public class Photographer
 {
     /// <summary>
-    /// Contains details of Photographer
+    ///     Reference Id of the photographer
     /// </summary>
-    public class Photographer
-    {
-        /// <summary>
-        /// Reference Id of the phographer
-        /// </summary>
-        public string ReferenceId { get; set; }
+    public string ReferenceId { get; set; }
 
-        /// <summary>
-        /// Name of the photographer
-        /// </summary>
-        public string UploaderName { get; set; }
-    }
+    /// <summary>
+    ///     Name of the photographer
+    /// </summary>
+    public string UploaderName { get; set; }
 }

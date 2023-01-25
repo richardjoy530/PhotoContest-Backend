@@ -2,7 +2,7 @@
     @Id int = NULL
 AS
 
-DELETE FROM [dbo].[PhotoTheme]
-      WHERE [Id] = @Id
-
-RETURN 0
+DELETE
+FROM [dbo].[PhotoTheme]
+WHERE [Id] = @Id
+    RETURN 0

@@ -5,7 +5,7 @@
 AS
 
 SELECT @ReferenceId = [ReferenceId]
-  FROM [dbo].[IdMap]
- WHERE [Id] = @Id AND [IdType] = @IdType
-
-RETURN 0
+FROM [dbo].[IdMap]
+WHERE [Id] = @Id
+  AND [IdType] = @IdType
+    RETURN 0

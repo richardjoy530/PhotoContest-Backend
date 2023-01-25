@@ -1,22 +1,25 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
+﻿#region
 
-namespace PhotoContest.Web.Contracts
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+
+#endregion
+
+namespace PhotoContest.Web.Contracts;
+
+/// <summary>
+///     Contains uploaded image
+/// </summary>
+public class ImageItem
 {
     /// <summary>
-    /// Contains uploaded image
+    ///     Unique Id assigned to this asset
     /// </summary>
-    public class ImageItem
-    {
-        /// <summary>
-        /// Unique Id assigned to this asset
-        /// </summary>
-        public string ReferenceId { get; set; }
+    public string ReferenceId { get; set; }
 
-        /// <summary>
-        /// The image file
-        /// </summary>
-        [Required]
-        public IFormFile Image { get; set; }
-    }
+    /// <summary>
+    ///     The image file
+    /// </summary>
+    [Required]
+    public IFormFile Image { get; set; }
 }

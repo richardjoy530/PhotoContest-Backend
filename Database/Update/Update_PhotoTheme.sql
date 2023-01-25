@@ -7,8 +7,10 @@
 AS
 
 UPDATE [dbo].[PhotoTheme]
-   SET [Theme]       = CASE WHEN @ThemeHasValue       = 1 THEN @Theme       ELSE [Theme]       END
-      ,[ContestDate] = CASE WHEN @ContestDateHasValue = 1 THEN @ContestDate ELSE [ContestDate] END
+SET [Theme] = CASE WHEN @ThemeHasValue = 1 THEN @Theme ELSE [Theme]
+END
+      ,[ContestDate] = CASE WHEN @ContestDateHasValue = 1 THEN @ContestDate ELSE [ContestDate]
+END
  WHERE [Id] = @Id
 
 RETURN 0

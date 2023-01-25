@@ -3,9 +3,8 @@
 AS
 
 SELECT [Id]
-      ,[Theme]
-      ,[ContestDate]
-  FROM [dbo].[PhotoTheme]
- WHERE [Id] = @Id
-
-RETURN 0
+        , [Theme]
+        , [ContestDate]
+FROM [dbo].[PhotoTheme]
+WHERE [Id] = @Id
+    RETURN 0

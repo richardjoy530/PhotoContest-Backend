@@ -3,8 +3,7 @@
 AS
 
 SELECT [Id]
-      ,[FilePath]
-  FROM [dbo].[FileMap]
- WHERE [Id] = @Id
-
-RETURN 0
+        , [FilePath]
+FROM [dbo].[FileMap]
+WHERE [Id] = @Id
+    RETURN 0

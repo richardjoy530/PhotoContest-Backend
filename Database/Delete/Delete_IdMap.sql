@@ -2,7 +2,7 @@
     @ReferenceId uniqueidentifier = NULL
 AS
 
-DELETE FROM [dbo].[IdMap]
-      WHERE [ReferenceId] = @ReferenceId
-
-RETURN 0
+DELETE
+FROM [dbo].[IdMap]
+WHERE [ReferenceId] = @ReferenceId
+    RETURN 0

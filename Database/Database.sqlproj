@@ -16,7 +16,7 @@
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
@@ -69,9 +69,9 @@
     <Build Include="Delete\Delete_PhotoEntry.sql" />
     <Build Include="Delete\Delete_PhotographerVoteDetails.sql" />
     <Build Include="Delete\Delete_PhotoTheme.sql" />
-    <Build Include="Delete\Detele_FileMap.sql" />
-    <Build Include="Delete\Detele_Photographer.sql" />
-    <Build Include="Delete\Detele_ScoreDetail.sql" />
+    <Build Include="Delete\Delete_FileMap.sql" />
+    <Build Include="Delete\Delete_Photographer.sql" />
+    <Build Include="Delete\Delete_ScoreDetail.sql" />
     <Build Include="Insert\Insert_FileMap.sql" />
     <Build Include="Insert\Insert_IdMap.sql" />
     <Build Include="Insert\Insert_PhotoEntry.sql" />
@@ -82,7 +82,7 @@
     <Build Include="Update\Update_FileMap.sql" />
     <Build Include="Update\Update_PhotoEntry.sql" />
     <Build Include="Update\Update_Photographer.sql" />
-    <Build Include="Update\Update_PhotoprapherVoteDetails.sql" />
+    <Build Include="Update\Update_PhotographerVoteDetails.sql" />
     <Build Include="Update\Update_PhotoTheme.sql" />
     <Build Include="Update\Update_ScoreDetail.sql" />
     <Build Include="GetById\GetById_FileMap.sql" />

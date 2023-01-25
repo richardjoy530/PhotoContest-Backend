@@ -1,18 +1,17 @@
-﻿namespace WebApi.Auth
+﻿namespace WebApi.Auth;
+
+/// <summary>
+///     Encapsulates response during auth
+/// </summary>
+public class AuthResponse
 {
     /// <summary>
-    /// Encapsulates response during auth
+    ///     Status indicating if the request was successful or errored
     /// </summary>
-    public class AuthResponse
-    {
-        /// <summary>
-        /// Status indicating if the request was succeusfull or errored
-        /// </summary>
-        public string Status { get; set; }
+    public string Status { get; set; }
 
-        /// <summary>
-        /// Message describing the response
-        /// </summary>
-        public string Message { get; set; }
-    }
+    /// <summary>
+    ///     Message describing the response
+    /// </summary>
+    public string Message { get; set; }
 }

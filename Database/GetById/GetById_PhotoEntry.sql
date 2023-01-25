@@ -3,12 +3,11 @@
 AS
 
 SELECT [Id]
-      ,[ThemeId]
-      ,[PhotographerId]
-      ,[FileId]
-      ,[Caption]
-      ,[UploadedOn]
-  FROM [dbo].[PhotoEntry]
- WHERE [Id] = @Id
-  
-RETURN 0
+        , [ThemeId]
+        , [PhotographerId]
+        , [FileId]
+        , [Caption]
+        , [UploadedOn]
+FROM [dbo].[PhotoEntry]
+WHERE [Id] = @Id
+    RETURN 0
