@@ -1,0 +1,5 @@
+﻿CREATE PROCEDURE Score_Delete
+@Id int
+AS
+
+DELETE FROM Score WHERE Id = @Id

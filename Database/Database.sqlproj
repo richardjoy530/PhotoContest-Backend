@@ -13,7 +13,7 @@
     </RootPath>
     <RootNamespace>Database</RootNamespace>
     <AssemblyName>Database</AssemblyName>
-    <ModelCollation>1033, CI</ModelCollation>
+    <ModelCollation>1033,CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -23,6 +23,8 @@
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <GenerateCreateScript>True</GenerateCreateScript>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -57,48 +59,46 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Delete" />
-    <Folder Include="Insert" />
-    <Folder Include="Update" />
-    <Folder Include="GetById" />
-    <Folder Include="Get" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Create_Schema.sql" />
-    <Build Include="Delete\Delete_IdMap.sql" />
-    <Build Include="Delete\Delete_PhotoEntry.sql" />
-    <Build Include="Delete\Delete_PhotographerVoteDetails.sql" />
-    <Build Include="Delete\Delete_PhotoTheme.sql" />
-    <Build Include="Delete\Delete_FileMap.sql" />
-    <Build Include="Delete\Delete_Photographer.sql" />
-    <Build Include="Delete\Delete_ScoreDetail.sql" />
-    <Build Include="Insert\Insert_FileMap.sql" />
-    <Build Include="Insert\Insert_IdMap.sql" />
-    <Build Include="Insert\Insert_PhotoEntry.sql" />
-    <Build Include="Insert\Insert_Photographer.sql" />
-    <Build Include="Insert\Insert_PhotographerVoteDetails.sql" />
-    <Build Include="Insert\Insert_PhotoTheme.sql" />
-    <Build Include="Insert\Insert_ScoreDetail.sql" />
-    <Build Include="Update\Update_FileMap.sql" />
-    <Build Include="Update\Update_PhotoEntry.sql" />
-    <Build Include="Update\Update_Photographer.sql" />
-    <Build Include="Update\Update_PhotographerVoteDetails.sql" />
-    <Build Include="Update\Update_PhotoTheme.sql" />
-    <Build Include="Update\Update_ScoreDetail.sql" />
-    <Build Include="GetById\GetById_FileMap.sql" />
-    <Build Include="GetById\GetId_IdMap.sql" />
-    <Build Include="GetById\GetById_PhotoEntry.sql" />
-    <Build Include="GetById\GetById_Photographer.sql" />
-    <Build Include="GetById\GetById_PhotographerVoteDetails.sql" />
-    <Build Include="GetById\GetById_PhotoTheme.sql" />
-    <Build Include="GetById\GetById_ScoreDetail.sql" />
-    <Build Include="Get\Get_FileMap.sql" />
-    <Build Include="Get\Get_IdMap.sql" />
-    <Build Include="Get\Get_PhotoEntry.sql" />
-    <Build Include="Get\Get_Photographer.sql" />
-    <Build Include="Get\Get_PhotographerVoteDetails.sql" />
-    <Build Include="Get\Get_PhotoTheme.sql" />
-    <Build Include="Get\Get_ScoreDetail.sql" />
-    <Build Include="GetById\GetRef_IdMap.sql" />
+    <Build Include="dbo\Tables\VoteInfo.sql" />
+    <Build Include="dbo\Tables\Score.sql" />
+    <Build Include="dbo\Tables\UserInfo.sql" />
+    <Build Include="dbo\Tables\Contest.sql" />
+    <Build Include="dbo\Tables\FileInfo.sql" />
+    <Build Include="dbo\Tables\Submission.sql" />
+    <Build Include="dbo\Stored Procedures\Contest_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Contest_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Contest_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\FileInfo_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\Score_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\Submission_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\UserInfo_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\VoteInfo_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\FileInfo_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\FileInfo_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Contest_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\FileInfo_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Score_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Submission_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\UserInfo_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\VoteInfo_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Score_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Score_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Submission_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Submission_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\UserInfo_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\UserInfo_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\VoteInfo_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\VoteInfo_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Contest_Update.sql" />
+    <Build Include="dbo\Stored Procedures\FileInfo_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Score_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Submission_Update.sql" />
+    <Build Include="dbo\Stored Procedures\VoteInfo_Update.sql" />
+    <Build Include="dbo\Stored Procedures\UserInfo_Update.sql" />
   </ItemGroup>
 </Project>
