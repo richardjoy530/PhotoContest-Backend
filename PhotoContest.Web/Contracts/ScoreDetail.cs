@@ -1,7 +1,7 @@
 ﻿namespace PhotoContest.Web.Contracts;
 
 /// <summary>
-///     Contains scores of a PhotoEntry
+///     Contains scores of a Submission
 /// </summary>
 public class ScoreDetail
 {
@@ -11,9 +11,9 @@ public class ScoreDetail
     public string ReferenceId { get; set; }
 
     /// <summary>
-    ///     PhotoEntry
+    ///     Submission
     /// </summary>
-    public PhotoEntry PhotoEntry { get; set; }
+    public Submission Submission { get; set; }
 
     /// <summary>
     ///     Score of the referenced PhotoEnty

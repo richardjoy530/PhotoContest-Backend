@@ -1,7 +1,8 @@
 ﻿#region
 
 using Microsoft.Extensions.DependencyInjection;
-using PhotoContest.Models;
+using PhotoContest.Implementation.Ado;
+using PhotoContest.Implementation.Ado.Providers;
 
 #endregion
 
@@ -17,12 +18,12 @@ public static class DependencyInjection
     /// <param name="isDev"></param>
     public static void ConfigureServices(this IServiceCollection services, bool isDev)
     {
-        services.AddSingleton<IProvider<PhotoEntry>, PhotoEntryProvider>();
-        services.AddSingleton<IProvider<Photographer>, PhotographerProvider>();
-        services.AddSingleton<IProvider<PhotographerVoteDetails>, PhotographerVoteDetailsProvider>();
-        services.AddSingleton<IProvider<PhotoTheme>, PhotoThemeProvider>();
-        services.AddSingleton<IProvider<ScoreDetail>, ScoreDetailProvider>();
-        services.AddSingleton<IProvider<FileMap>, FileMapProvider>();
+        services.AddSingleton<IProvider<Submission>, SubmissionProvider>();
+        services.AddSingleton<IProvider<UserInfo>, UserInfoProvider>();
+        services.AddSingleton<IProvider<VoteInfo>, VoteInfoProvider>();
+        services.AddSingleton<IProvider<Contest>, ContestProvider>();
+        services.AddSingleton<IProvider<ScoreInfo>, ScoreInfoProvider>();
+        services.AddSingleton<IProvider<FileInfo>, FileInfoProvider>();
         services.AddSingleton<IReferenceIdMapper, ReferenceIdProvider>();
 
         if (isDev)

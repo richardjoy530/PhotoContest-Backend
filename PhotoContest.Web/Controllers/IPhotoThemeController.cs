@@ -14,9 +14,9 @@ public interface IPhotoThemeController
 {
     /// <summary>
     /// </summary>
-    /// <param name="photoTheme"></param>
+    /// <param name="contest"></param>
     /// <returns></returns>
-    PhotoTheme CreatePhotographer([FromBody] PhotoTheme photoTheme);
+    Contest CreatePhotographer([FromBody] Contest contest);
 
     /// <summary>
     /// </summary>
@@ -26,18 +26,18 @@ public interface IPhotoThemeController
     /// <summary>
     /// </summary>
     /// <returns></returns>
-    IEnumerable<PhotoTheme> GetAll();
+    IEnumerable<Contest> GetAll();
 
     /// <summary>
     /// </summary>
     /// <param name="referenceId"></param>
     /// <returns></returns>
-    PhotoTheme GetById(string referenceId);
+    Contest GetById(string referenceId);
 
     /// <summary>
     /// </summary>
     /// <param name="referenceId"></param>
-    /// <param name="photoTheme"></param>
+    /// <param name="contest"></param>
     /// <returns></returns>
-    PhotoTheme UpdatePhotographer(string referenceId, [FromBody] PhotoTheme photoTheme);
+    Contest UpdatePhotographer(string referenceId, [FromBody] Contest contest);
 }

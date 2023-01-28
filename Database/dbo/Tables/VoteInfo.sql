@@ -10,6 +10,6 @@
     CONSTRAINT [FK_FirstId_Submission] FOREIGN KEY ([FirstId]) REFERENCES [dbo].[Submission] ([Id]),
     CONSTRAINT [FK_SecondId_Submission] FOREIGN KEY ([SecondId]) REFERENCES [dbo].[Submission] ([Id]),
     CONSTRAINT [FK_ThirdId_Submission] FOREIGN KEY ([ThirdId]) REFERENCES [dbo].[Submission] ([Id]),
-    CONSTRAINT [FK_UserId_UserInfo] FOREIGN KEY ([UserId]) REFERENCES [dbo].[UserInfo] ([Id])
+    CONSTRAINT [FK_UserId_VoteInfo_UserInfo] FOREIGN KEY ([UserId]) REFERENCES [dbo].[UserInfo] ([Id])
 );
 

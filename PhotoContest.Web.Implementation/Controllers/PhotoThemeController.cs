@@ -19,12 +19,12 @@ namespace PhotoContest.Web.Implementation.Controllers;
 [ApiController]
 public class PhotoThemeController : ControllerBase, IPhotoThemeController
 {
-    private readonly IProvider<PhotoTheme> _photoThemeProvider;
+    private readonly IProvider<Contest> _photoThemeProvider;
 
     /// <summary>
     /// </summary>
     /// <param name="photoThemeProvider"></param>
-    public PhotoThemeController(IProvider<PhotoTheme> photoThemeProvider)
+    public PhotoThemeController(IProvider<Contest> photoThemeProvider)
     {
         this._photoThemeProvider = photoThemeProvider ?? throw new ArgumentNullException(nameof(photoThemeProvider));
     }
@@ -34,7 +34,7 @@ public class PhotoThemeController : ControllerBase, IPhotoThemeController
     /// <param name="referenceId"></param>
     /// <returns></returns>
     [HttpGet("{referenceId}")]
-    public Contracts.PhotoTheme GetById(string referenceId)
+    public Contracts.Contest GetById(string referenceId)
     {
         return _photoThemeProvider.GetById(referenceId).ToContract();
     }
@@ -43,38 +43,38 @@ public class PhotoThemeController : ControllerBase, IPhotoThemeController
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<Contracts.PhotoTheme> GetAll()
+    public IEnumerable<Contracts.Contest> GetAll()
     {
         return _photoThemeProvider.GetAll().ToContract();
     }
 
     /// <summary>
     /// </summary>
-    /// <param name="photoTheme"></param>
+    /// <param name="contest"></param>
     /// <returns></returns>
     [HttpPost]
-    public Contracts.PhotoTheme CreatePhotographer([FromBody] Contracts.PhotoTheme photoTheme)
+    public Contracts.Contest CreatePhotographer([FromBody] Contracts.Contest contest)
     {
-        if (string.IsNullOrWhiteSpace(photoTheme.ReferenceId))
-            photoTheme.ReferenceId = Guid.NewGuid().ToString();
-        else if (!Guid.TryParse(photoTheme.ReferenceId, out _))
-            throw new ValidationException($"Invalid {nameof(photoTheme.ReferenceId)}");
+        if (string.IsNullOrWhiteSpace(contest.ReferenceId))
+            contest.ReferenceId = Guid.NewGuid().ToString();
+        else if (!Guid.TryParse(contest.ReferenceId, out _))
+            throw new ValidationException($"Invalid {nameof(contest.ReferenceId)}");
 
-        return _photoThemeProvider.Insert(photoTheme.ToModel()).ToContract();
+        return _photoThemeProvider.Insert(contest.ToModel()).ToContract();
     }
 
     /// <summary>
     /// </summary>
     /// <param name="referenceId"></param>
-    /// <param name="photoTheme"></param>
+    /// <param name="contest"></param>
     /// <returns></returns>
     [HttpPut("{referenceId}")]
-    public Contracts.PhotoTheme UpdatePhotographer(string referenceId, [FromBody] Contracts.PhotoTheme photoTheme)
+    public Contracts.Contest UpdatePhotographer(string referenceId, [FromBody] Contracts.Contest contest)
     {
-        if (referenceId != photoTheme.ReferenceId)
-            throw new ValidationException($"{nameof(photoTheme.ReferenceId)} does not match within the request");
+        if (referenceId != contest.ReferenceId)
+            throw new ValidationException($"{nameof(contest.ReferenceId)} does not match within the request");
 
-        _photoThemeProvider.Update(photoTheme.ToModel(), referenceId);
+        _photoThemeProvider.Update(contest.ToModel(), referenceId);
         return _photoThemeProvider.GetById(referenceId).ToContract();
     }
 

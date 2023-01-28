@@ -8,15 +8,15 @@ using System.ComponentModel.DataAnnotations;
 namespace PhotoContest.Web.Contracts;
 
 /// <summary>
-///     Contains the details of PhotoEntry
+///     Contains the details of Submission
 /// </summary>
-public class PhotoEntry
+public class Submission
 {
     /// <summary>
-    ///     Theme of the photo. This must correspond to <see cref="PhotoTheme" />
+    ///     Contest of the photo. This must correspond to <see cref="Contracts.Contest" />
     /// </summary>
     [Required]
-    public PhotoTheme Theme { get; set; }
+    public Contest Contest { get; set; }
 
     /// <summary>
     ///     Reference Id of the associated photo. This should always be valid.

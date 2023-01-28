@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Data;
 
 #endregion
@@ -7,14 +8,14 @@ using System.Data;
 namespace PhotoContest.Models;
 
 /// <summary>
-///     Contains details of Photographer
+///     FileInfo
 /// </summary>
-public class Photographer : IDbModel
+public class FileInfo : IDbModel
 {
     /// <summary>
     /// </summary>
     /// <param name="referenceId"></param>
-    public Photographer(string referenceId)
+    public FileInfo(string referenceId)
     {
         Id = new Id {ReferenceId = referenceId};
     }
@@ -22,43 +23,49 @@ public class Photographer : IDbModel
     /// <summary>
     /// </summary>
     /// <param name="integerId"></param>
-    public Photographer(int integerId)
+    public FileInfo(int integerId)
     {
         Id = new Id {IntegerId = integerId};
     }
 
     /// <summary>
     /// </summary>
-    public Photographer(IDataRecord dataRecord)
+    /// <param name="dataRecord"></param>
+    public FileInfo(IDataRecord dataRecord)
     {
         Id = new Id {IntegerId = (int) dataRecord["Id"]};
-        UploaderName = (string) dataRecord["UploaderName"];
+        Path = (string) dataRecord["Path"];
     }
 
     /// <summary>
-    ///     Id details of the <see cref="Photographer" /> record
+    ///     Id
     /// </summary>
     public Id Id { get; set; }
 
     /// <summary>
-    ///     Name of the photographer
+    ///     Path of the location where the file is saved
     /// </summary>
-    public string UploaderName { get; set; }
+    public string Path { get; set; }
 
-    /// <inheritdoc />
-    public bool IsResolved { get; set; }
+    /// <summary>
+    /// </summary>
+    public bool IsResolved
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
 
     /// <inheritdoc />
     public void ResolveIntegerId(IReferenceIdMapper mapper)
     {
-        Id.ResolveIntegerId(mapper);
+        Id.IntegerId = mapper.GetIntegerId(Id.ReferenceId);
         IsResolved = true;
     }
 
     /// <inheritdoc />
-    public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.Photographer)
+    public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.File)
     {
-        Id.ResolveReferenceId(mapper, idType);
+        Id.ReferenceId = mapper.GetReferenceId(Id.IntegerId, idType);
         IsResolved = true;
     }
 }

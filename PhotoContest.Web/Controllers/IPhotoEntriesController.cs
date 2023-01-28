@@ -14,9 +14,9 @@ public interface IPhotoEntriesController
 {
     /// <summary>
     /// </summary>
-    /// <param name="photoEntry"></param>
+    /// <param name="submission"></param>
     /// <returns></returns>
-    PhotoEntry CreatePhotoEntry([FromBody] PhotoEntry photoEntry);
+    Submission CreatePhotoEntry([FromBody] Submission submission);
 
     /// <summary>
     /// </summary>
@@ -26,24 +26,24 @@ public interface IPhotoEntriesController
     /// <summary>
     /// </summary>
     /// <returns></returns>
-    IEnumerable<PhotoEntry> GetAll();
+    IEnumerable<Submission> GetAll();
 
     /// <summary>
     /// </summary>
     /// <param name="theme"></param>
     /// <returns></returns>
-    IEnumerable<PhotoEntry> GetAllByTheme(string theme);
+    IEnumerable<Submission> GetAllByTheme(string theme);
 
     /// <summary>
     /// </summary>
     /// <param name="referenceId"></param>
     /// <returns></returns>
-    PhotoEntry GetById(string referenceId);
+    Submission GetById(string referenceId);
 
     /// <summary>
     /// </summary>
     /// <param name="referenceId"></param>
-    /// <param name="photoEntry"></param>
+    /// <param name="submission"></param>
     /// <returns></returns>
-    PhotoEntry UpdatePhotoEntry(string referenceId, [FromBody] PhotoEntry photoEntry);
+    Submission UpdatePhotoEntry(string referenceId, [FromBody] Submission submission);
 }

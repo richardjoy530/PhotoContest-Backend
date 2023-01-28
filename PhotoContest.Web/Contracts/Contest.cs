@@ -7,9 +7,9 @@ using System;
 namespace PhotoContest.Web.Contracts;
 
 /// <summary>
-///     Contains details of PhotoTheme
+///     Contains details of Contest
 /// </summary>
-public class PhotoTheme
+public class Contest
 {
 #nullable enable
     /// <summary>
@@ -19,7 +19,7 @@ public class PhotoTheme
 #nullable disable
 
     /// <summary>
-    ///     Theme of the photo contest
+    ///     Contest of the photo contest
     /// </summary>
     public string Theme { get; set; }
 

@@ -8,14 +8,14 @@ using System.Data;
 namespace PhotoContest.Models;
 
 /// <summary>
-///     Contains the details of PhotoEntry
+///     Contains the details of Submission
 /// </summary>
-public class PhotoEntry : IDbModel
+public class Submission : IDbModel
 {
     /// <summary>
     /// </summary>
     /// <param name="referenceId"></param>
-    public PhotoEntry(string referenceId)
+    public Submission(string referenceId)
     {
         Id = new Id {ReferenceId = referenceId};
     }
@@ -23,7 +23,7 @@ public class PhotoEntry : IDbModel
     /// <summary>
     /// </summary>
     /// <param name="integerId"></param>
-    public PhotoEntry(int integerId)
+    public Submission(int integerId)
     {
         Id = new Id {IntegerId = integerId};
     }
@@ -31,36 +31,36 @@ public class PhotoEntry : IDbModel
     /// <summary>
     /// </summary>
     /// <param name="dataRecord"></param>
-    public PhotoEntry(IDataRecord dataRecord)
+    public Submission(IDataRecord dataRecord)
     {
         Id = new Id {IntegerId = (int) dataRecord["Id"]};
-        Theme = new PhotoTheme((int) dataRecord["Id"]);
-        FileId = new Id {IntegerId = (int) dataRecord["FileId"]};
+        Contest = new Contest((int) dataRecord["Id"]);
+        FileInfo = new Id {IntegerId = (int) dataRecord["FileInfo"]};
         Caption = (string) dataRecord["Caption"];
-        // TODO: Change this to go fetch the photographer from cache.
-        Photographer = new Photographer((int) dataRecord["PhotographerId"]);
+        // TODO: Change this to go fetch the userInfo from cache.
+        UserInfo = new UserInfo((int) dataRecord["PhotographerId"]);
         UploadedOn = (DateTime) dataRecord["UploadedOn"];
     }
 
     /// <summary>
-    ///     Id details of the PhotoEntry record
+    ///     Id details of the Submission record
     /// </summary>
     public Id Id { get; set; }
 
     /// <summary>
-    ///     Theme of the photo. This must correspond to <see cref="PhotoTheme" />
+    ///     Contest of the photo. This must correspond to <see cref="Models.Contest" />
     /// </summary>
-    public PhotoTheme Theme { get; set; }
+    public Contest Contest { get; set; }
 
     /// <summary>
-    ///     Details of the photographer who uploaded the photo
+    ///     Details of the userInfo who uploaded the photo
     /// </summary>
-    public Photographer Photographer { get; set; }
+    public UserInfo UserInfo { get; set; }
 
     /// <summary>
     ///     Id details of the associated photo. This should always be valid.
     /// </summary>
-    public Id FileId { get; set; }
+    public Id FileInfo { get; set; }
 
     /// <summary>
     ///     A creative caption to go in with your photo
@@ -79,8 +79,8 @@ public class PhotoEntry : IDbModel
     public void ResolveIntegerId(IReferenceIdMapper mapper)
     {
         Id.ResolveIntegerId(mapper);
-        Theme.ResolveIntegerId(mapper);
-        FileId.ResolveIntegerId(mapper);
+        Contest.ResolveIntegerId(mapper);
+        FileInfo.ResolveIntegerId(mapper);
         IsResolved = true;
     }
 
@@ -88,8 +88,8 @@ public class PhotoEntry : IDbModel
     public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.PhotoEntry)
     {
         Id.ResolveReferenceId(mapper, idType);
-        Theme.ResolveReferenceId(mapper);
-        FileId.ResolveReferenceId(mapper, IdType.File);
+        Contest.ResolveReferenceId(mapper);
+        FileInfo.ResolveReferenceId(mapper, IdType.File);
         IsResolved = true;
     }
 }

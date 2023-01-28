@@ -13,7 +13,7 @@ public class PhotographerVoteDetails
     /// <summary>
     ///     Active theme during the voting
     /// </summary>
-    public PhotoTheme Theme { get; set; }
+    public Contest Theme { get; set; }
 
     /// <summary>
     ///     Details of the photographer whos voting details are encapsulated
@@ -21,17 +21,17 @@ public class PhotographerVoteDetails
     public Photographer Photographer { get; set; }
 
     /// <summary>
-    ///     Reference Id of the first voted <see cref="PhotoEntry" />
+    ///     Reference Id of the first voted <see cref="Submission" />
     /// </summary>
-    public PhotoEntry FirstVote { get; set; }
+    public Submission FirstVote { get; set; }
 
     /// <summary>
-    ///     Reference Id of the second voted <see cref="PhotoEntry" />
+    ///     Reference Id of the second voted <see cref="Submission" />
     /// </summary>
-    public PhotoEntry SecondVote { get; set; }
+    public Submission SecondVote { get; set; }
 
     /// <summary>
-    ///     Reference Id of the third voted <see cref="PhotoEntry" />
+    ///     Reference Id of the third voted <see cref="Submission" />
     /// </summary>
-    public PhotoEntry ThirdVote { get; set; }
+    public Submission ThirdVote { get; set; }
 }

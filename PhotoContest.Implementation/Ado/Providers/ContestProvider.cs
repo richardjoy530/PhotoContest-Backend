@@ -4,37 +4,36 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using PhotoContest.Models;
 
 #endregion
 
-namespace PhotoContest.Implementation;
+namespace PhotoContest.Implementation.Ado.Providers;
 
 /// <summary>
+///     Database access layer of <see cref="Contest" />
 /// </summary>
-public class FileMapProvider : IProvider<FileMap>
+public class ContestProvider : IProvider<Contest>
 {
-    private const string InsertProcedure = "[dbo].[Insert_FileMap]";
-    private const string GetProcedure = "[dbo].[Get_FileMap]";
-    private const string UpdateProcedure = "[dbo].[Update_FileMap]";
-    private const string DeleteProcedure = "[dbo].[Delete_FileMap]";
     private readonly string _connectionString;
-    private readonly IReferenceIdMapper _referenceIdMapper;
+    private const string GetByIdProcedure = "[dbo].[Contest_GetById]";
+    private const string GetProcedure = "[dbo].[Contest_GetAll]";
+    private const string InsertProcedure = "[dbo].[Contest_Insert]";
+    private const string UpdateProcedure = "[dbo].[Contest_Update]";
+    private const string DeleteProcedure = "[dbo].[Contest_Delete]";
 
     /// <summary>
+    ///     Initializes a new instance of ContestProvider class
     /// </summary>
-    public FileMapProvider(
-        IDbConnection dbConnection,
-        IReferenceIdMapper referenceIdMapper
-    )
+    /// <param name="dbConnection"></param>
+    public ContestProvider(IDbConnection dbConnection)
     {
         if (dbConnection is null) throw new ArgumentNullException(nameof(dbConnection));
+
         _connectionString = dbConnection.ConnectionString;
-        _referenceIdMapper = referenceIdMapper ?? throw new ArgumentNullException(nameof(referenceIdMapper));
     }
 
     /// <inheritdoc />
-    public FileMap Insert(FileMap fileMap)
+    public int Insert(Contest data)
     {
         using SqlConnection connection = new(_connectionString);
         connection.Open();
@@ -42,28 +41,42 @@ public class FileMapProvider : IProvider<FileMap>
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = InsertProcedure;
         command.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
-        command.Parameters.Add(new SqlParameter("@FilePath", fileMap.FilePath));
+        command.Parameters.Add(new SqlParameter("@Theme", data.Theme));
+        command.Parameters.Add(new SqlParameter("@EndDate", data.EndDate));
         command.ExecuteNonQuery();
-        fileMap.Id.IntegerId = Convert.ToInt32(command.Parameters["@Id"].Value);
-        return fileMap;
+        return Convert.ToInt32(command.Parameters["@Id"].Value);
     }
 
     /// <inheritdoc />
-    public void Delete(string referenceId)
+    public void Delete(int id)
     {
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = DeleteProcedure;
-        command.Parameters.Add(new SqlParameter("@Id", _referenceIdMapper.GetIntegerId(referenceId)));
+        command.Parameters.Add(new SqlParameter("@Id", id));
         command.ExecuteNonQuery();
     }
 
     /// <inheritdoc />
-    public IEnumerable<FileMap> GetAll()
+    public Contest GetById(int id)
     {
-        var fileMaps = new List<FileMap>();
+        using SqlConnection connection = new(_connectionString);
+        connection.Open();
+        using var command = connection.CreateCommand();
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = GetByIdProcedure;
+        command.Parameters.Add(new SqlParameter("@Id", id));
+        using var reader = command.ExecuteReader();
+        reader.Read();
+        return ParseData(reader);
+    }
+
+    /// <inheritdoc />
+    public IEnumerable<Contest> GetAll()
+    {
+        var contests = new List<Contest>();
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -71,40 +84,35 @@ public class FileMapProvider : IProvider<FileMap>
         command.CommandText = GetProcedure;
         using var reader = command.ExecuteReader();
         while (reader.Read())
-        {
-            var fileMap = new FileMap(reader);
-            fileMap.ResolveReferenceId(_referenceIdMapper);
-            fileMaps.Add(fileMap);
-        }
+            contests.Add(ParseData(reader));
 
-        return fileMaps;
+        return contests;
     }
 
     /// <inheritdoc />
-    public FileMap GetById(string referenceId)
-    {
-        using SqlConnection connection = new(_connectionString);
-        connection.Open();
-        using var command = connection.CreateCommand();
-        command.CommandType = CommandType.StoredProcedure;
-        command.CommandText = GetProcedure;
-        command.Parameters.Add(new SqlParameter("@Id", _referenceIdMapper.GetIntegerId(referenceId)));
-        using var reader = command.ExecuteReader();
-        reader.Read();
-        var fileMap = new FileMap(reader);
-        return fileMap;
-    }
-
-    /// <inheritdoc />
-    public void Update(FileMap fileMap, string referenceId)
+    public void Update(Contest data, int id)
     {
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = UpdateProcedure;
-        command.Parameters.Add(new SqlParameter("@Id", _referenceIdMapper.GetIntegerId(referenceId)));
-        command.Parameters.Add(new SqlParameter("@FilePath", fileMap.FilePath));
+        command.Parameters.Add(new SqlParameter("@Id", id));
+        command.Parameters.Add(new SqlParameter("@Theme", data.Theme));
+        command.Parameters.Add(new SqlParameter("@EndDate", data.EndDate));
         command.ExecuteNonQuery();
+    }
+
+    private static Contest ParseData(IDataRecord record)
+    {
+        if (record is null)
+            throw new ArgumentNullException(nameof(record));
+        
+        return new Contest()
+        {
+            EndDate = (DateTime)record["EndDate"],
+            Theme = (string)record["Theme"],
+            Id = (int)record["Id"]
+        };
     }
 }

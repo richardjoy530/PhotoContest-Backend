@@ -3,11 +3,12 @@
     @ContestId      int,
     @FileInfoId     int,
     @Caption        varchar(100),
-    @UploadedOn     datetime
+    @UploadedOn     datetime,
+    @UserId         int
 AS
 
-INSERT INTO Submission (ContestId, FileInfoId, Caption, UploadedOn)
-    VALUES (@ContestId, @FileInfoId, @Caption, @UploadedOn)
+INSERT INTO Submission (ContestId, FileInfoId, Caption, UploadedOn, UserId)
+    VALUES (@ContestId, @FileInfoId, @Caption, @UploadedOn, @UserId)
 
 SELECT @Id = SCOPE_IDENTITY();
 

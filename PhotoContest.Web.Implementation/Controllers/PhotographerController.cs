@@ -19,12 +19,12 @@ namespace PhotoContest.Web.Implementation.Controllers;
 [ApiController]
 public class PhotographerController : ControllerBase, IPhotographerController
 {
-    private readonly IProvider<Photographer> _photographerProvider;
+    private readonly IProvider<UserInfo> _photographerProvider;
 
     /// <summary>
     /// </summary>
     /// <param name="photographerProvider"></param>
-    public PhotographerController(IProvider<Photographer> photographerProvider)
+    public PhotographerController(IProvider<UserInfo> photographerProvider)
     {
         _photographerProvider = photographerProvider ?? throw new ArgumentNullException(nameof(photographerProvider));
     }

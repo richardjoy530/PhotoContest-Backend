@@ -1,14 +1,14 @@
 ﻿namespace PhotoContest.Models;
 
 /// <summary>
-///     Contains scores of a PhotoEntry
+///     Contains scores of a Submission
 /// </summary>
-public class ScoreDetail : IDbModel
+public class ScoreInfo : IDbModel
 {
     /// <summary>
     /// </summary>
     /// <param name="referenceId"></param>
-    public ScoreDetail(string referenceId)
+    public ScoreInfo(string referenceId)
     {
         Id = new Id {ReferenceId = referenceId};
     }
@@ -16,7 +16,7 @@ public class ScoreDetail : IDbModel
     /// <summary>
     /// </summary>
     /// <param name="integerId"></param>
-    public ScoreDetail(int integerId)
+    public ScoreInfo(int integerId)
     {
         Id = new Id {IntegerId = integerId};
     }
@@ -27,12 +27,12 @@ public class ScoreDetail : IDbModel
     public Id Id { get; set; }
 
     /// <summary>
-    ///     Id of the PhotoEntry
+    ///     Id of the Submission
     /// </summary>
-    public PhotoEntry PhotoEntry { get; set; }
+    public Submission Submission { get; set; }
 
     /// <summary>
-    ///     Score of the referenced PhotoEntry
+    ///     Score of the referenced Submission
     /// </summary>
     public int Score { get; set; }
 
@@ -43,7 +43,7 @@ public class ScoreDetail : IDbModel
     public void ResolveIntegerId(IReferenceIdMapper mapper)
     {
         Id.ResolveIntegerId(mapper);
-        PhotoEntry.ResolveIntegerId(mapper);
+        Submission.ResolveIntegerId(mapper);
         IsResolved = true;
     }
 
@@ -51,7 +51,7 @@ public class ScoreDetail : IDbModel
     public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.ScoreDetail)
     {
         Id.ResolveReferenceId(mapper, idType);
-        PhotoEntry.ResolveReferenceId(mapper);
+        Submission.ResolveReferenceId(mapper);
         IsResolved = true;
     }
 }

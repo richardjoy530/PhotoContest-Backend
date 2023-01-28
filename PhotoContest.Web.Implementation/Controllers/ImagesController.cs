@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PhotoContest.Models;
 using PhotoContest.Web.Contracts;
 using PhotoContest.Web.Controllers;
+using FileInfo = PhotoContest.Models.FileInfo;
 
 #endregion
 
@@ -20,7 +20,7 @@ namespace PhotoContest.Web.Implementation.Controllers;
 [ApiController]
 public class ImagesController : ControllerBase, IImagesController
 {
-    private readonly IProvider<FileMap> _fileMapProvider;
+    private readonly IProvider<FileInfo> _fileMapProvider;
     private readonly IFileService _fileService;
 
     /// <summary>
@@ -30,7 +30,7 @@ public class ImagesController : ControllerBase, IImagesController
     /// <param name="fileMapProvider"></param>
     public ImagesController(
         IFileService fileService,
-        IProvider<FileMap> fileMapProvider)
+        IProvider<FileInfo> fileMapProvider)
     {
         _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
         _fileMapProvider = fileMapProvider ?? throw new ArgumentNullException(nameof(fileMapProvider));
@@ -49,7 +49,7 @@ public class ImagesController : ControllerBase, IImagesController
         else if (!Guid.TryParse(imageItem.ReferenceId, out _))
             throw new ValidationException($"Invalid {nameof(imageItem.ReferenceId)}");
 
-        var fileMap = new FileMap(imageItem.ReferenceId) {FilePath = imageItem.Image.FileName};
+        var fileMap = new FileInfo(imageItem.ReferenceId) {Path = imageItem.Image.FileName};
 
         _fileMapProvider.Insert(fileMap);
         await using var stream = imageItem.Image.OpenReadStream();
@@ -66,7 +66,7 @@ public class ImagesController : ControllerBase, IImagesController
     public IActionResult Get(string referenceId)
     {
         var fileMap = _fileMapProvider.GetById(referenceId);
-        using var stream = _fileService.ReadFileAsync(fileMap.FilePath);
+        using var stream = _fileService.ReadFileAsync(fileMap.Path);
         var bytes = GetBytes(stream);
         return File(bytes, "image/jpg");
     }

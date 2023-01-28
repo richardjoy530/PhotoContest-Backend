@@ -6,17 +6,17 @@
 public enum IdType
 {
     /// <summary>
-    ///     PhotoEntry
+    ///     Submission
     /// </summary>
     PhotoEntry,
 
     /// <summary>
-    ///     Photographer
+    ///     UserInfo
     /// </summary>
     Photographer,
 
     /// <summary>
-    ///     ScoreDetail
+    ///     ScoreInfo
     /// </summary>
     ScoreDetail,
 
@@ -26,7 +26,7 @@ public enum IdType
     File,
 
     /// <summary>
-    ///     Theme
+    ///     Contest
     /// </summary>
     Theme,
 
