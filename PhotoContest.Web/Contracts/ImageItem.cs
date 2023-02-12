@@ -15,7 +15,7 @@ public class ImageItem
     /// <summary>
     ///     Unique Id assigned to this asset
     /// </summary>
-    public string ReferenceId { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     ///     The image file

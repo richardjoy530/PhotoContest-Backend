@@ -1,10 +1,10 @@
-﻿CREATE PROCEDURE Score_Insert
+﻿CREATE PROCEDURE ScoreInfo_Insert
     @Id             int OUTPUT,
     @SubmissionId   int,
     @Score          int
 AS
 
-INSERT INTO Score (SubmissionId, Score)
+INSERT INTO ScoreInfo (SubmissionId, Score)
     VALUES (@SubmissionId, @Score)
 
 SELECT @Id = SCOPE_IDENTITY();

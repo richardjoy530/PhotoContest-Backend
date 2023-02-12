@@ -11,13 +11,13 @@ namespace PhotoContest.Web.Controllers;
 /// <summary>
 ///     Image Controller
 /// </summary>
-public interface IImagesController
+public interface IFileController
 {
     /// <summary>
     ///     Gets image specified by the reference id
     /// </summary>
     /// <returns></returns>
-    IActionResult Get(string referenceId);
+    IActionResult Get(int id);
 
     /// <summary>
     ///     Api to save an image

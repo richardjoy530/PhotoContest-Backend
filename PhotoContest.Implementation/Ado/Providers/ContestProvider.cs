@@ -103,7 +103,7 @@ public class ContestProvider : IProvider<Contest>
         command.ExecuteNonQuery();
     }
 
-    private static Contest ParseData(IDataRecord record)
+    private static Contest ParseData(System.Data.IDataRecord record)
     {
         if (record is null)
             throw new ArgumentNullException(nameof(record));

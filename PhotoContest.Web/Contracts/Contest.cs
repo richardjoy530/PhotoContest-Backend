@@ -11,20 +11,13 @@ namespace PhotoContest.Web.Contracts;
 /// </summary>
 public class Contest
 {
-#nullable enable
-    /// <summary>
-    ///     Unique id of the theme
-    /// </summary>
-    public string? ReferenceId { get; set; }
-#nullable disable
-
     /// <summary>
     ///     Contest of the photo contest
     /// </summary>
     public string Theme { get; set; }
 
     /// <summary>
-    ///     Date of the contest
+    ///     End date of the contest
     /// </summary>
-    public DateTime? ContestDate { get; set; }
+    public DateTime EndDate { get; set; }
 }

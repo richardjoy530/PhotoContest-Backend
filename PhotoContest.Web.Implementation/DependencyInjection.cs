@@ -17,9 +17,6 @@ public static class DependencyInjection
     /// <param name="services"></param>
     public static void ConfigureServices(this IServiceCollection services)
     {
-        services.AddSingleton<IImagesController, ImagesController>();
-        services.AddSingleton<IPhotographerController, PhotographerController>();
-        services.AddSingleton<IPhotoEntriesController, PhotoEntriesController>();
-        services.AddSingleton<IPhotoThemeController, PhotoThemeController>();
+        services.AddSingleton<IFileController, FileController>();
     }
 }

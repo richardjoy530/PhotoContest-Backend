@@ -102,7 +102,7 @@ public class UserInfoProvider : IProvider<UserInfo>
         command.ExecuteNonQuery();
     }
 
-    private static UserInfo ParseData(IDataRecord record)
+    private static UserInfo ParseData(System.Data.IDataRecord record)
     {
         if (record is null)
             throw new ArgumentNullException(nameof(record));

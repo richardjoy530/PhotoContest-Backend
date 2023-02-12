@@ -3,6 +3,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using PhotoContest.Implementation.Ado;
 using PhotoContest.Implementation.Ado.Providers;
+using PhotoContest.Implementation.Service;
+using PhotoContest.Implementation.Service.Files;
 
 #endregion
 
@@ -24,11 +26,13 @@ public static class DependencyInjection
         services.AddSingleton<IProvider<Contest>, ContestProvider>();
         services.AddSingleton<IProvider<ScoreInfo>, ScoreInfoProvider>();
         services.AddSingleton<IProvider<FileInfo>, FileInfoProvider>();
-        services.AddSingleton<IReferenceIdMapper, ReferenceIdProvider>();
 
         if (isDev)
-            services.AddSingleton<IFileService, SystemFileService>();
+            services.AddSingleton<IFileProvider, SystemFileProvider>();
         else
-            services.AddSingleton<IFileService, AzureBlobService>();
+            services.AddSingleton<IFileProvider, AzureBlobProvider>();
+        
+        services.AddSingleton<IFileService, FileService>();
+        services.AddSingleton<IContestService, ContestService>();
     }
 }

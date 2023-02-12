@@ -109,7 +109,7 @@ public class SubmissionProvider : IProvider<Submission>
         command.ExecuteNonQuery();
     }
 
-    private static Submission ParseData(IDataRecord record)
+    private static Submission ParseData(System.Data.IDataRecord record)
     {
         if (record is null)
             throw new ArgumentNullException(nameof(record));

@@ -3,7 +3,7 @@ namespace PhotoContest.Implementation.Ado;
 /// <summary>
 /// 
 /// </summary>
-public record ScoreInfo : IRecord
+public record ScoreInfo : IDataRecord
 {
     /// <summary>
     /// 

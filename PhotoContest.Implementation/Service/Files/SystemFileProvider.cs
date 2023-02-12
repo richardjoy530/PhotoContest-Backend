@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 #endregion
 
-namespace PhotoContest.Implementation;
+namespace PhotoContest.Implementation.Service.Files;
 
 /// <summary>
 /// </summary>
-public class SystemFileService : IFileService
+public class SystemFileProvider : IFileProvider
 {
     /// <summary>
     /// </summary>
@@ -18,7 +18,7 @@ public class SystemFileService : IFileService
     /// <returns></returns>
     public Stream ReadFileAsync(string filename)
     {
-        var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "images/");
+        var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images/");
         return File.OpenRead(path);
     }
 

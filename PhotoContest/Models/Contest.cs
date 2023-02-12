@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using System.Data;
 
 #endregion
 
@@ -10,37 +9,12 @@ namespace PhotoContest.Models;
 /// <summary>
 ///     Contains details of Contest
 /// </summary>
-public class Contest : IDbModel
+public class Contest
 {
-    /// <summary>
-    /// </summary>
-    public Contest(string referenceId)
-    {
-        Id = new Id {ReferenceId = referenceId};
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="integerId"></param>
-    public Contest(int integerId)
-    {
-        Id = new Id {IntegerId = integerId};
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="dataRecord"></param>
-    public Contest(IDataRecord dataRecord)
-    {
-        Id = new Id {IntegerId = (int) dataRecord["Id"]};
-        Theme = (string) dataRecord["Contest"];
-        EndDate = (DateTime) dataRecord["EndDate"];
-    }
-
     /// <summary>
     ///     Id details of the <see cref="Contest" /> record
     /// </summary>
-    public Id Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     ///     Contest of the photo contest
@@ -51,21 +25,4 @@ public class Contest : IDbModel
     ///     Date of the contest
     /// </summary>
     public DateTime EndDate { get; set; }
-
-    /// <inheritdoc />
-    public bool IsResolved { get; set; }
-
-    /// <inheritdoc />
-    public void ResolveIntegerId(IReferenceIdMapper mapper)
-    {
-        Id.IntegerId = mapper.GetIntegerId(Id.ReferenceId);
-        IsResolved = true;
-    }
-
-    /// <inheritdoc />
-    public void ResolveReferenceId(IReferenceIdMapper mapper, IdType idType = IdType.Theme)
-    {
-        Id.ReferenceId = mapper.GetReferenceId(Id.IntegerId, idType);
-        IsResolved = true;
-    }
 }

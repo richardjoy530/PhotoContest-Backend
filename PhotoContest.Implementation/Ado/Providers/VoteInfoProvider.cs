@@ -109,7 +109,7 @@ public class VoteInfoProvider : IProvider<VoteInfo>
         command.ExecuteNonQuery();
     }
 
-    private static VoteInfo ParseData(IDataRecord record)
+    private static VoteInfo ParseData(System.Data.IDataRecord record)
     {
         if (record is null)
             throw new ArgumentNullException(nameof(record));

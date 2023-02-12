@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE Score_Update
+﻿CREATE PROCEDURE ScoreInfo_Update
     @Id                 int,
     @SubmissionId       int = NULL,
     @Score              int = NULL,
@@ -6,7 +6,7 @@
     @updateScore        bit = 0
 AS
 
-UPDATE Score SET 
+UPDATE ScoreInfo SET 
     SubmissionId    = IIF(@UpdateSubmissionId   = 1, @SubmissionId, SubmissionId),
     Score           = IIF(@updateScore          = 1, @Score,        Score)
  WHERE Id = @Id

@@ -1,4 +1,0 @@
-﻿CREATE PROCEDURE Score_GetAll
-AS
-
-SELECT * FROM Score

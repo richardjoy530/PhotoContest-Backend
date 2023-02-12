@@ -101,7 +101,7 @@ public class FileInfoProvider : IProvider<FileInfo>
         command.ExecuteNonQuery();
     }
 
-    private static FileInfo ParseData(IDataRecord record)
+    private static FileInfo ParseData(System.Data.IDataRecord record)
     {
         if (record is null)
             throw new ArgumentNullException(nameof(record));

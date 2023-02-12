@@ -9,7 +9,7 @@ namespace PhotoContest;
 /// <summary>
 ///     An interface for all the basic data access operations
 /// </summary>
-public interface IProvider<TModel> where TModel : IRecord
+public interface IProvider<TModel> where TModel : IDataRecord
 {
     /// <summary>
     ///     Retrieves the <typeparamref name="TModel" /> with the given <paramref name="id" /> from the database

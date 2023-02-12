@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Score] (
+﻿CREATE TABLE [dbo].[ScoreInfo] (
     [Id]           INT IDENTITY (1, 1) NOT NULL,
     [SubmissionId] INT NOT NULL,
     [Score]        INT DEFAULT ((0)) NOT NULL,

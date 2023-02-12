@@ -3,6 +3,6 @@ namespace PhotoContest;
 /// <summary>
 /// 
 /// </summary>
-public interface IRecord
+public interface IDataRecord
 {
 }

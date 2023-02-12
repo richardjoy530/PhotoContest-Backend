@@ -103,7 +103,7 @@ public class ScoreInfoProvider : IProvider<ScoreInfo>
         command.ExecuteNonQuery();
     }
 
-    private static ScoreInfo ParseData(IDataRecord record)
+    private static ScoreInfo ParseData(System.Data.IDataRecord record)
     {
         if (record is null)
             throw new ArgumentNullException(nameof(record));

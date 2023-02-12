@@ -3,7 +3,7 @@ namespace PhotoContest.Implementation.Ado;
 /// <summary>
 /// 
 /// </summary>
-public record UserInfo : IRecord
+public record UserInfo : IDataRecord
 {
     /// <summary>
     /// 

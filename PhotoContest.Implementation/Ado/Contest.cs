@@ -5,7 +5,7 @@ namespace PhotoContest.Implementation.Ado;
 /// <summary>
 /// 
 /// </summary>
-public record Contest : IRecord
+public record Contest : IDataRecord
 {
     /// <summary>
     /// 

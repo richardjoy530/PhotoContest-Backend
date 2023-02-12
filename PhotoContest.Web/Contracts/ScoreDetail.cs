@@ -8,15 +8,15 @@ public class ScoreDetail
     /// <summary>
     ///     ReferenceId
     /// </summary>
-    public string ReferenceId { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     ///     Submission
     /// </summary>
-    public Submission Submission { get; set; }
+    public int SubmissionId { get; set; }
 
     /// <summary>
-    ///     Score of the referenced PhotoEnty
+    ///     Score of the referenced Submission
     /// </summary>
     public int Score { get; set; }
 }

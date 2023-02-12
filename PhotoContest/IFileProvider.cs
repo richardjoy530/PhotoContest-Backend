@@ -1,29 +1,26 @@
 ﻿#region
 
-using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Threading.Tasks;
 
 #endregion
 
 namespace PhotoContest;
 
 /// <summary>
-///     An interface for data access on files
 /// </summary>
 public interface IFileProvider
 {
     /// <summary>
-    ///     Saves the given file into the file system
     /// </summary>
-    /// <param name="file"></param>
-    /// <param name="referenceId"></param>
-    /// <remarks>File will be saved in the File system of the WebApi server, the file location will be saved in database</remarks>
-    /// <returns>referenceId of the file</returns>
-    public string UploadImage(IFormFile file, string referenceId);
+    /// <param name="filename"></param>
+    /// <returns></returns>
+    Stream ReadFileAsync(string filename);
 
     /// <summary>
-    ///     Retries the file contents as a byte[]
     /// </summary>
-    /// <param name="referenceId"></param>
+    /// <param name="stream"></param>
+    /// <param name="filename"></param>
     /// <returns></returns>
-    public byte[] GetFileDataInBytes(string referenceId);
+    Task UploadFileAsync(Stream stream, string filename);
 }

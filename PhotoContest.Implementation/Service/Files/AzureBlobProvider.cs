@@ -8,11 +8,11 @@ using Microsoft.Extensions.Configuration;
 
 #endregion
 
-namespace PhotoContest.Implementation;
+namespace PhotoContest.Implementation.Service.Files;
 
 /// <summary>
 /// </summary>
-public class AzureBlobService : IFileService
+public class AzureBlobProvider : IFileProvider
 {
     private const string Container = "photos";
     private readonly BlobContainerClient _containerClient;
@@ -20,7 +20,7 @@ public class AzureBlobService : IFileService
     /// <summary>
     /// </summary>
     /// <exception cref="ArgumentNullException"></exception>
-    public AzureBlobService(IConfiguration configuration)
+    public AzureBlobProvider(IConfiguration configuration)
     {
         _ = configuration ?? throw new ArgumentNullException(nameof(configuration));
         var connectionString = configuration.GetConnectionString("StorageAccount");
