@@ -42,13 +42,16 @@ public class UserInfoProvider : IProvider<UserInfo>
         command.CommandText = InsertProcedure;
         command.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
         command.Parameters.Add(new SqlParameter("@Name", data.Name));
+        command.Parameters.Add(new SqlParameter("@Email", data.Email));
+        command.Parameters.Add(new SqlParameter("@RegistrationDate", data.RegistrationDate));
+        command.Parameters.Add(new SqlParameter("@RefId", data.RefId));
         command.ExecuteNonQuery();
-
-        return Convert.ToInt32(command.Parameters["@Id"].Value);
+        
+        return data.Id = Convert.ToInt32(command.Parameters["@Id"].Value);
     }
 
     /// <inheritdoc />
-    public void Delete(int id)
+    public bool Delete(int id)
     {
         using SqlConnection connection = new(_connectionString);
         connection.Open();
@@ -56,7 +59,7 @@ public class UserInfoProvider : IProvider<UserInfo>
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = DeleteProcedure;
         command.Parameters.Add(new SqlParameter("@Id", id));
-        command.ExecuteNonQuery();
+        return command.ExecuteNonQuery() > 0;
     }
 
     /// <inheritdoc />
@@ -99,6 +102,13 @@ public class UserInfoProvider : IProvider<UserInfo>
         command.CommandText = UpdateProcedure;
         command.Parameters.Add(new SqlParameter("@Id", id));
         command.Parameters.Add(new SqlParameter("@Name", data.Name));
+        command.Parameters.Add(new SqlParameter("@UpdateName", true));
+        command.Parameters.Add(new SqlParameter("@Email", data.Email));
+        command.Parameters.Add(new SqlParameter("@UpdateEmail", true));
+        command.Parameters.Add(new SqlParameter("@RefId", data.RefId));
+        command.Parameters.Add(new SqlParameter("@UpdateRefId", false));
+        command.Parameters.Add(new SqlParameter("@RegistrationDate", data.RegistrationDate));
+        command.Parameters.Add(new SqlParameter("@UpdateRegistrationDate", true));
         command.ExecuteNonQuery();
     }
 
@@ -111,6 +121,9 @@ public class UserInfoProvider : IProvider<UserInfo>
         {
             Id = (int)record["Id"],
             Name = (string)record["Name"],
+            Email = (string)record["Email"],
+            RefId = (string)record["RefId"],
+            RegistrationDate = (DateTime)record["RegistrationDate"],
         };
     }
 }

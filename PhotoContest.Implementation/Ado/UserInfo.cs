@@ -1,3 +1,5 @@
+using System;
+
 namespace PhotoContest.Implementation.Ado;
 
 /// <summary>
@@ -14,4 +16,19 @@ public record UserInfo : IDataRecord
     /// 
     /// </summary>
     public string Name;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public string Email;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public string RefId;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public DateTime RegistrationDate;
 }

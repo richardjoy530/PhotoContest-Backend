@@ -46,5 +46,5 @@ public interface IProvider<TModel> where TModel : IDataRecord
     ///     Deletes the record of <typeparamref name="TModel" /> with <paramref name="id" />
     /// </summary>
     /// <param name="id"></param>
-    public void Delete(int id);
+    public bool Delete(int id);
 }

@@ -98,7 +98,7 @@ public class VoteInfoProvider : IProvider<VoteInfo>
     }
 
     /// <inheritdoc />
-    public void Delete(int id)
+    public bool Delete(int id)
     {
         using SqlConnection connection = new(_connectionString);
         connection.Open();
@@ -106,7 +106,7 @@ public class VoteInfoProvider : IProvider<VoteInfo>
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = DeleteProcedure;
         command.Parameters.Add(new SqlParameter("@Id", id));
-        command.ExecuteNonQuery();
+        return command.ExecuteNonQuery() > 0;
     }
 
     private static VoteInfo ParseData(System.Data.IDataRecord record)

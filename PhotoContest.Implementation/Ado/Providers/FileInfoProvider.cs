@@ -43,11 +43,12 @@ public class FileInfoProvider : IProvider<FileInfo>
         command.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
         command.Parameters.Add(new SqlParameter("@Path", data.Path));
         command.ExecuteNonQuery();
-        return Convert.ToInt32(command.Parameters["@Id"].Value);
+        
+        return data.Id = Convert.ToInt32(command.Parameters["@Id"].Value);
     }
 
     /// <inheritdoc />
-    public void Delete(int id)
+    public bool Delete(int id)
     {
         using SqlConnection connection = new(_connectionString);
         connection.Open();
@@ -55,7 +56,7 @@ public class FileInfoProvider : IProvider<FileInfo>
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = DeleteProcedure;
         command.Parameters.Add(new SqlParameter("@Id", id));
-        command.ExecuteNonQuery();
+        return command.ExecuteNonQuery() > 0;
     }
 
     /// <inheritdoc />
@@ -98,6 +99,7 @@ public class FileInfoProvider : IProvider<FileInfo>
         command.CommandText = UpdateProcedure;
         command.Parameters.Add(new SqlParameter("@Id", id));
         command.Parameters.Add(new SqlParameter("@Path", data.Path));
+        command.Parameters.Add(new SqlParameter("@UpdatePath", true));
         command.ExecuteNonQuery();
     }
 

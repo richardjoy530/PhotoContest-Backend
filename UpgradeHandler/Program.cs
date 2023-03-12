@@ -67,32 +67,32 @@ namespace UpgradeHandler
             //     InsertSubmission(submission);
             // }
 
-            foreach (var voteInfoString in File.ReadAllLines(@"E:\Project\Python\vote.log"))
-            {
-                var tokens = voteInfoString.Split('#');
-                var theme = tokens[0].Trim();
-                var userId = tokens[1].Trim();
-                var first = tokens[2].Trim();
-                var second = tokens[3].Trim();
-                var third = tokens[4].Trim();
-            
-                // if (first !="" && !allSubmissionDatas.Select(u => u.RefId).Contains(first))
-                //     Console.WriteLine($"{first} not present in the submission db theme {theme}");
-                // if (second !="" && !allSubmissionDatas.Select(u => u.RefId).Contains(second))
-                //     Console.WriteLine($"{second} not present in the submission db theme {theme}");
-                // if (third !="" && !allSubmissionDatas.Select(u => u.RefId).Contains(third))
-                //     Console.WriteLine($"{third} not present in the submission db theme {theme}");
-                
-                var voteInfo = new VoteInfoData()
-                {
-                    ContestId = allContests.First(c => c.Theme == theme).Id,
-                    UserId = allUserInfos.First((u => u.RefId == userId)).Id,
-                    FirstId = first == "" ? 0 : allSubmissionDatas.First(s => s.RefId == first).Id,
-                    SecondId = second == "" ? 0 : allSubmissionDatas.First(s => s.RefId == second).Id,
-                    ThirdId = third == "" ? 0 : allSubmissionDatas.First(s => s.RefId == third).Id
-                };
-                InsertVoteInfoData(voteInfo);
-            }
+            // foreach (var voteInfoString in File.ReadAllLines(@"E:\Project\Python\vote.log"))
+            // {
+            //     var tokens = voteInfoString.Split('#');
+            //     var theme = tokens[0].Trim();
+            //     var userId = tokens[1].Trim();
+            //     var first = tokens[2].Trim();
+            //     var second = tokens[3].Trim();
+            //     var third = tokens[4].Trim();
+            //
+            //     // if (first !="" && !allSubmissionDatas.Select(u => u.RefId).Contains(first))
+            //     //     Console.WriteLine($"{first} not present in the submission db theme {theme}");
+            //     // if (second !="" && !allSubmissionDatas.Select(u => u.RefId).Contains(second))
+            //     //     Console.WriteLine($"{second} not present in the submission db theme {theme}");
+            //     // if (third !="" && !allSubmissionDatas.Select(u => u.RefId).Contains(third))
+            //     //     Console.WriteLine($"{third} not present in the submission db theme {theme}");
+            //     
+            //     var voteInfo = new VoteInfoData()
+            //     {
+            //         ContestId = allContests.First(c => c.Theme == theme).Id,
+            //         UserId = allUserInfos.First((u => u.RefId == userId)).Id,
+            //         FirstId = first == "" ? 0 : allSubmissionDatas.First(s => s.RefId == first).Id,
+            //         SecondId = second == "" ? 0 : allSubmissionDatas.First(s => s.RefId == second).Id,
+            //         ThirdId = third == "" ? 0 : allSubmissionDatas.First(s => s.RefId == third).Id
+            //     };
+            //     InsertVoteInfoData(voteInfo);
+            // }
 
             // foreach (var entrusting in File.ReadAllLines(@"E:\Project\Python\auth.html"))
             // {

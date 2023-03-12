@@ -116,7 +116,7 @@ public class SubmissionProvider : IProvider<Submission>
     }
 
     /// <inheritdoc />
-    public void Delete(int id)
+    public bool Delete(int id)
     {
         using SqlConnection connection = new(_connectionString);
         connection.Open();
@@ -124,7 +124,7 @@ public class SubmissionProvider : IProvider<Submission>
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = DeleteProcedure;
         command.Parameters.Add(new SqlParameter("@Id", id));
-        command.ExecuteNonQuery();
+        return command.ExecuteNonQuery() > 0;
     }
 
     private static Submission ParseData(System.Data.IDataRecord record)

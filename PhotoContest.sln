@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoContest.Web.Implementa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpgradeHandler", "UpgradeHandler\UpgradeHandler.csproj", "{FA1A3DE2-E1EA-4732-97AF-C6579E881D00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoContest.Implementation.Tests", "PhotoContest.Implementation.Tests\PhotoContest.Implementation.Tests.csproj", "{8F601E83-2DEC-4114-B8BC-718E1FCB043D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{FA1A3DE2-E1EA-4732-97AF-C6579E881D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA1A3DE2-E1EA-4732-97AF-C6579E881D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA1A3DE2-E1EA-4732-97AF-C6579E881D00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F601E83-2DEC-4114-B8BC-718E1FCB043D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F601E83-2DEC-4114-B8BC-718E1FCB043D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F601E83-2DEC-4114-B8BC-718E1FCB043D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F601E83-2DEC-4114-B8BC-718E1FCB043D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

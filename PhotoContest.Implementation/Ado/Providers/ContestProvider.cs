@@ -44,11 +44,12 @@ public class ContestProvider : IProvider<Contest>
         command.Parameters.Add(new SqlParameter("@Theme", data.Theme));
         command.Parameters.Add(new SqlParameter("@EndDate", data.EndDate));
         command.ExecuteNonQuery();
-        return Convert.ToInt32(command.Parameters["@Id"].Value);
+        
+        return data.Id = Convert.ToInt32(command.Parameters["@Id"].Value);
     }
 
     /// <inheritdoc />
-    public void Delete(int id)
+    public bool Delete(int id)
     {
         using SqlConnection connection = new(_connectionString);
         connection.Open();
@@ -56,7 +57,7 @@ public class ContestProvider : IProvider<Contest>
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = DeleteProcedure;
         command.Parameters.Add(new SqlParameter("@Id", id));
-        command.ExecuteNonQuery();
+        return command.ExecuteNonQuery() > 0;
     }
 
     /// <inheritdoc />
@@ -99,7 +100,9 @@ public class ContestProvider : IProvider<Contest>
         command.CommandText = UpdateProcedure;
         command.Parameters.Add(new SqlParameter("@Id", id));
         command.Parameters.Add(new SqlParameter("@Theme", data.Theme));
+        command.Parameters.Add(new SqlParameter("@UpdateTheme", true));
         command.Parameters.Add(new SqlParameter("@EndDate", data.EndDate));
+        command.Parameters.Add(new SqlParameter("@UpdateEndDate", true));
         command.ExecuteNonQuery();
     }
 
