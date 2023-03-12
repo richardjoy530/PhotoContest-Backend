@@ -1,5 +1,6 @@
-﻿CREATE PROCEDURE UserInfo_GetById
-@Id int
+﻿CREATE PROCEDURE UserInfo_GetById @Id int
 AS
 
-SELECT * FROM UserInfo WHERE Id = @Id
+SELECT *
+FROM UserInfo
+WHERE Id = @Id

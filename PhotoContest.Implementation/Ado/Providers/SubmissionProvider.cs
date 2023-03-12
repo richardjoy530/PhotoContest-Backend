@@ -63,6 +63,24 @@ public class SubmissionProvider : IProvider<Submission>
     }
 
     /// <inheritdoc />
+    public int Insert(Models.Submission data)
+    {
+        using SqlConnection connection = new(_connectionString);
+        connection.Open();
+        using var command = connection.CreateCommand();
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = InsertProcedure;
+        command.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
+        command.Parameters.Add(new SqlParameter("@ContestId", data.Contest.Id));
+        command.Parameters.Add(new SqlParameter("@FileInfoId", data.FileInfo.Id));
+        command.Parameters.Add(new SqlParameter("@Caption", data.Caption));
+        command.Parameters.Add(new SqlParameter("@UserId", data.UserInfo.Id));
+        command.Parameters.Add(new SqlParameter("@UploadedOn", data.UploadedOn));
+        command.ExecuteNonQuery();
+        return Convert.ToInt32(command.Parameters["@Id"].Value);
+    }
+
+    /// <inheritdoc />
     public int Insert(Submission data)
     {
         using SqlConnection connection = new(_connectionString);

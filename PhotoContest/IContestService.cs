@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using PhotoContest.Models;
 
 namespace PhotoContest;
@@ -20,4 +21,10 @@ public interface IContestService
     /// </summary>
     /// <returns></returns>
     Contest GetCurrentContest();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    IEnumerable<Contest> GetAllContests();
 }

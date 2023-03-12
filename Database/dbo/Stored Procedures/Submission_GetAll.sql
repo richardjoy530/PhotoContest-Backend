@@ -1,4 +1,5 @@
 ﻿CREATE PROCEDURE Submission_GetAll
-AS
+    AS
 
-SELECT * FROM Submission
+SELECT *
+FROM Submission

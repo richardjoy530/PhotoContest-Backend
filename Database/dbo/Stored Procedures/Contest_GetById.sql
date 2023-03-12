@@ -1,5 +1,6 @@
-﻿CREATE PROCEDURE Contest_GetById
-@Id int
+﻿CREATE PROCEDURE Contest_GetById @Id int
 AS
 
-SELECT * FROM Contest WHERE Id = @Id
+SELECT *
+FROM Contest
+WHERE Id = @Id

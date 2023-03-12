@@ -1,5 +1,6 @@
-﻿CREATE PROCEDURE VoteInfo_GetById
-@Id int
+﻿CREATE PROCEDURE VoteInfo_GetById @Id int
 AS
 
-SELECT * FROM VoteInfo WHERE Id = @Id
+SELECT *
+FROM VoteInfo
+WHERE Id = @Id

@@ -1,5 +1,4 @@
-﻿CREATE PROCEDURE VoteInfo_Insert
-    @Id         int OUTPUT,
+﻿CREATE PROCEDURE VoteInfo_Insert @Id         int OUTPUT,
     @FirstId    int,
     @SecondId   int,
     @ThirdId    int,

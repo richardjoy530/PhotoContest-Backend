@@ -1,5 +1,6 @@
-﻿CREATE PROCEDURE Contest_Delete
-    @Id int
+﻿CREATE PROCEDURE Contest_Delete @Id int
 AS
 
-DELETE FROM Contest WHERE Id = @Id
+DELETE
+FROM Contest
+WHERE Id = @Id

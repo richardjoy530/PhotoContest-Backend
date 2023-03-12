@@ -17,6 +17,11 @@ public class Submission
     public int Id { get; set; }
 
     /// <summary>
+    /// 
+    /// </summary>
+    public string RefId { get; set; }
+
+    /// <summary>
     ///     Contest of the photo. This must correspond to <see cref="Models.Contest" />
     /// </summary>
     public Contest Contest { get; set; }

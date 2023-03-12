@@ -18,7 +18,8 @@ public class SystemFileProvider : IFileProvider
     /// <returns></returns>
     public Stream ReadFileAsync(string filename)
     {
-        var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images/");
+        var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+        path = Path.Combine(path, filename);
         return File.OpenRead(path);
     }
 

@@ -1,4 +1,5 @@
 ﻿CREATE PROCEDURE VoteInfo_GetAll
-AS
+    AS
 
-SELECT * FROM VoteInfo
+SELECT *
+FROM VoteInfo

@@ -2,6 +2,8 @@
 
 #endregion
 
+using System;
+
 namespace PhotoContest.Models;
 
 /// <summary>
@@ -18,4 +20,19 @@ public class UserInfo
     ///     Name of the userInfo
     /// </summary>
     public string Name { get; set; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public string RefId { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public string Email { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public DateTime RegisteredDate { get; set; }
 }

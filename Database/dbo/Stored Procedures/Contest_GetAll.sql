@@ -1,4 +1,5 @@
 ﻿CREATE PROCEDURE Contest_GetAll
-AS
+    AS
 
-SELECT * FROM Contest
+SELECT *
+FROM Contest

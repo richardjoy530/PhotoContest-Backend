@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using PhotoContest.Web.Contracts;
 using PhotoContest.Web.Controllers;
 
@@ -7,7 +9,9 @@ namespace PhotoContest.Web.Implementation.Controllers;
 /// <summary>
 /// 
 /// </summary>
-public class ContestController : IContestController
+[Route("api/[controller]")]
+[ApiController]
+public class ContestController : ControllerBase, IContestController
 {
     private readonly IContestService _contestService;
     /// <summary>
@@ -21,50 +25,26 @@ public class ContestController : IContestController
     }
     
     /// <inheritdoc />
+    [HttpPost]
     public int CreateContest(Contest contest)
     {
         return _contestService.AddContest(contest.Theme, contest.EndDate);
     }
-    
+
     /// <inheritdoc />
-    public Contest GetCurrentContest()
+    [HttpGet]
+    public Contest[] GetAll()
     {
-        throw new NotImplementedException();
+        return _contestService.GetAllContests().Select(ToContract).ToArray();
     }
-    
-    /// <inheritdoc />
-    public Contest GetContestById(int id)
+
+    private static Contest ToContract(Models.Contest arg)
     {
-        throw new NotImplementedException();
-    }
-    
-    /// <inheritdoc />
-    public Contest[] GetAllContests()
-    {
-        throw new NotImplementedException();
-    }
-    
-    /// <inheritdoc />
-    public void AddPhotoSubmission(Submission submission)
-    {
-        throw new NotImplementedException();
-    }
-    
-    /// <inheritdoc />
-    public Submission[] GetCurrentSubmissions()
-    {
-        throw new NotImplementedException();
-    }
-    
-    /// <inheritdoc />
-    public void Vote(int submissionId, int position)
-    {
-        throw new NotImplementedException();
-    }
-    
-    /// <inheritdoc />
-    public VoteInfo GetVoteInfo()
-    {
-        throw new NotImplementedException();
+        return new Contest()
+        {
+            EndDate = arg.EndDate,
+            Theme = arg.Theme,
+            Id = arg.Id
+        };
     }
 }

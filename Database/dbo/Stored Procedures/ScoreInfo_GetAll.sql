@@ -1,4 +1,5 @@
 ﻿CREATE PROCEDURE ScoreInfo_GetAll
-AS
+    AS
 
-SELECT * FROM ScoreInfo
+SELECT *
+FROM ScoreInfo

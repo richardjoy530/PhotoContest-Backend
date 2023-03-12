@@ -1,6 +1,6 @@
-﻿CREATE PROCEDURE FileInfo_Insert
+﻿CREATE PROCEDURE [dbo].[FileInfo_Insert]
     @Id     int OUTPUT,
-    @Path   varchar(50)
+    @Path   varchar(200)
 AS
 
 INSERT INTO FileInfo (Path) VALUES (@Path)

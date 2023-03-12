@@ -1,4 +1,5 @@
 ﻿CREATE PROCEDURE FileInfo_GetAll
-AS
+    AS
 
-SELECT * FROM FileInfo
+SELECT *
+FROM FileInfo
