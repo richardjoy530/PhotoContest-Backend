@@ -1,6 +1,5 @@
-﻿CREATE PROCEDURE Submission_Delete @Id int
+﻿CREATE PROCEDURE Submission_Delete
+@Id int
 AS
 
-DELETE
-FROM Submission
-WHERE Id = @Id
+DELETE FROM Submission WHERE Id = @Id

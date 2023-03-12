@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE ScoreInfo_Insert @Id             int OUTPUT,
+﻿CREATE PROCEDURE ScoreInfo_Insert
+    @Id             int OUTPUT,
     @SubmissionId   int,
     @Score          int
 AS

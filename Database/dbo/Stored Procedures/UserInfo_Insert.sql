@@ -3,10 +3,10 @@
     @Name       varchar(100) = NULL,
     @RefId       varchar(100) = NULL,
 	@Email varchar(100) = NULL,
-	@RegisteredDate date = NULL
+	@RegistrationDate date = NULL
 AS
 
-INSERT INTO UserInfo (Name, RefId, Email, RegisteredDate) VALUES (@Name, @RefId, @Email, @RegisteredDate)
+INSERT INTO UserInfo (Name, RefId, Email, RegistrationDate) VALUES (@Name, @RefId, @Email, @RegistrationDate)
 
 SELECT @Id = SCOPE_IDENTITY();
 

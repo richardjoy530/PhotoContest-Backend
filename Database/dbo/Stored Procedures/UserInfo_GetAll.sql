@@ -1,5 +1,4 @@
 ﻿CREATE PROCEDURE UserInfo_GetAll
-    AS
+AS
 
-SELECT *
-FROM UserInfo
+SELECT * FROM UserInfo

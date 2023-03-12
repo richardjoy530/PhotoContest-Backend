@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE Contest_Insert @Id         int OUTPUT,
+﻿CREATE PROCEDURE Contest_Insert
+    @Id         int OUTPUT,
     @Theme      varchar(100),
     @EndDate    datetime
 AS
