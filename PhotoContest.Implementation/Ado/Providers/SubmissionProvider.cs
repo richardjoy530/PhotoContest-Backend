@@ -35,6 +35,9 @@ public class SubmissionProvider : IProvider<Submission>
     /// <inheritdoc />
     public Submission GetById(int id)
     {
+        if (id < 1) 
+            throw new ArgumentException("Database Id must not be less than 1");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -49,7 +52,7 @@ public class SubmissionProvider : IProvider<Submission>
     /// <inheritdoc />
     public IEnumerable<Submission> GetAll()
     {
-        var photoEntries = new List<Submission>();
+        var data = new List<Submission>();
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -57,14 +60,36 @@ public class SubmissionProvider : IProvider<Submission>
         command.CommandText = GetProcedure;
         using var reader = command.ExecuteReader();
         while (reader.Read())
-            photoEntries.Add(ParseData(reader));
+            data.Add(ParseData(reader));
 
-        return photoEntries;
+        return data;
     }
 
     /// <inheritdoc />
     public int Insert(Submission data)
     {
+        if (data is null) throw new ArgumentNullException(nameof(data));
+
+        if (data.Id != 0) throw new ArgumentException("Id must be 0 while inserting");
+
+        if (data.ContestId < 1)
+            throw new ArgumentException("ContestId must not be less than 1");
+        
+        if (data.UserId < 1)
+            throw new ArgumentException("UserId must not be less than 1");
+        
+        if (data.FileInfoId < 1)
+            throw new ArgumentException("FileInfoId must not be less than 1");
+        
+        if (string.IsNullOrWhiteSpace(data.Caption))
+            throw new ArgumentException("Caption must not be null or whitespace");
+
+        if (string.IsNullOrWhiteSpace(data.RefId))
+            data.RefId = Guid.NewGuid().ToString();
+        
+        if (data.UploadedOn == default)
+            data.UploadedOn = DateTime.Now;
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -83,32 +108,57 @@ public class SubmissionProvider : IProvider<Submission>
     }
 
     /// <inheritdoc />
-    public void Update(Submission data, int id)
+    public bool Update(Submission data, long updateParamsLong = (long)SubmissionParams.None)
     {
+        var updateParams = (SubmissionParams)updateParamsLong;
+        if (data.Id < 1) 
+            throw new ArgumentException("Database Id must not be less than 1");
+
+        if ((SubmissionParams.ContestId & updateParams) == SubmissionParams.ContestId && data.ContestId < 1)
+            throw new ArgumentException("ContestId must not be less than 1");
+        
+        if ((SubmissionParams.UserId & updateParams) == SubmissionParams.UserId && data.UserId < 1)
+            throw new ArgumentException("UserId must not be less than 1");
+        
+        if ((SubmissionParams.FileInfoId & updateParams) == SubmissionParams.FileInfoId && data.FileInfoId < 1)
+            throw new ArgumentException("FileInfoId must not be less than 1");
+        
+        if ((SubmissionParams.Caption & updateParams) == SubmissionParams.Caption && string.IsNullOrWhiteSpace(data.Caption))
+            throw new ArgumentException("Caption must not be null or whitespace");
+        
+        if ((SubmissionParams.RefId & updateParams) == SubmissionParams.RefId && string.IsNullOrWhiteSpace(data.RefId))
+            throw new ArgumentException("RefId must not be null or whitespace");
+        
+        if ((SubmissionParams.UploadedOn & updateParams) == SubmissionParams.UploadedOn && data.UploadedOn == default)
+            throw new ArgumentException("UploadedOn must be valid date.");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = UpdateProcedure;
-        command.Parameters.Add(new SqlParameter("@Id", id));
+        command.Parameters.Add(new SqlParameter("@Id", data.Id));
         command.Parameters.Add(new SqlParameter("@ContestId", data.ContestId));
-        command.Parameters.Add(new SqlParameter("@UpdateContestId", true));
+        command.Parameters.Add(new SqlParameter("@UpdateContestId", SubmissionParams.ContestId & updateParams));
         command.Parameters.Add(new SqlParameter("@FileInfoId", data.FileInfoId));
-        command.Parameters.Add(new SqlParameter("@UpdateFileInfoId", true));
+        command.Parameters.Add(new SqlParameter("@UpdateFileInfoId", SubmissionParams.FileInfoId & updateParams));
         command.Parameters.Add(new SqlParameter("@Caption", data.Caption));
-        command.Parameters.Add(new SqlParameter("@UpdateCaption", true));
+        command.Parameters.Add(new SqlParameter("@UpdateCaption", SubmissionParams.Caption & updateParams));
         command.Parameters.Add(new SqlParameter("@UserId", data.UserId));
-        command.Parameters.Add(new SqlParameter("@UpdateUserId", true));
+        command.Parameters.Add(new SqlParameter("@UpdateUserId", SubmissionParams.UserId & updateParams));
         command.Parameters.Add(new SqlParameter("@UploadedOn", data.UploadedOn));
-        command.Parameters.Add(new SqlParameter("@UpdateUploadedOn", true));
+        command.Parameters.Add(new SqlParameter("@UpdateUploadedOn", SubmissionParams.UploadedOn & updateParams));
         command.Parameters.Add(new SqlParameter("@RefId", data.RefId));
-        command.Parameters.Add(new SqlParameter("@UpdateRefId", true));
-        command.ExecuteNonQuery();
+        command.Parameters.Add(new SqlParameter("@UpdateRefId", SubmissionParams.RefId & updateParams));
+        return command.ExecuteNonQuery() > 0;
     }
 
     /// <inheritdoc />
     public bool Delete(int id)
     {
+        if (id < 1) 
+            throw new ArgumentException("Database Id must not be less than 1");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();

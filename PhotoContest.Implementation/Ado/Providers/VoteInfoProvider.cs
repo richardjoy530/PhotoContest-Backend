@@ -35,6 +35,9 @@ public class VoteInfoProvider : IProvider<VoteInfo>
     /// <inheritdoc />
     public VoteInfo GetById(int id)
     {
+        if (id < 1) 
+            throw new ArgumentException("Database Id must not be less than 1");
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -49,7 +52,7 @@ public class VoteInfoProvider : IProvider<VoteInfo>
     /// <inheritdoc />
     public IEnumerable<VoteInfo> GetAll()
     {
-        var photoEntries = new List<VoteInfo>();
+        var data = new List<VoteInfo>();
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -57,14 +60,33 @@ public class VoteInfoProvider : IProvider<VoteInfo>
         command.CommandText = GetProcedure;
         using var reader = command.ExecuteReader();
         while (reader.Read())
-            photoEntries.Add(ParseData(reader));
+            data.Add(ParseData(reader));
 
-        return photoEntries;
+        return data;
     }
 
     /// <inheritdoc />
     public int Insert(VoteInfo data)
     {
+        if (data is null) throw new ArgumentNullException(nameof(data));
+
+        if (data.Id != 0) throw new ArgumentException("Id must be 0 while inserting");
+        
+        if (data.ContestId < 1)
+            throw new ArgumentException("ContestId must not be less than 1");
+        
+        if (data.UserId < 1)
+            throw new ArgumentException("UserId must not be less than 1");
+        
+        if (data.FirstId < 1)
+            throw new ArgumentException("FirstId must not be less than 1");
+        
+        if (data.SecondId < 1)
+            throw new ArgumentException("SecondId must not be less than 1");
+        
+        if (data.ThirdId < 1)
+            throw new ArgumentException("ThirdId must not be less than 1");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -81,30 +103,52 @@ public class VoteInfoProvider : IProvider<VoteInfo>
     }
 
     /// <inheritdoc />
-    public void Update(VoteInfo data, int id)
+    public bool Update(VoteInfo data, long updateParamsLong = (long)VoteInfoParams.None)
     {
+        var updateParams = (VoteInfoParams)updateParamsLong;
+        if (data.Id < 1) 
+            throw new ArgumentException("Database Id must not be less than 1");
+
+        if ((VoteInfoParams.ContestId & updateParams) == VoteInfoParams.ContestId && data.ContestId < 1)
+            throw new ArgumentException("ContestId must not be less than 1");
+        
+        if ((VoteInfoParams.UserId & updateParams) == VoteInfoParams.UserId && data.UserId < 1)
+            throw new ArgumentException("UserId must not be less than 1");
+        
+        if ((VoteInfoParams.FirstId & updateParams) == VoteInfoParams.FirstId && data.FirstId < 1)
+            throw new ArgumentException("FirstId must not be less than 1");
+        
+        if ((VoteInfoParams.SecondId & updateParams) == VoteInfoParams.SecondId && data.SecondId < 1)
+            throw new ArgumentException("SecondId must not be less than 1");
+        
+        if ((VoteInfoParams.ThirdId & updateParams) == VoteInfoParams.ThirdId && data.ThirdId < 1)
+            throw new ArgumentException("ThirdId must not be less than 1");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = UpdateProcedure;
-        command.Parameters.Add(new SqlParameter("@Id", id));
+        command.Parameters.Add(new SqlParameter("@Id", data.Id));
         command.Parameters.Add(new SqlParameter("@ContestId", data.ContestId));
-        command.Parameters.Add(new SqlParameter("@UpdateContestId", true));
+        command.Parameters.Add(new SqlParameter("@UpdateContestId", VoteInfoParams.ContestId & updateParams));
         command.Parameters.Add(new SqlParameter("@FirstId", data.FirstId));
-        command.Parameters.Add(new SqlParameter("@UpdateFirstId", true));
+        command.Parameters.Add(new SqlParameter("@UpdateFirstId", VoteInfoParams.FirstId & updateParams));
         command.Parameters.Add(new SqlParameter("@SecondId", data.SecondId));
-        command.Parameters.Add(new SqlParameter("@UpdateSecondId", true));
+        command.Parameters.Add(new SqlParameter("@UpdateSecondId", VoteInfoParams.SecondId & updateParams));
         command.Parameters.Add(new SqlParameter("@ThirdId", data.ThirdId));
-        command.Parameters.Add(new SqlParameter("@UpdateThirdId", true));
+        command.Parameters.Add(new SqlParameter("@UpdateThirdId", VoteInfoParams.ThirdId & updateParams));
         command.Parameters.Add(new SqlParameter("@UserId", data.UserId));
-        command.Parameters.Add(new SqlParameter("@UpdateUserId", true));
-        command.ExecuteNonQuery();
+        command.Parameters.Add(new SqlParameter("@UpdateUserId", VoteInfoParams.UserId & updateParams));
+        return command.ExecuteNonQuery() > 0;
     }
 
     /// <inheritdoc />
     public bool Delete(int id)
     {
+        if (id < 1) 
+            throw new ArgumentException("Database Id must not be less than 1");
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();

@@ -25,12 +25,12 @@ public class ProviderTests
         PhotoContest.Implementation.DependencyInjection.ConfigureServices(serviceCollection, true);
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
-        ContestProvider = serviceProvider.GetService<IProvider<Contest>>();
-        FileInfoProvider = serviceProvider.GetService<IProvider<FileInfo>>();
-        SubmissionProvider = serviceProvider.GetService<IProvider<Submission>>();
-        UserInfoProvider = serviceProvider.GetService<IProvider<UserInfo>>();
-        VoteInfoProvider = serviceProvider.GetService<IProvider<VoteInfo>>();
-        ScoreInfoProvider = serviceProvider.GetService<IProvider<ScoreInfo>>();
+        ContestProvider = serviceProvider.GetService<IProvider<Contest>>() ?? throw new InvalidOperationException();
+        FileInfoProvider = serviceProvider.GetService<IProvider<FileInfo>>() ?? throw new InvalidOperationException();
+        SubmissionProvider = serviceProvider.GetService<IProvider<Submission>>() ?? throw new InvalidOperationException();
+        UserInfoProvider = serviceProvider.GetService<IProvider<UserInfo>>() ?? throw new InvalidOperationException();
+        VoteInfoProvider = serviceProvider.GetService<IProvider<VoteInfo>>() ?? throw new InvalidOperationException();
+        ScoreInfoProvider = serviceProvider.GetService<IProvider<ScoreInfo>>() ?? throw new InvalidOperationException();
 
         IdentityMap = new List<KeyValuePair<RecordType, int>>();
     }
@@ -54,11 +54,11 @@ public class ProviderTests
         UserInfo EnsureInfoById(UserInfo expected)
         {
             var actual = UserInfoProvider.GetById(expected.Id);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.Email, actual.Email);
-            Assert.AreEqual(expected.RegistrationDate, actual.RegistrationDate);
-            Assert.AreEqual(expected.RefId, actual.RefId);
+            Assert.That(actual.Id, Is.EqualTo(expected.Id));
+            Assert.That(actual.Name, Is.EqualTo(expected.Name));
+            Assert.That(actual.Email, Is.EqualTo(expected.Email));
+            Assert.That(actual.RegistrationDate, Is.EqualTo(expected.RegistrationDate));
+            Assert.That(actual.RefId, Is.EqualTo(expected.RefId));
             return actual;
         }
         EnsureInfoById(userInfo);
@@ -66,7 +66,8 @@ public class ProviderTests
         //Update
         userInfo.Email = $"updated_{email}";
         userInfo.Name = $"updated_{name}";
-        UserInfoProvider.Update(userInfo, userInfo.Id);
+        var updateParams = UserInfoParams.Email | UserInfoParams.Name;
+        UserInfoProvider.Update(userInfo, (long)updateParams);
         EnsureInfoById(userInfo);
         
         IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.UserInfo, userInfo.Id));
@@ -89,9 +90,9 @@ public class ProviderTests
         Contest EnsureInfoById(Contest expected)
         {
             var actual = ContestProvider.GetById(expected.Id);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.AreEqual(expected.Theme, actual.Theme);
-            Assert.AreEqual(expected.EndDate, actual.EndDate);
+            Assert.That(actual.Id, Is.EqualTo(expected.Id));
+            Assert.That(actual.Theme, Is.EqualTo(expected.Theme));
+            Assert.That(actual.EndDate, Is.EqualTo(expected.EndDate));
             return actual;
         }
         EnsureInfoById(contest);
@@ -99,7 +100,8 @@ public class ProviderTests
         //Update
         contest.Theme = $"updated_{theme}";
         contest.EndDate = DateTime.Parse(dateTimeString).AddDays(5);
-        ContestProvider.Update(contest, contest.Id);
+        var updateParams = ContestParams.Theme | ContestParams.EndDate;
+        ContestProvider.Update(contest, (long)updateParams);
         EnsureInfoById(contest);
         
         IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.Contest, contest.Id));
@@ -121,15 +123,16 @@ public class ProviderTests
         FileInfo EnsureInfoById(FileInfo expected)
         {
             var actual = FileInfoProvider.GetById(expected.Id);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.AreEqual(expected.Path, actual.Path);
+            Assert.That(actual.Id, Is.EqualTo(expected.Id));
+            Assert.That(actual.Path, Is.EqualTo(expected.Path));
             return actual;
         }
         EnsureInfoById(fileInfo);
         
         //Update
         fileInfo.Path = $"updated_{path}";
-        FileInfoProvider.Update(fileInfo, fileInfo.Id);
+        var updateParams = FileInfoParams.Path;
+        FileInfoProvider.Update(fileInfo, (long)updateParams);
         EnsureInfoById(fileInfo);
         
         IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.FileInfo, fileInfo.Id));
@@ -199,12 +202,12 @@ public class ProviderTests
         Submission EnsureInfoById(Submission expected)
         {
             var actual = SubmissionProvider.GetById(expected.Id);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.AreEqual(expected.Caption, actual.Caption);
-            Assert.AreEqual(expected.UploadedOn, actual.UploadedOn);
-            Assert.AreEqual(expected.FileInfoId, actual.FileInfoId);
-            Assert.AreEqual(expected.ContestId, actual.ContestId);
-            Assert.AreEqual(expected.RefId, actual.RefId);
+            Assert.That(actual.Id, Is.EqualTo(expected.Id));
+            Assert.That(actual.Caption, Is.EqualTo(expected.Caption));
+            Assert.That(actual.UploadedOn, Is.EqualTo(expected.UploadedOn));
+            Assert.That(actual.FileInfoId, Is.EqualTo(expected.FileInfoId));
+            Assert.That(actual.ContestId, Is.EqualTo(expected.ContestId));
+            Assert.That(actual.RefId, Is.EqualTo(expected.RefId));
             return actual;
         }
         EnsureInfoById(submissionInfo);
@@ -212,8 +215,8 @@ public class ProviderTests
         //Update
         submissionInfo.Caption = $"updated_{submissionInfo.Caption}";
         submissionInfo.UploadedOn = submissionInfo.UploadedOn.AddDays(5);
-
-        SubmissionProvider.Update(submissionInfo, submissionInfo.Id);
+        var updateParams = SubmissionParams.Caption | SubmissionParams.UploadedOn;
+        SubmissionProvider.Update(submissionInfo, (long)updateParams);
         EnsureInfoById(submissionInfo);
     }
     

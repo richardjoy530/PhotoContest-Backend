@@ -35,6 +35,16 @@ public class ScoreInfoProvider : IProvider<ScoreInfo>
     /// <inheritdoc />
     public int Insert(ScoreInfo data)
     {
+        if (data is null) throw new ArgumentNullException(nameof(data));
+
+        if (data.Id != 0) throw new ArgumentException("Id must be 0 while inserting");
+        
+        if (data.SubmissionId < 1)
+            throw new ArgumentException("Database Id must not be less than 1");
+        
+        if (data.Score < 0)
+            throw new ArgumentException("Score must not be less than 0");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -50,6 +60,9 @@ public class ScoreInfoProvider : IProvider<ScoreInfo>
     /// <inheritdoc />
     public bool Delete(int id)
     {
+        if (id < 1) 
+            throw new ArgumentException("Database Id must not be less than 1");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -62,6 +75,9 @@ public class ScoreInfoProvider : IProvider<ScoreInfo>
     /// <inheritdoc />
     public ScoreInfo GetById(int id)
     {
+        if (id < 1) 
+            throw new ArgumentException("Database Id must not be less than 1");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -90,19 +106,29 @@ public class ScoreInfoProvider : IProvider<ScoreInfo>
     }
 
     /// <inheritdoc />
-    public void Update(ScoreInfo data, int id)
+    public bool Update(ScoreInfo data, long updateParamsLong = (long)ScoreInfoParams.None)
     {
+        var updateParams = (ScoreInfoParams)updateParamsLong;
+        if (data.Id < 1) 
+            throw new ArgumentException("Database Id must not be less than 1");
+
+        if ((ScoreInfoParams.SubmissionId & updateParams) == ScoreInfoParams.SubmissionId && data.SubmissionId < 1)
+            throw new ArgumentException("Database Id must not be less than 1");
+        
+        if ((ScoreInfoParams.Score & updateParams) == ScoreInfoParams.Score && data.Score < 0)
+            throw new ArgumentException("Score must not be less than 0");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = UpdateProcedure;
-        command.Parameters.Add(new SqlParameter("@Id", id));
+        command.Parameters.Add(new SqlParameter("@Id", data.Id));
         command.Parameters.Add(new SqlParameter("@Score", data.Score));
-        command.Parameters.Add(new SqlParameter("@UpdateScore", true));
+        command.Parameters.Add(new SqlParameter("@UpdateScore", ScoreInfoParams.Score & updateParams));
         command.Parameters.Add(new SqlParameter("@SubmissionId", data.SubmissionId));
-        command.Parameters.Add(new SqlParameter("@UpdateSubmissionId", true));
-        command.ExecuteNonQuery();
+        command.Parameters.Add(new SqlParameter("@UpdateSubmissionId", ScoreInfoParams.SubmissionId & updateParams));
+        return command.ExecuteNonQuery() > 0;
     }
 
     private static ScoreInfo ParseData(System.Data.IDataRecord record)

@@ -35,6 +35,22 @@ public class UserInfoProvider : IProvider<UserInfo>
     /// <inheritdoc />
     public int Insert(UserInfo data)
     {
+        if (data is null) throw new ArgumentNullException(nameof(data));
+
+        if (data.Id != 0) throw new ArgumentException("Id must be 0 while inserting");
+
+        if (string.IsNullOrWhiteSpace(data.Name))
+            throw new ArgumentException($"{nameof(data.Name)} is null or empty");
+        
+        if (string.IsNullOrWhiteSpace(data.Email))
+            throw new ArgumentException($"{nameof(data.Email)} is null or empty");
+        
+        if (string.IsNullOrWhiteSpace(data.RefId))
+            data.RefId = Guid.NewGuid().ToString();
+        
+        if (data.RegistrationDate == default)
+            data.RegistrationDate = DateTime.Now;
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -53,6 +69,9 @@ public class UserInfoProvider : IProvider<UserInfo>
     /// <inheritdoc />
     public bool Delete(int id)
     {
+        if (id < 1) 
+            throw new ArgumentException("Database Id must not be less than 1");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -65,6 +84,9 @@ public class UserInfoProvider : IProvider<UserInfo>
     /// <inheritdoc />
     public UserInfo GetById(int id)
     {
+        if (id < 1) 
+            throw new ArgumentException("Database Id must not be less than 1");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -93,23 +115,40 @@ public class UserInfoProvider : IProvider<UserInfo>
     }
 
     /// <inheritdoc />
-    public void Update(UserInfo data, int id)
+    public bool Update(UserInfo data, long updateParamsLong = (long)UserInfoParams.None)
     {
+        var updateParams = (UserInfoParams)updateParamsLong;
+        
+        if (data.Id < 1) 
+            throw new ArgumentException("Database Id must not be less than 1");
+        
+        if ((UserInfoParams.Name & updateParams) == UserInfoParams.Name && string.IsNullOrWhiteSpace(data.Name))
+            throw new ArgumentException("Name must not be null or whitespace");
+        
+        if ((UserInfoParams.Email & updateParams) == UserInfoParams.Email && string.IsNullOrWhiteSpace(data.Email))
+            throw new ArgumentException("Email must not be null or whitespace");
+        
+        if ((UserInfoParams.RefId & updateParams) == UserInfoParams.RefId && string.IsNullOrWhiteSpace(data.RefId))
+            throw new ArgumentException("RefId must not be null or whitespace");
+        
+        if ((UserInfoParams.RegistrationDate & updateParams) == UserInfoParams.RegistrationDate && data.RegistrationDate == default)
+            throw new ArgumentException("RegistrationDate must be valid date.");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = UpdateProcedure;
-        command.Parameters.Add(new SqlParameter("@Id", id));
+        command.Parameters.Add(new SqlParameter("@Id", data.Id));
         command.Parameters.Add(new SqlParameter("@Name", data.Name));
-        command.Parameters.Add(new SqlParameter("@UpdateName", true));
+        command.Parameters.Add(new SqlParameter("@UpdateName", UserInfoParams.Name & updateParams));
         command.Parameters.Add(new SqlParameter("@Email", data.Email));
-        command.Parameters.Add(new SqlParameter("@UpdateEmail", true));
+        command.Parameters.Add(new SqlParameter("@UpdateEmail", UserInfoParams.Email & updateParams));
         command.Parameters.Add(new SqlParameter("@RefId", data.RefId));
-        command.Parameters.Add(new SqlParameter("@UpdateRefId", false));
+        command.Parameters.Add(new SqlParameter("@UpdateRefId", UserInfoParams.RefId & updateParams));
         command.Parameters.Add(new SqlParameter("@RegistrationDate", data.RegistrationDate));
-        command.Parameters.Add(new SqlParameter("@UpdateRegistrationDate", true));
-        command.ExecuteNonQuery();
+        command.Parameters.Add(new SqlParameter("@UpdateRegistrationDate", UserInfoParams.RegistrationDate & updateParams));
+        return command.ExecuteNonQuery() > 0;
     }
 
     private static UserInfo ParseData(System.Data.IDataRecord record)

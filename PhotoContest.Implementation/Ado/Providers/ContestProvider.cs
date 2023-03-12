@@ -35,6 +35,16 @@ public class ContestProvider : IProvider<Contest>
     /// <inheritdoc />
     public int Insert(Contest data)
     {
+        if (data is null) throw new ArgumentNullException(nameof(data));
+
+        if (data.Id != 0) throw new ArgumentException("Id must be 0 while inserting");
+
+        if (data.EndDate == default)
+            throw new ArgumentException($"{nameof(data.EndDate)} is invalid current value is {data.EndDate}");
+        
+        if (string.IsNullOrWhiteSpace(data.Theme))
+            throw new ArgumentException($"{nameof(data.Theme)} is null or empty");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -51,6 +61,8 @@ public class ContestProvider : IProvider<Contest>
     /// <inheritdoc />
     public bool Delete(int id)
     {
+        if (id < 1) throw new ArgumentException("Database id must not be less than 1");
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -63,6 +75,8 @@ public class ContestProvider : IProvider<Contest>
     /// <inheritdoc />
     public Contest GetById(int id)
     {
+        if (id < 1) throw new ArgumentException("Database id must not be less than 1");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -91,19 +105,30 @@ public class ContestProvider : IProvider<Contest>
     }
 
     /// <inheritdoc />
-    public void Update(Contest data, int id)
+    public bool Update(Contest data, long updateParamsLong = (long)ContestParams.None)
     {
+        var updateParams = (ContestParams)updateParamsLong;
+        if (data is null) throw new ArgumentNullException(nameof(data));
+        
+        if (data.Id < 1) throw new ArgumentException("Database Id must not be less than 1");
+
+        if ((ContestParams.EndDate & updateParams) == ContestParams.EndDate && data.EndDate == default)
+            throw new ArgumentException($"{nameof(data.EndDate)} is invalid current value is {data.EndDate}");
+        
+        if ((ContestParams.Theme & updateParams) == ContestParams.Theme && string.IsNullOrWhiteSpace(data.Theme))
+            throw new ArgumentException($"{nameof(data.Theme)} is null or empty");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = UpdateProcedure;
-        command.Parameters.Add(new SqlParameter("@Id", id));
+        command.Parameters.Add(new SqlParameter("@Id", data.Id));
         command.Parameters.Add(new SqlParameter("@Theme", data.Theme));
-        command.Parameters.Add(new SqlParameter("@UpdateTheme", true));
+        command.Parameters.Add(new SqlParameter("@UpdateTheme", ContestParams.Theme & updateParams));
         command.Parameters.Add(new SqlParameter("@EndDate", data.EndDate));
-        command.Parameters.Add(new SqlParameter("@UpdateEndDate", true));
-        command.ExecuteNonQuery();
+        command.Parameters.Add(new SqlParameter("@UpdateEndDate", ContestParams.EndDate & updateParams));
+        return command.ExecuteNonQuery() > 0;
     }
 
     private static Contest ParseData(System.Data.IDataRecord record)

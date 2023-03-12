@@ -36,11 +36,11 @@ public interface IProvider<TModel> where TModel : IDataRecord
     public int Insert(TModel data);
 
     /// <summary>
-    ///     Updates <typeparamref name="TModel" /> by <paramref name="id" />
+    ///     Updates <typeparamref name="TModel" />
     /// </summary>
     /// <param name="data"></param>
-    /// <param name="id"></param>
-    public void Update(TModel data, int id);
+    /// <param name="updateParams"></param>
+    public bool Update(TModel data, long updateParams);
 
     /// <summary>
     ///     Deletes the record of <typeparamref name="TModel" /> with <paramref name="id" />

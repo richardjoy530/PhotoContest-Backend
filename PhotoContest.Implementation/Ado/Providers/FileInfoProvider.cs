@@ -35,6 +35,13 @@ public class FileInfoProvider : IProvider<FileInfo>
     /// <inheritdoc />
     public int Insert(FileInfo data)
     {
+        if (data is null) throw new ArgumentNullException(nameof(data));
+
+        if (data.Id != 0) throw new ArgumentException("Id must be 0 while inserting");
+        
+        if (string.IsNullOrWhiteSpace(data.Path))
+            throw new ArgumentException($"{nameof(data.Path)} is null or empty");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -50,6 +57,8 @@ public class FileInfoProvider : IProvider<FileInfo>
     /// <inheritdoc />
     public bool Delete(int id)
     {
+        if (id < 1) throw new ArgumentException("Database id must not be less than 1");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -62,6 +71,8 @@ public class FileInfoProvider : IProvider<FileInfo>
     /// <inheritdoc />
     public FileInfo GetById(int id)
     {
+        if (id < 1) throw new ArgumentException("Database id must not be less than 1");
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -90,17 +101,23 @@ public class FileInfoProvider : IProvider<FileInfo>
     }
 
     /// <inheritdoc />
-    public void Update(FileInfo data, int id)
+    public bool Update(FileInfo data, long updateParamsLong = (long)FileInfoParams.None)
     {
+        var updateParams = (FileInfoParams)updateParamsLong;
+        if (data.Id < 1) throw new ArgumentException("Database Id must not be less than 1");
+
+        if ((FileInfoParams.Path & updateParams) == FileInfoParams.Path && string.IsNullOrWhiteSpace(data.Path))
+            throw new ArgumentException($"{nameof(data.Path)} is null or empty");
+        
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = UpdateProcedure;
-        command.Parameters.Add(new SqlParameter("@Id", id));
+        command.Parameters.Add(new SqlParameter("@Id", data.Id));
         command.Parameters.Add(new SqlParameter("@Path", data.Path));
-        command.Parameters.Add(new SqlParameter("@UpdatePath", true));
-        command.ExecuteNonQuery();
+        command.Parameters.Add(new SqlParameter("@UpdatePath", FileInfoParams.Path & updateParams));
+        return command.ExecuteNonQuery() > 0;
     }
 
     private static FileInfo ParseData(System.Data.IDataRecord record)
