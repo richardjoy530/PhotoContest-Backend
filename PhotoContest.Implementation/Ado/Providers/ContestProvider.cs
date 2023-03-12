@@ -90,6 +90,12 @@ public class ContestProvider : IProvider<Contest>
     }
 
     /// <inheritdoc />
+    public int[] GetAllIds()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc />
     public IEnumerable<Contest> GetAll()
     {
         var contests = new List<Contest>();

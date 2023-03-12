@@ -1,30 +1,30 @@
-namespace PhotoContest.Implementation.Ado.DataRecords;
+namespace PhotoContest.Models;
 
 /// <summary>
 /// </summary>
-public record VoteInfo : IDataRecord
+public enum AssetType
 {
     /// <summary>
     /// </summary>
-    public int ContestId;
-
+    Contest,
+    
     /// <summary>
     /// </summary>
-    public int FirstId;
-
+    FileInfo,
+    
     /// <summary>
     /// </summary>
-    public int Id { get; set; }
-
+    ScoreInfo,
+    
     /// <summary>
     /// </summary>
-    public int SecondId;
-
+    Submission,
+    
     /// <summary>
     /// </summary>
-    public int ThirdId;
-
+    UserInfo,
+    
     /// <summary>
     /// </summary>
-    public int UserId;
+    VoteInfo,
 }

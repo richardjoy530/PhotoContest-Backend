@@ -12,9 +12,10 @@ public record Contest : IDataRecord
 
     /// <summary>
     /// </summary>
-    public int Id;
+    public string Theme;
 
     /// <summary>
+    /// 
     /// </summary>
-    public string Theme;
+    public int Id { get; set; }
 }

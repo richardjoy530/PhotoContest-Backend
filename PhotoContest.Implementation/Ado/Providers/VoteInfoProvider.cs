@@ -51,6 +51,12 @@ public class VoteInfoProvider : IProvider<VoteInfo>
     }
 
     /// <inheritdoc />
+    public int[] GetAllIds()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc />
     public IEnumerable<VoteInfo> GetAll()
     {
         var data = new List<VoteInfo>();

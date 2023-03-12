@@ -20,7 +20,7 @@ public record Submission : IDataRecord
 
     /// <summary>
     /// </summary>
-    public int Id;
+    public int Id { get; set; }
 
     /// <summary>
     /// </summary>

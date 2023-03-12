@@ -51,6 +51,12 @@ public class SubmissionProvider : IProvider<Submission>
     }
 
     /// <inheritdoc />
+    public int[] GetAllIds()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc />
     public IEnumerable<Submission> GetAll()
     {
         var data = new List<Submission>();

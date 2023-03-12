@@ -8,7 +8,7 @@ namespace PhotoContest.Implementation.Tests;
 
 public class ProviderTests
 {
-    private static readonly string ConnectionString = "Server=localhost;Database=FridayDatabase;Trusted_Connection=yes;";
+    private static readonly string ConnectionString = "Server=localhost;Database=TestDatabase;Trusted_Connection=yes;";
     private IProvider<Contest> ContestProvider { get; set; }
     private IProvider<FileInfo> FileInfoProvider { get; set; }
     private IProvider<Submission> SubmissionProvider { get; set; }

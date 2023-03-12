@@ -21,6 +21,11 @@ public interface IProvider<TModel> where TModel : IDataRecord
     public TModel GetById(int id);
 
     /// <summary>
+    ///     Retrieves all the Id in database.
+    /// </summary>
+    public int[] GetAllIds();
+
+    /// <summary>
     ///     Retrieves a list of all the <typeparamref name="TModel" /> in database
     /// </summary>
     /// <returns>An IEnumerable of <typeparamref name="TModel" /></returns>

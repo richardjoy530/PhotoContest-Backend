@@ -100,6 +100,12 @@ public class UserInfoProvider : IProvider<UserInfo>
     }
 
     /// <inheritdoc />
+    public int[] GetAllIds()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc />
     public IEnumerable<UserInfo> GetAll()
     {
         var userInfos = new List<UserInfo>();

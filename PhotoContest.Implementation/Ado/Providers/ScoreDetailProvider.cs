@@ -91,6 +91,12 @@ public class ScoreInfoProvider : IProvider<ScoreInfo>
     }
 
     /// <inheritdoc />
+    public int[] GetAllIds()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc />
     public IEnumerable<ScoreInfo> GetAll()
     {
         var scoreInfos = new List<ScoreInfo>();

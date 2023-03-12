@@ -3,7 +3,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using PhotoContest.Implementation.Ado.DataRecords;
 using PhotoContest.Implementation.Ado.Providers;
-using PhotoContest.Implementation.Service;
 using PhotoContest.Implementation.Service.Files;
 
 #endregion
@@ -33,6 +32,5 @@ public static class DependencyInjection
             services.AddSingleton<IFileProvider, AzureBlobProvider>();
 
         services.AddSingleton<IFileService, FileService>();
-        services.AddSingleton<IContestService, ContestService>();
     }
 }

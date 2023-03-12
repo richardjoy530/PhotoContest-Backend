@@ -86,6 +86,12 @@ public class FileInfoProvider : IProvider<FileInfo>
     }
 
     /// <inheritdoc />
+    public int[] GetAllIds()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc />
     public IEnumerable<FileInfo> GetAll()
     {
         var contests = new List<FileInfo>();
