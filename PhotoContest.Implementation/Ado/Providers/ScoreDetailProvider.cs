@@ -44,7 +44,7 @@ public class ScoreInfoProvider : IProvider<ScoreInfo>
         command.Parameters.Add(new SqlParameter("@Score", data.Score));
         command.Parameters.Add(new SqlParameter("@SubmissionId", data.SubmissionId));
         command.ExecuteNonQuery();
-        return Convert.ToInt32(command.Parameters["@Id"].Value);
+        return data.Id = Convert.ToInt32(command.Parameters["@Id"].Value);
     }
 
     /// <inheritdoc />
@@ -98,8 +98,10 @@ public class ScoreInfoProvider : IProvider<ScoreInfo>
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = UpdateProcedure;
         command.Parameters.Add(new SqlParameter("@Id", id));
-        command.Parameters.Add(new SqlParameter("@Path", data.Score));
+        command.Parameters.Add(new SqlParameter("@Score", data.Score));
+        command.Parameters.Add(new SqlParameter("@UpdateScore", true));
         command.Parameters.Add(new SqlParameter("@SubmissionId", data.SubmissionId));
+        command.Parameters.Add(new SqlParameter("@UpdateSubmissionId", true));
         command.ExecuteNonQuery();
     }
 

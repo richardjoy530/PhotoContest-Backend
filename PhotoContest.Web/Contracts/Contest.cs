@@ -22,7 +22,7 @@ public class Contest
     public string Theme { get; set; }
 
     /// <summary>
-    ///     End date of the contest
+    ///     End date of the contest in yyyy-mm-dd format timezone IST
     /// </summary>
     public DateTime EndDate { get; set; }
 }

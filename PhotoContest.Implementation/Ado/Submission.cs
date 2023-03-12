@@ -36,4 +36,9 @@ public record Submission : IDataRecord
     /// 
     /// </summary>
     public int UserId;
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public string RefId;
 }

@@ -15,7 +15,7 @@ public class ProviderTests
     private IProvider<UserInfo> UserInfoProvider { get; set; }
     private IProvider<VoteInfo> VoteInfoProvider { get; set; }
     private IProvider<ScoreInfo> ScoreInfoProvider { get; set; }
-    private static IList<KeyValuePair<RecordType, int>> CleanupIdentityMap { get; set; }
+    private static IList<KeyValuePair<RecordType, int>> IdentityMap { get; set; }
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
@@ -32,7 +32,7 @@ public class ProviderTests
         VoteInfoProvider = serviceProvider.GetService<IProvider<VoteInfo>>();
         ScoreInfoProvider = serviceProvider.GetService<IProvider<ScoreInfo>>();
 
-        CleanupIdentityMap = new List<KeyValuePair<RecordType, int>>();
+        IdentityMap = new List<KeyValuePair<RecordType, int>>();
     }
 
     [TestCase("Sceen Chako", "sceen.chako@gmail.com")]
@@ -69,7 +69,7 @@ public class ProviderTests
         UserInfoProvider.Update(userInfo, userInfo.Id);
         EnsureInfoById(userInfo);
         
-        CleanupIdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.UserInfo, userInfo.Id));
+        IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.UserInfo, userInfo.Id));
     }
 
     [TestCase("Heroes", "2023-05-27")]
@@ -102,7 +102,7 @@ public class ProviderTests
         ContestProvider.Update(contest, contest.Id);
         EnsureInfoById(contest);
         
-        CleanupIdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.Contest, contest.Id));
+        IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.Contest, contest.Id));
     }
 
     [TestCase("https://learn.microsoft.com/en-us/s-studio-ssms?redirectedfrom=MSDN&view=sql-server-ver16")]
@@ -132,30 +132,111 @@ public class ProviderTests
         FileInfoProvider.Update(fileInfo, fileInfo.Id);
         EnsureInfoById(fileInfo);
         
-        CleanupIdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.FileInfo, fileInfo.Id));
+        IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.FileInfo, fileInfo.Id));
+    }
+
+    private void InsertUserInfo(string name, string email)
+    {
+        var userInfo = new UserInfo
+        {
+            Name = name,
+            Email = email,
+            RegistrationDate = DateTime.Today,
+            RefId = Guid.NewGuid().ToString()
+        };
+        
+        //Insert
+        UserInfoProvider.Insert(userInfo);
+        IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.UserInfo, userInfo.Id));
+    }
+
+    private void InsertContest(string theme, string dateTimeString)
+    {
+        var contest = new Contest
+        {
+            EndDate = DateTime.Parse(dateTimeString),
+            Theme = theme,
+        };
+        
+        //Insert
+        ContestProvider.Insert(contest);
+        IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.Contest, contest.Id));
+    }
+
+    private void InsertFileInfo(string path)
+    {
+        var fileInfo = new FileInfo
+        {
+            Path = path,
+        };
+        
+        //Insert
+        FileInfoProvider.Insert(fileInfo);
+        IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.FileInfo, fileInfo.Id));
+    }
+
+    [Test]
+    public void SubmissionProviderTests()
+    {
+        InsertUserInfo("Jimbru", "jimbru.rocks@hotmail.com");
+        InsertContest("Circus Time 1 2 3", "2019-01-01");
+        InsertFileInfo("https://github.com/actions/setup-dotnet");
+        var submissionInfo = new Submission
+        {
+            UserId = IdentityMap.Where(kv => kv.Key == RecordType.UserInfo).Select(kv => kv.Value).First(),
+            Caption = "The best photo ever",
+            UploadedOn = DateTime.Parse("2019-02-01"),
+            FileInfoId = IdentityMap.Where(kv => kv.Key == RecordType.FileInfo).Select(kv => kv.Value).First(),
+            ContestId = IdentityMap.Where(kv => kv.Key == RecordType.Contest).Select(kv => kv.Value).First(),
+            RefId = Guid.NewGuid().ToString()
+        };
+        
+        //Insert
+        SubmissionProvider.Insert(submissionInfo);
+        IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.Submission, submissionInfo.Id));
+
+        //Get by id
+        Submission EnsureInfoById(Submission expected)
+        {
+            var actual = SubmissionProvider.GetById(expected.Id);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.Caption, actual.Caption);
+            Assert.AreEqual(expected.UploadedOn, actual.UploadedOn);
+            Assert.AreEqual(expected.FileInfoId, actual.FileInfoId);
+            Assert.AreEqual(expected.ContestId, actual.ContestId);
+            Assert.AreEqual(expected.RefId, actual.RefId);
+            return actual;
+        }
+        EnsureInfoById(submissionInfo);
+        
+        //Update
+        submissionInfo.Caption = $"updated_{submissionInfo.Caption}";
+        submissionInfo.UploadedOn = submissionInfo.UploadedOn.AddDays(5);
+
+        SubmissionProvider.Update(submissionInfo, submissionInfo.Id);
+        EnsureInfoById(submissionInfo);
     }
     
     [OneTimeTearDown]
     public void TearDown()
     {
-        foreach (var kvp in CleanupIdentityMap)
-        {
-            switch (kvp.Key)
-            {
-                case RecordType.UserInfo: Assert.IsTrue(UserInfoProvider.Delete(kvp.Value));
-                    break;
-                case RecordType.ScoreInfo: Assert.IsTrue(ScoreInfoProvider.Delete(kvp.Value));
-                    break;
-                case RecordType.Contest: Assert.IsTrue(ContestProvider.Delete(kvp.Value));
-                    break;
-                case RecordType.VoteInfo: Assert.IsTrue(VoteInfoProvider.Delete(kvp.Value));
-                    break;
-                case RecordType.Submission: Assert.IsTrue(SubmissionProvider.Delete(kvp.Value));
-                    break;
-                case RecordType.FileInfo: Assert.IsTrue(FileInfoProvider.Delete(kvp.Value));
-                    break;
-            }
-        }
+        foreach (var id in IdentityMap.Where(kv => kv.Key == RecordType.VoteInfo).Select(kv => kv.Value))
+            Assert.IsTrue(VoteInfoProvider.Delete(id));
+        
+        foreach (var id in IdentityMap.Where(kv => kv.Key == RecordType.ScoreInfo).Select(kv => kv.Value))
+            Assert.IsTrue(ScoreInfoProvider.Delete(id));
+        
+        foreach (var id in IdentityMap.Where(kv => kv.Key == RecordType.Submission).Select(kv => kv.Value))
+            Assert.IsTrue(SubmissionProvider.Delete(id));
+        
+        foreach (var id in IdentityMap.Where(kv => kv.Key == RecordType.FileInfo).Select(kv => kv.Value))
+            Assert.IsTrue(FileInfoProvider.Delete(id));
+        
+        foreach (var id in IdentityMap.Where(kv => kv.Key == RecordType.UserInfo).Select(kv => kv.Value))
+            Assert.IsTrue(UserInfoProvider.Delete(id));
+        
+        foreach (var id in IdentityMap.Where(kv => kv.Key == RecordType.Contest).Select(kv => kv.Value))
+            Assert.IsTrue(ContestProvider.Delete(id));
     }
 }
 

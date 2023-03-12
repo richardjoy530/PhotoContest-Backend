@@ -77,7 +77,7 @@ public class VoteInfoProvider : IProvider<VoteInfo>
         command.Parameters.Add(new SqlParameter("@ThirdId", data.ThirdId));
         command.Parameters.Add(new SqlParameter("@UserId", data.UserId));
         command.ExecuteNonQuery();
-        return Convert.ToInt32(command.Parameters["@Id"].Value);
+        return data.Id = Convert.ToInt32(command.Parameters["@Id"].Value);
     }
 
     /// <inheritdoc />
@@ -90,10 +90,15 @@ public class VoteInfoProvider : IProvider<VoteInfo>
         command.CommandText = UpdateProcedure;
         command.Parameters.Add(new SqlParameter("@Id", id));
         command.Parameters.Add(new SqlParameter("@ContestId", data.ContestId));
+        command.Parameters.Add(new SqlParameter("@UpdateContestId", true));
         command.Parameters.Add(new SqlParameter("@FirstId", data.FirstId));
+        command.Parameters.Add(new SqlParameter("@UpdateFirstId", true));
         command.Parameters.Add(new SqlParameter("@SecondId", data.SecondId));
+        command.Parameters.Add(new SqlParameter("@UpdateSecondId", true));
         command.Parameters.Add(new SqlParameter("@ThirdId", data.ThirdId));
+        command.Parameters.Add(new SqlParameter("@UpdateThirdId", true));
         command.Parameters.Add(new SqlParameter("@UserId", data.UserId));
+        command.Parameters.Add(new SqlParameter("@UpdateUserId", true));
         command.ExecuteNonQuery();
     }
 
