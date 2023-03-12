@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using PhotoContest.Implementation.Ado;
 
 namespace PhotoContest.Implementation.Service;
@@ -38,5 +40,24 @@ public class ContestService : IContestService
     public Models.Contest GetCurrentContest()
     {
         throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<Models.Contest> GetAllContests()
+    {
+        return _contestProvider.GetAll().Select(ToModel);
+    }
+
+    private Models.Contest ToModel(Contest arg)
+    {
+        return new Models.Contest()
+        {
+            EndDate = arg.EndDate,
+            Id = arg.Id,
+            Theme = arg.Theme
+        };
     }
 }

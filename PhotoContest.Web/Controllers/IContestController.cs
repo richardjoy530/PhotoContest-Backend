@@ -21,42 +21,5 @@ public interface IContestController
     /// 
     /// </summary>
     /// <returns></returns>
-    Contest GetCurrentContest();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    Contest GetContestById(int id);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    Contest[] GetAllContests();
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="submission"></param>
-    void AddPhotoSubmission(Submission submission);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    Submission[] GetCurrentSubmissions();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="submissionId"></param>
-    /// <param name="position"></param>
-    void Vote(int submissionId, int position);
-
-    /// <summary>
-    /// Current user's vote details for the current contest
-    /// </summary>
-    VoteInfo GetVoteInfo();
+    Contest[] GetAll();
 }

@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE FileInfo_Update
     @Id             int,
-    @Path          varchar(50) = NULL,
+    @Path          varchar(200) = NULL,
     @UpdatePath    bit = 0
 AS
 
