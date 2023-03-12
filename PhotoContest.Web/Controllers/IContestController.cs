@@ -18,7 +18,6 @@ public interface IContestController
     int CreateContest([FromBody] Contest contest);
 
     /// <summary>
-    /// 
     /// </summary>
     /// <returns></returns>
     Contest[] GetAll();

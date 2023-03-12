@@ -1,8 +1,8 @@
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
-using PhotoContest.Implementation.Ado;
-using FileInfo = PhotoContest.Implementation.Ado.FileInfo;
+using PhotoContest.Implementation.Ado.DataRecords;
+using FileInfo = PhotoContest.Implementation.Ado.DataRecords.FileInfo;
 
 namespace PhotoContest.Implementation.Tests;
 
@@ -20,9 +20,9 @@ public class ProviderTests
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        var serviceCollection = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
+        var serviceCollection = new ServiceCollection();
         serviceCollection.AddSingleton<IDbConnection>(_ => new SqlConnection(ConnectionString));
-        PhotoContest.Implementation.DependencyInjection.ConfigureServices(serviceCollection, true);
+        serviceCollection.ConfigureServices(true);
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
         ContestProvider = serviceProvider.GetService<IProvider<Contest>>() ?? throw new InvalidOperationException();
@@ -46,10 +46,10 @@ public class ProviderTests
             RegistrationDate = DateTime.Today,
             RefId = Guid.NewGuid().ToString()
         };
-        
+
         //Insert
         UserInfoProvider.Insert(userInfo);
-        
+
         //Get by id
         UserInfo EnsureInfoById(UserInfo expected)
         {
@@ -61,15 +61,16 @@ public class ProviderTests
             Assert.That(actual.RefId, Is.EqualTo(expected.RefId));
             return actual;
         }
+
         EnsureInfoById(userInfo);
-        
+
         //Update
         userInfo.Email = $"updated_{email}";
         userInfo.Name = $"updated_{name}";
         var updateParams = UserInfoParams.Email | UserInfoParams.Name;
         UserInfoProvider.Update(userInfo, (long)updateParams);
         EnsureInfoById(userInfo);
-        
+
         IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.UserInfo, userInfo.Id));
     }
 
@@ -80,12 +81,12 @@ public class ProviderTests
         var contest = new Contest
         {
             EndDate = DateTime.Parse(dateTimeString),
-            Theme = theme,
+            Theme = theme
         };
-        
+
         //Insert
         ContestProvider.Insert(contest);
-        
+
         //Get by id
         Contest EnsureInfoById(Contest expected)
         {
@@ -95,15 +96,16 @@ public class ProviderTests
             Assert.That(actual.EndDate, Is.EqualTo(expected.EndDate));
             return actual;
         }
+
         EnsureInfoById(contest);
-        
+
         //Update
         contest.Theme = $"updated_{theme}";
         contest.EndDate = DateTime.Parse(dateTimeString).AddDays(5);
         var updateParams = ContestParams.Theme | ContestParams.EndDate;
         ContestProvider.Update(contest, (long)updateParams);
         EnsureInfoById(contest);
-        
+
         IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.Contest, contest.Id));
     }
 
@@ -113,12 +115,12 @@ public class ProviderTests
     {
         var fileInfo = new FileInfo
         {
-            Path = path,
+            Path = path
         };
-        
+
         //Insert
         FileInfoProvider.Insert(fileInfo);
-        
+
         //Get by id
         FileInfo EnsureInfoById(FileInfo expected)
         {
@@ -127,14 +129,15 @@ public class ProviderTests
             Assert.That(actual.Path, Is.EqualTo(expected.Path));
             return actual;
         }
+
         EnsureInfoById(fileInfo);
-        
+
         //Update
         fileInfo.Path = $"updated_{path}";
         var updateParams = FileInfoParams.Path;
         FileInfoProvider.Update(fileInfo, (long)updateParams);
         EnsureInfoById(fileInfo);
-        
+
         IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.FileInfo, fileInfo.Id));
     }
 
@@ -147,7 +150,7 @@ public class ProviderTests
             RegistrationDate = DateTime.Today,
             RefId = Guid.NewGuid().ToString()
         };
-        
+
         //Insert
         UserInfoProvider.Insert(userInfo);
         IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.UserInfo, userInfo.Id));
@@ -158,9 +161,9 @@ public class ProviderTests
         var contest = new Contest
         {
             EndDate = DateTime.Parse(dateTimeString),
-            Theme = theme,
+            Theme = theme
         };
-        
+
         //Insert
         ContestProvider.Insert(contest);
         IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.Contest, contest.Id));
@@ -170,9 +173,9 @@ public class ProviderTests
     {
         var fileInfo = new FileInfo
         {
-            Path = path,
+            Path = path
         };
-        
+
         //Insert
         FileInfoProvider.Insert(fileInfo);
         IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.FileInfo, fileInfo.Id));
@@ -193,7 +196,7 @@ public class ProviderTests
             ContestId = IdentityMap.Where(kv => kv.Key == RecordType.Contest).Select(kv => kv.Value).First(),
             RefId = Guid.NewGuid().ToString()
         };
-        
+
         //Insert
         SubmissionProvider.Insert(submissionInfo);
         IdentityMap.Add(new KeyValuePair<RecordType, int>(RecordType.Submission, submissionInfo.Id));
@@ -210,8 +213,9 @@ public class ProviderTests
             Assert.That(actual.RefId, Is.EqualTo(expected.RefId));
             return actual;
         }
+
         EnsureInfoById(submissionInfo);
-        
+
         //Update
         submissionInfo.Caption = $"updated_{submissionInfo.Caption}";
         submissionInfo.UploadedOn = submissionInfo.UploadedOn.AddDays(5);
@@ -219,25 +223,25 @@ public class ProviderTests
         SubmissionProvider.Update(submissionInfo, (long)updateParams);
         EnsureInfoById(submissionInfo);
     }
-    
+
     [OneTimeTearDown]
     public void TearDown()
     {
         foreach (var id in IdentityMap.Where(kv => kv.Key == RecordType.VoteInfo).Select(kv => kv.Value))
             Assert.IsTrue(VoteInfoProvider.Delete(id));
-        
+
         foreach (var id in IdentityMap.Where(kv => kv.Key == RecordType.ScoreInfo).Select(kv => kv.Value))
             Assert.IsTrue(ScoreInfoProvider.Delete(id));
-        
+
         foreach (var id in IdentityMap.Where(kv => kv.Key == RecordType.Submission).Select(kv => kv.Value))
             Assert.IsTrue(SubmissionProvider.Delete(id));
-        
+
         foreach (var id in IdentityMap.Where(kv => kv.Key == RecordType.FileInfo).Select(kv => kv.Value))
             Assert.IsTrue(FileInfoProvider.Delete(id));
-        
+
         foreach (var id in IdentityMap.Where(kv => kv.Key == RecordType.UserInfo).Select(kv => kv.Value))
             Assert.IsTrue(UserInfoProvider.Delete(id));
-        
+
         foreach (var id in IdentityMap.Where(kv => kv.Key == RecordType.Contest).Select(kv => kv.Value))
             Assert.IsTrue(ContestProvider.Delete(id));
     }

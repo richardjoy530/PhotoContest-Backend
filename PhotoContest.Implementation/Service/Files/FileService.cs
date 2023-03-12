@@ -2,20 +2,18 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using FileInfo = PhotoContest.Implementation.Ado.FileInfo;
+using FileInfo = PhotoContest.Implementation.Ado.DataRecords.FileInfo;
 
 namespace PhotoContest.Implementation.Service.Files;
 
 /// <summary>
-/// 
 /// </summary>
 public class FileService : IFileService
 {
-    private readonly IFileProvider _fileProvider;
     private readonly IProvider<FileInfo> _fileInfoProvider;
+    private readonly IFileProvider _fileProvider;
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="fileProvider"></param>
     /// <param name="fileInfoProvider"></param>
@@ -25,8 +23,8 @@ public class FileService : IFileService
         _fileInfoProvider = fileInfoProvider ?? throw new ArgumentNullException(nameof(fileInfoProvider));
         _fileProvider = fileProvider ?? throw new ArgumentNullException(nameof(fileProvider));
     }
+
     /// <summary>
-    /// 
     /// </summary>
     public async Task SaveFile(IFormFile file)
     {
@@ -40,7 +38,6 @@ public class FileService : IFileService
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>

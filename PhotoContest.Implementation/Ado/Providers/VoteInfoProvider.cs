@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using PhotoContest.Implementation.Ado.DataRecords;
 
 #endregion
 
@@ -14,12 +15,12 @@ namespace PhotoContest.Implementation.Ado.Providers;
 /// </summary>
 public class VoteInfoProvider : IProvider<VoteInfo>
 {
-    private readonly string _connectionString;
     private const string GetByIdProcedure = "[dbo].[VoteInfo_GetById]";
     private const string GetProcedure = "[dbo].[VoteInfo_GetAll]";
     private const string InsertProcedure = "[dbo].[VoteInfo_Insert]";
     private const string UpdateProcedure = "[dbo].[VoteInfo_Update]";
     private const string DeleteProcedure = "[dbo].[VoteInfo_Delete]";
+    private readonly string _connectionString;
 
     /// <summary>
     ///     Initializes a new instance of PhotoEntryProvider class
@@ -35,7 +36,7 @@ public class VoteInfoProvider : IProvider<VoteInfo>
     /// <inheritdoc />
     public VoteInfo GetById(int id)
     {
-        if (id < 1) 
+        if (id < 1)
             throw new ArgumentException("Database Id must not be less than 1");
 
         using SqlConnection connection = new(_connectionString);
@@ -71,22 +72,22 @@ public class VoteInfoProvider : IProvider<VoteInfo>
         if (data is null) throw new ArgumentNullException(nameof(data));
 
         if (data.Id != 0) throw new ArgumentException("Id must be 0 while inserting");
-        
+
         if (data.ContestId < 1)
             throw new ArgumentException("ContestId must not be less than 1");
-        
+
         if (data.UserId < 1)
             throw new ArgumentException("UserId must not be less than 1");
-        
+
         if (data.FirstId < 1)
             throw new ArgumentException("FirstId must not be less than 1");
-        
+
         if (data.SecondId < 1)
             throw new ArgumentException("SecondId must not be less than 1");
-        
+
         if (data.ThirdId < 1)
             throw new ArgumentException("ThirdId must not be less than 1");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -106,24 +107,24 @@ public class VoteInfoProvider : IProvider<VoteInfo>
     public bool Update(VoteInfo data, long updateParamsLong = (long)VoteInfoParams.None)
     {
         var updateParams = (VoteInfoParams)updateParamsLong;
-        if (data.Id < 1) 
+        if (data.Id < 1)
             throw new ArgumentException("Database Id must not be less than 1");
 
         if ((VoteInfoParams.ContestId & updateParams) == VoteInfoParams.ContestId && data.ContestId < 1)
             throw new ArgumentException("ContestId must not be less than 1");
-        
+
         if ((VoteInfoParams.UserId & updateParams) == VoteInfoParams.UserId && data.UserId < 1)
             throw new ArgumentException("UserId must not be less than 1");
-        
+
         if ((VoteInfoParams.FirstId & updateParams) == VoteInfoParams.FirstId && data.FirstId < 1)
             throw new ArgumentException("FirstId must not be less than 1");
-        
+
         if ((VoteInfoParams.SecondId & updateParams) == VoteInfoParams.SecondId && data.SecondId < 1)
             throw new ArgumentException("SecondId must not be less than 1");
-        
+
         if ((VoteInfoParams.ThirdId & updateParams) == VoteInfoParams.ThirdId && data.ThirdId < 1)
             throw new ArgumentException("ThirdId must not be less than 1");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -146,7 +147,7 @@ public class VoteInfoProvider : IProvider<VoteInfo>
     /// <inheritdoc />
     public bool Delete(int id)
     {
-        if (id < 1) 
+        if (id < 1)
             throw new ArgumentException("Database Id must not be less than 1");
 
         using SqlConnection connection = new(_connectionString);
@@ -162,8 +163,8 @@ public class VoteInfoProvider : IProvider<VoteInfo>
     {
         if (record is null)
             throw new ArgumentNullException(nameof(record));
-        
-        return new VoteInfo()
+
+        return new VoteInfo
         {
             Id = (int)record["Id"],
             UserId = (int)record["UserId"],

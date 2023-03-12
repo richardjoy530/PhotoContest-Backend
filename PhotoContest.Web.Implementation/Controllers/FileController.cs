@@ -55,7 +55,7 @@ public class FileController : ControllerBase, IFileController
 
     private static byte[] GetBytes(Stream stream)
     {
-        var streamLength = (int) stream.Length; // total number of bytes read
+        var streamLength = (int)stream.Length; // total number of bytes read
         var numBytesReadPosition = 0; // actual number of bytes read
         var fileInBytes = new byte[streamLength];
 

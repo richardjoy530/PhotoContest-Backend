@@ -12,10 +12,9 @@ namespace PhotoContest.Web.Contracts;
 public class Contest
 {
     /// <summary>
-    /// 
     /// </summary>
     public int Id { get; set; }
-    
+
     /// <summary>
     ///     Contest of the photo contest
     /// </summary>

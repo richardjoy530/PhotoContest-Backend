@@ -7,23 +7,22 @@ using PhotoContest.Web.Controllers;
 namespace PhotoContest.Web.Implementation.Controllers;
 
 /// <summary>
-/// 
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ContestController : ControllerBase, IContestController
 {
     private readonly IContestService _contestService;
+
     /// <summary>
-    /// 
     /// </summary>
     public ContestController(
         IContestService contestService
-        )
+    )
     {
         _contestService = contestService ?? throw new ArgumentNullException(nameof(contestService));
     }
-    
+
     /// <inheritdoc />
     [HttpPost]
     public int CreateContest(Contest contest)
@@ -40,7 +39,7 @@ public class ContestController : ControllerBase, IContestController
 
     private static Contest ToContract(Models.Contest arg)
     {
-        return new Contest()
+        return new Contest
         {
             EndDate = arg.EndDate,
             Theme = arg.Theme,

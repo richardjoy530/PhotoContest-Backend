@@ -17,7 +17,6 @@ public class Submission
     public int Id { get; set; }
 
     /// <summary>
-    /// 
     /// </summary>
     public string RefId { get; set; }
 

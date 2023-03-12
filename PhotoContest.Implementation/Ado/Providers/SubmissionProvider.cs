@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using PhotoContest.Implementation.Ado.DataRecords;
 
 #endregion
 
@@ -14,12 +15,12 @@ namespace PhotoContest.Implementation.Ado.Providers;
 /// </summary>
 public class SubmissionProvider : IProvider<Submission>
 {
-    private readonly string _connectionString;
     private const string GetByIdProcedure = "[dbo].[Submission_GetById]";
     private const string GetProcedure = "[dbo].[Submission_GetAll]";
     private const string InsertProcedure = "[dbo].[Submission_Insert]";
     private const string UpdateProcedure = "[dbo].[Submission_Update]";
     private const string DeleteProcedure = "[dbo].[Submission_Delete]";
+    private readonly string _connectionString;
 
     /// <summary>
     ///     Initializes a new instance of PhotoEntryProvider class
@@ -35,9 +36,9 @@ public class SubmissionProvider : IProvider<Submission>
     /// <inheritdoc />
     public Submission GetById(int id)
     {
-        if (id < 1) 
+        if (id < 1)
             throw new ArgumentException("Database Id must not be less than 1");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -74,22 +75,22 @@ public class SubmissionProvider : IProvider<Submission>
 
         if (data.ContestId < 1)
             throw new ArgumentException("ContestId must not be less than 1");
-        
+
         if (data.UserId < 1)
             throw new ArgumentException("UserId must not be less than 1");
-        
+
         if (data.FileInfoId < 1)
             throw new ArgumentException("FileInfoId must not be less than 1");
-        
+
         if (string.IsNullOrWhiteSpace(data.Caption))
             throw new ArgumentException("Caption must not be null or whitespace");
 
         if (string.IsNullOrWhiteSpace(data.RefId))
             data.RefId = Guid.NewGuid().ToString();
-        
+
         if (data.UploadedOn == default)
             data.UploadedOn = DateTime.Now;
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -103,7 +104,7 @@ public class SubmissionProvider : IProvider<Submission>
         command.Parameters.Add(new SqlParameter("@UploadedOn", data.UploadedOn));
         command.Parameters.Add(new SqlParameter("@RefId", data.RefId));
         command.ExecuteNonQuery();
-        
+
         return data.Id = Convert.ToInt32(command.Parameters["@Id"].Value);
     }
 
@@ -111,27 +112,28 @@ public class SubmissionProvider : IProvider<Submission>
     public bool Update(Submission data, long updateParamsLong = (long)SubmissionParams.None)
     {
         var updateParams = (SubmissionParams)updateParamsLong;
-        if (data.Id < 1) 
+        if (data.Id < 1)
             throw new ArgumentException("Database Id must not be less than 1");
 
         if ((SubmissionParams.ContestId & updateParams) == SubmissionParams.ContestId && data.ContestId < 1)
             throw new ArgumentException("ContestId must not be less than 1");
-        
+
         if ((SubmissionParams.UserId & updateParams) == SubmissionParams.UserId && data.UserId < 1)
             throw new ArgumentException("UserId must not be less than 1");
-        
+
         if ((SubmissionParams.FileInfoId & updateParams) == SubmissionParams.FileInfoId && data.FileInfoId < 1)
             throw new ArgumentException("FileInfoId must not be less than 1");
-        
-        if ((SubmissionParams.Caption & updateParams) == SubmissionParams.Caption && string.IsNullOrWhiteSpace(data.Caption))
+
+        if ((SubmissionParams.Caption & updateParams) == SubmissionParams.Caption &&
+            string.IsNullOrWhiteSpace(data.Caption))
             throw new ArgumentException("Caption must not be null or whitespace");
-        
+
         if ((SubmissionParams.RefId & updateParams) == SubmissionParams.RefId && string.IsNullOrWhiteSpace(data.RefId))
             throw new ArgumentException("RefId must not be null or whitespace");
-        
+
         if ((SubmissionParams.UploadedOn & updateParams) == SubmissionParams.UploadedOn && data.UploadedOn == default)
             throw new ArgumentException("UploadedOn must be valid date.");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -156,9 +158,9 @@ public class SubmissionProvider : IProvider<Submission>
     /// <inheritdoc />
     public bool Delete(int id)
     {
-        if (id < 1) 
+        if (id < 1)
             throw new ArgumentException("Database Id must not be less than 1");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -172,8 +174,8 @@ public class SubmissionProvider : IProvider<Submission>
     {
         if (record is null)
             throw new ArgumentNullException(nameof(record));
-        
-        return new Submission()
+
+        return new Submission
         {
             Id = (int)record["Id"],
             UserId = (int)record["UserId"],
@@ -181,7 +183,7 @@ public class SubmissionProvider : IProvider<Submission>
             ContestId = (int)record["ContestId"],
             FileInfoId = (int)record["FileInfoId"],
             UploadedOn = (DateTime)record["UploadedOn"],
-            RefId = (string)record["RefId"],
+            RefId = (string)record["RefId"]
         };
     }
 }

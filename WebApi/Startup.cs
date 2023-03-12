@@ -64,7 +64,7 @@ public class Startup
         // TODO: Configure Swagger to use enum name instead of value
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo {Title = "PhotoContest WebApi", Version = "v1"});
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "PhotoContest WebApi", Version = "v1" });
             c.IncludeXmlComments(XmlCommentsFilePath);
             c.AddSecurityDefinition("JWT authorization", new OpenApiSecurityScheme
             {

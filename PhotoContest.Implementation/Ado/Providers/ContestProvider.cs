@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using PhotoContest.Implementation.Ado.DataRecords;
 
 #endregion
 
@@ -14,12 +15,12 @@ namespace PhotoContest.Implementation.Ado.Providers;
 /// </summary>
 public class ContestProvider : IProvider<Contest>
 {
-    private readonly string _connectionString;
     private const string GetByIdProcedure = "[dbo].[Contest_GetById]";
     private const string GetProcedure = "[dbo].[Contest_GetAll]";
     private const string InsertProcedure = "[dbo].[Contest_Insert]";
     private const string UpdateProcedure = "[dbo].[Contest_Update]";
     private const string DeleteProcedure = "[dbo].[Contest_Delete]";
+    private readonly string _connectionString;
 
     /// <summary>
     ///     Initializes a new instance of ContestProvider class
@@ -41,10 +42,10 @@ public class ContestProvider : IProvider<Contest>
 
         if (data.EndDate == default)
             throw new ArgumentException($"{nameof(data.EndDate)} is invalid current value is {data.EndDate}");
-        
+
         if (string.IsNullOrWhiteSpace(data.Theme))
             throw new ArgumentException($"{nameof(data.Theme)} is null or empty");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -54,7 +55,7 @@ public class ContestProvider : IProvider<Contest>
         command.Parameters.Add(new SqlParameter("@Theme", data.Theme));
         command.Parameters.Add(new SqlParameter("@EndDate", data.EndDate));
         command.ExecuteNonQuery();
-        
+
         return data.Id = Convert.ToInt32(command.Parameters["@Id"].Value);
     }
 
@@ -76,7 +77,7 @@ public class ContestProvider : IProvider<Contest>
     public Contest GetById(int id)
     {
         if (id < 1) throw new ArgumentException("Database id must not be less than 1");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -109,15 +110,15 @@ public class ContestProvider : IProvider<Contest>
     {
         var updateParams = (ContestParams)updateParamsLong;
         if (data is null) throw new ArgumentNullException(nameof(data));
-        
+
         if (data.Id < 1) throw new ArgumentException("Database Id must not be less than 1");
 
         if ((ContestParams.EndDate & updateParams) == ContestParams.EndDate && data.EndDate == default)
             throw new ArgumentException($"{nameof(data.EndDate)} is invalid current value is {data.EndDate}");
-        
+
         if ((ContestParams.Theme & updateParams) == ContestParams.Theme && string.IsNullOrWhiteSpace(data.Theme))
             throw new ArgumentException($"{nameof(data.Theme)} is null or empty");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -135,8 +136,8 @@ public class ContestProvider : IProvider<Contest>
     {
         if (record is null)
             throw new ArgumentNullException(nameof(record));
-        
-        return new Contest()
+
+        return new Contest
         {
             EndDate = (DateTime)record["EndDate"],
             Theme = (string)record["Theme"],

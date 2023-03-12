@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using PhotoContest.Implementation.Ado.DataRecords;
 
 #endregion
 
@@ -14,12 +15,12 @@ namespace PhotoContest.Implementation.Ado.Providers;
 /// </summary>
 public class ScoreInfoProvider : IProvider<ScoreInfo>
 {
-    private readonly string _connectionString;
     private const string GetByIdProcedure = "[dbo].[ScoreInfo_GetById]";
     private const string GetProcedure = "[dbo].[ScoreInfo_GetAll]";
     private const string InsertProcedure = "[dbo].[ScoreInfo_Insert]";
     private const string UpdateProcedure = "[dbo].[ScoreInfo_Update]";
     private const string DeleteProcedure = "[dbo].[ScoreInfo_Delete]";
+    private readonly string _connectionString;
 
     /// <summary>
     ///     Initializes a new instance of ContestProvider class
@@ -38,13 +39,13 @@ public class ScoreInfoProvider : IProvider<ScoreInfo>
         if (data is null) throw new ArgumentNullException(nameof(data));
 
         if (data.Id != 0) throw new ArgumentException("Id must be 0 while inserting");
-        
+
         if (data.SubmissionId < 1)
             throw new ArgumentException("Database Id must not be less than 1");
-        
+
         if (data.Score < 0)
             throw new ArgumentException("Score must not be less than 0");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -60,9 +61,9 @@ public class ScoreInfoProvider : IProvider<ScoreInfo>
     /// <inheritdoc />
     public bool Delete(int id)
     {
-        if (id < 1) 
+        if (id < 1)
             throw new ArgumentException("Database Id must not be less than 1");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -75,9 +76,9 @@ public class ScoreInfoProvider : IProvider<ScoreInfo>
     /// <inheritdoc />
     public ScoreInfo GetById(int id)
     {
-        if (id < 1) 
+        if (id < 1)
             throw new ArgumentException("Database Id must not be less than 1");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -109,15 +110,15 @@ public class ScoreInfoProvider : IProvider<ScoreInfo>
     public bool Update(ScoreInfo data, long updateParamsLong = (long)ScoreInfoParams.None)
     {
         var updateParams = (ScoreInfoParams)updateParamsLong;
-        if (data.Id < 1) 
+        if (data.Id < 1)
             throw new ArgumentException("Database Id must not be less than 1");
 
         if ((ScoreInfoParams.SubmissionId & updateParams) == ScoreInfoParams.SubmissionId && data.SubmissionId < 1)
             throw new ArgumentException("Database Id must not be less than 1");
-        
+
         if ((ScoreInfoParams.Score & updateParams) == ScoreInfoParams.Score && data.Score < 0)
             throw new ArgumentException("Score must not be less than 0");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -135,12 +136,12 @@ public class ScoreInfoProvider : IProvider<ScoreInfo>
     {
         if (record is null)
             throw new ArgumentNullException(nameof(record));
-        
-        return new ScoreInfo()
+
+        return new ScoreInfo
         {
             Id = (int)record["Id"],
             Score = (int)record["Score"],
-            SubmissionId = (int)record["SubmissionId"],
+            SubmissionId = (int)record["SubmissionId"]
         };
     }
 }

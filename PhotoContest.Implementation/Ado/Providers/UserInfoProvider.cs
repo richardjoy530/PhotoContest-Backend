@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using PhotoContest.Implementation.Ado.DataRecords;
 
 #endregion
 
@@ -14,12 +15,12 @@ namespace PhotoContest.Implementation.Ado.Providers;
 /// </summary>
 public class UserInfoProvider : IProvider<UserInfo>
 {
-    private readonly string _connectionString;
     private const string GetByIdProcedure = "[dbo].[UserInfo_GetById]";
     private const string GetProcedure = "[dbo].[UserInfo_GetAll]";
     private const string InsertProcedure = "[dbo].[UserInfo_Insert]";
     private const string UpdateProcedure = "[dbo].[UserInfo_Update]";
     private const string DeleteProcedure = "[dbo].[UserInfo_Delete]";
+    private readonly string _connectionString;
 
     /// <summary>
     ///     Initializes a new instance of UserInfoProvider class
@@ -41,16 +42,16 @@ public class UserInfoProvider : IProvider<UserInfo>
 
         if (string.IsNullOrWhiteSpace(data.Name))
             throw new ArgumentException($"{nameof(data.Name)} is null or empty");
-        
+
         if (string.IsNullOrWhiteSpace(data.Email))
             throw new ArgumentException($"{nameof(data.Email)} is null or empty");
-        
+
         if (string.IsNullOrWhiteSpace(data.RefId))
             data.RefId = Guid.NewGuid().ToString();
-        
+
         if (data.RegistrationDate == default)
             data.RegistrationDate = DateTime.Now;
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -62,16 +63,16 @@ public class UserInfoProvider : IProvider<UserInfo>
         command.Parameters.Add(new SqlParameter("@RegistrationDate", data.RegistrationDate));
         command.Parameters.Add(new SqlParameter("@RefId", data.RefId));
         command.ExecuteNonQuery();
-        
+
         return data.Id = Convert.ToInt32(command.Parameters["@Id"].Value);
     }
 
     /// <inheritdoc />
     public bool Delete(int id)
     {
-        if (id < 1) 
+        if (id < 1)
             throw new ArgumentException("Database Id must not be less than 1");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -84,9 +85,9 @@ public class UserInfoProvider : IProvider<UserInfo>
     /// <inheritdoc />
     public UserInfo GetById(int id)
     {
-        if (id < 1) 
+        if (id < 1)
             throw new ArgumentException("Database Id must not be less than 1");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -118,22 +119,23 @@ public class UserInfoProvider : IProvider<UserInfo>
     public bool Update(UserInfo data, long updateParamsLong = (long)UserInfoParams.None)
     {
         var updateParams = (UserInfoParams)updateParamsLong;
-        
-        if (data.Id < 1) 
+
+        if (data.Id < 1)
             throw new ArgumentException("Database Id must not be less than 1");
-        
+
         if ((UserInfoParams.Name & updateParams) == UserInfoParams.Name && string.IsNullOrWhiteSpace(data.Name))
             throw new ArgumentException("Name must not be null or whitespace");
-        
+
         if ((UserInfoParams.Email & updateParams) == UserInfoParams.Email && string.IsNullOrWhiteSpace(data.Email))
             throw new ArgumentException("Email must not be null or whitespace");
-        
+
         if ((UserInfoParams.RefId & updateParams) == UserInfoParams.RefId && string.IsNullOrWhiteSpace(data.RefId))
             throw new ArgumentException("RefId must not be null or whitespace");
-        
-        if ((UserInfoParams.RegistrationDate & updateParams) == UserInfoParams.RegistrationDate && data.RegistrationDate == default)
+
+        if ((UserInfoParams.RegistrationDate & updateParams) == UserInfoParams.RegistrationDate &&
+            data.RegistrationDate == default)
             throw new ArgumentException("RegistrationDate must be valid date.");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -147,7 +149,8 @@ public class UserInfoProvider : IProvider<UserInfo>
         command.Parameters.Add(new SqlParameter("@RefId", data.RefId));
         command.Parameters.Add(new SqlParameter("@UpdateRefId", UserInfoParams.RefId & updateParams));
         command.Parameters.Add(new SqlParameter("@RegistrationDate", data.RegistrationDate));
-        command.Parameters.Add(new SqlParameter("@UpdateRegistrationDate", UserInfoParams.RegistrationDate & updateParams));
+        command.Parameters.Add(new SqlParameter("@UpdateRegistrationDate",
+            UserInfoParams.RegistrationDate & updateParams));
         return command.ExecuteNonQuery() > 0;
     }
 
@@ -155,14 +158,14 @@ public class UserInfoProvider : IProvider<UserInfo>
     {
         if (record is null)
             throw new ArgumentNullException(nameof(record));
-        
-        return new UserInfo()
+
+        return new UserInfo
         {
             Id = (int)record["Id"],
             Name = (string)record["Name"],
             Email = (string)record["Email"],
             RefId = (string)record["RefId"],
-            RegistrationDate = (DateTime)record["RegistrationDate"],
+            RegistrationDate = (DateTime)record["RegistrationDate"]
         };
     }
 }

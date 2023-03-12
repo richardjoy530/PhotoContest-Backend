@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using PhotoContest.Implementation.Ado.DataRecords;
 
 #endregion
 
@@ -14,12 +15,12 @@ namespace PhotoContest.Implementation.Ado.Providers;
 /// </summary>
 public class FileInfoProvider : IProvider<FileInfo>
 {
-    private readonly string _connectionString;
     private const string GetByIdProcedure = "[dbo].[FileInfo_GetById]";
     private const string GetProcedure = "[dbo].[FileInfo_GetAll]";
     private const string InsertProcedure = "[dbo].[FileInfo_Insert]";
     private const string UpdateProcedure = "[dbo].[FileInfo_Update]";
     private const string DeleteProcedure = "[dbo].[FileInfo_Delete]";
+    private readonly string _connectionString;
 
     /// <summary>
     ///     Initializes a new instance of ContestProvider class
@@ -38,10 +39,10 @@ public class FileInfoProvider : IProvider<FileInfo>
         if (data is null) throw new ArgumentNullException(nameof(data));
 
         if (data.Id != 0) throw new ArgumentException("Id must be 0 while inserting");
-        
+
         if (string.IsNullOrWhiteSpace(data.Path))
             throw new ArgumentException($"{nameof(data.Path)} is null or empty");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -50,7 +51,7 @@ public class FileInfoProvider : IProvider<FileInfo>
         command.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
         command.Parameters.Add(new SqlParameter("@Path", data.Path));
         command.ExecuteNonQuery();
-        
+
         return data.Id = Convert.ToInt32(command.Parameters["@Id"].Value);
     }
 
@@ -58,7 +59,7 @@ public class FileInfoProvider : IProvider<FileInfo>
     public bool Delete(int id)
     {
         if (id < 1) throw new ArgumentException("Database id must not be less than 1");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -108,7 +109,7 @@ public class FileInfoProvider : IProvider<FileInfo>
 
         if ((FileInfoParams.Path & updateParams) == FileInfoParams.Path && string.IsNullOrWhiteSpace(data.Path))
             throw new ArgumentException($"{nameof(data.Path)} is null or empty");
-        
+
         using SqlConnection connection = new(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -124,8 +125,8 @@ public class FileInfoProvider : IProvider<FileInfo>
     {
         if (record is null)
             throw new ArgumentNullException(nameof(record));
-        
-        return new FileInfo()
+
+        return new FileInfo
         {
             Path = (string)record["Path"],
             Id = (int)record["Id"]
