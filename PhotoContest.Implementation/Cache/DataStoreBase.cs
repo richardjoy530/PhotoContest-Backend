@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using PhotoContest.Models;
 using Contest = PhotoContest.Implementation.Ado.DataRecords.Contest;
 using FileInfo = PhotoContest.Implementation.Ado.DataRecords.FileInfo;
@@ -13,7 +15,13 @@ namespace PhotoContest.Implementation.Cache;
 internal class DataStoreBase
 {
     private IDictionary<(AssetType Type, int Id), IDataRecord> _inMemoryDataRecordMap;
-    private IDictionary<AssetType, IEnumerable<int>> _identityMap;
+    private IDictionary<AssetType, HashSet<int>> _identityMap;
+    private bool _cachedAllContest;
+    private bool _cachedAllUserInfo;
+    private bool _cachedAllFileInfo;
+    private bool _cachedAllVoteInfo;
+    private bool _cachedAllSubmission;
+    private bool _cachedAllScoreInfo;
     private readonly IProvider<Contest> _contestProvider;
     private readonly IProvider<UserInfo> _userInfoProvider;
     private readonly IProvider<FileInfo> _fileInfoProvider;
@@ -35,7 +43,7 @@ internal class DataStoreBase
         }
     }
     
-    private IDictionary<AssetType, IEnumerable<int>> IdentityMap
+    private IDictionary<AssetType, HashSet<int>> IdentityMap
     {
         get
         {
@@ -44,7 +52,7 @@ internal class DataStoreBase
                 if (_identityMap != null)
                     return _identityMap;
                 else
-                    return _identityMap = new Dictionary<AssetType, IEnumerable<int>>();
+                    return _identityMap = new Dictionary<AssetType, HashSet<int>>();
             }
         }
     }
@@ -132,27 +140,38 @@ internal class DataStoreBase
         return dataRecord.Id;
     }
 
+    //todo : optimise bulk scenarios
     public IEnumerable<T> GetAll<T>(AssetType type)
     {
-        //todo: IsDeleted SPs, GetAllIds, Checks for all the IsDeleted
-        int[] ids;
         switch (type)
         {
-            case AssetType.Contest: ids = _contestProvider.GetAllIds(); break;
-            case AssetType.FileInfo: ids = _fileInfoProvider.GetAllIds(); break;
-            case AssetType.ScoreInfo: ids = _scoreInfoProvider.GetAllIds(); break;
-            case AssetType.Submission: ids = _submissionProvider.GetAllIds(); break;
-            case AssetType.UserInfo: ids = _userInfoProvider.GetAllIds(); break;
-            case AssetType.VoteInfo: ids = _voteInfoProvider.GetAllIds(); break;
-            default: ids = new int[] { }; break;
+            case AssetType.Contest: GetAllIdsHandler(type, () => _contestProvider.GetAllIds(), ref _cachedAllContest);  break;
+            case AssetType.FileInfo: GetAllIdsHandler(type, () => _fileInfoProvider.GetAllIds(), ref _cachedAllFileInfo);  break;
+            case AssetType.ScoreInfo: GetAllIdsHandler(type, () => _scoreInfoProvider.GetAllIds(), ref _cachedAllScoreInfo);  break;
+            case AssetType.Submission: GetAllIdsHandler(type, () => _submissionProvider.GetAllIds(), ref _cachedAllSubmission);  break;
+            case AssetType.UserInfo: GetAllIdsHandler(type, () => _userInfoProvider.GetAllIds(), ref _cachedAllUserInfo);  break;
+            case AssetType.VoteInfo: GetAllIdsHandler(type, () => _voteInfoProvider.GetAllIds(), ref _cachedAllVoteInfo);  break;
         }
 
-        return null;
-    } 
+        var dataRecords = new Collection<T>();
+        for (var id = 0; id < IdentityMap[type].Count; id++)
+        {
+            dataRecords.Add((T)GetRecord(id, type));
+        }
+
+        return dataRecords;
+    }
+
+    private void GetAllIdsHandler(AssetType type, Func<int[]> handler, ref bool isCached)
+    {
+        if (isCached) return;
+        IdentityMap[type] = handler().ToHashSet();
+        isCached = true;
+    }
 
     private IDataRecord GetDataRecord(int id, AssetType type, Func<int, IDataRecord> handler, bool replaceCache)
     {
-        var inCache = false;
+        bool inCache;
         if (!(inCache = InMemoryDataRecordMap.TryGetValue((type, id), out var dataRecord)) || replaceCache)
         {
             // i.e not in cache or need to be force replaced
@@ -165,11 +184,6 @@ internal class DataStoreBase
 
         return dataRecord;
     }
-    
-    
-    
-    
-    
     
 #pragma warning disable CS0649
     private static readonly object Locker;
