@@ -2,4 +2,4 @@
 @Id int
 AS
 
-SELECT * FROM UserInfo WHERE Id = @Id
+SELECT * FROM UserInfo WHERE Id = @Id And IsDeleted = 0

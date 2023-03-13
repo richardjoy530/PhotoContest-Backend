@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 #endregion
 
-namespace WebApi.Auth;
+namespace PhotoContest.Web.Auth;
 
 /// <summary>
 ///     A helper for the data access of Microsoft.AspNetCore.Identity

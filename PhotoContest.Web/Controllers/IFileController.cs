@@ -6,7 +6,7 @@ using PhotoContest.Web.Contracts;
 
 #endregion
 
-namespace PhotoContest.Web.Controllers;
+namespace PhotoContest.Web.Implementation.Controllers;
 
 /// <summary>
 ///     Image Controller
@@ -22,7 +22,7 @@ public interface IFileController
     /// <summary>
     ///     Api to save an image
     /// </summary>
-    /// <param name="imageItem"></param>
+    /// <param name="imageFileRequest"></param>
     /// <returns></returns>
-    Task<IActionResult> SaveImage([FromForm] ImageItem imageItem);
+    Task<IActionResult> SaveImage([FromForm] ImageFileRequest imageFileRequest);
 }

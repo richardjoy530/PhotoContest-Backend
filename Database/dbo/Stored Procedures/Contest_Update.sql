@@ -11,4 +11,4 @@ AS
 UPDATE Contest SET 
     Theme    = IIF(@UpdateTheme     = 1, @Theme,    Theme),
     EndDate  = IIF(@updateEndDate   = 1, @EndDate,  EndDate)
- WHERE Id = @Id
+ WHERE Id = @Id And IsDeleted = 0

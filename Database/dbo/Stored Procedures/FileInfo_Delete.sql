@@ -2,4 +2,4 @@
 @Id int
 AS
 
-DELETE FROM FileInfo WHERE Id = @Id
+Update FileInfo SET IsDeleted = 1 WHERE Id = @Id

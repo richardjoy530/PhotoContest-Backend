@@ -1,4 +1,4 @@
-﻿namespace WebApi.Auth;
+﻿namespace PhotoContest.Web.Auth;
 
 /// <summary>
 ///     Encapsulates response during auth

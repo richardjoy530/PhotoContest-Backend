@@ -18,4 +18,4 @@ UPDATE VoteInfo SET
     ThirdId     = IIF(@updateThirdId    = 1, @ThirdId,      ThirdId),
     ContestId   = IIF(@updateContestId  = 1, @ContestId,    ContestId),
     UserId      = IIF(@updateUserId     = 1, @UserId,       UserId)
- WHERE Id = @Id
+ WHERE Id = @Id And IsDeleted = 0

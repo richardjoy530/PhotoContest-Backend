@@ -2,4 +2,4 @@
 @Id int
 AS
 
-DELETE FROM UserInfo WHERE Id = @Id
+Update UserInfo SET IsDeleted = 1 WHERE Id = @Id

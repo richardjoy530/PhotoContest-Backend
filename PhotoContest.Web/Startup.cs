@@ -17,11 +17,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using WebApi.Auth;
+using PhotoContest.Web.Auth;
 
 #endregion
 
-namespace WebApi;
+namespace PhotoContest.Web;
 
 /// <summary>
 ///     The <see cref="Startup" /> class configures services and the app's request pipeline.
@@ -64,7 +64,7 @@ public class Startup
         // TODO: Configure Swagger to use enum name instead of value
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "PhotoContest WebApi", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "PhotoContest PhotoContest.Web", Version = "v1" });
             c.IncludeXmlComments(XmlCommentsFilePath);
             c.AddSecurityDefinition("JWT authorization", new OpenApiSecurityScheme
             {
@@ -124,7 +124,6 @@ public class Startup
         services.AddSingleton<IDbConnection>(_ => new SqlConnection(Configuration.GetConnectionString("Connection")));
 
         PhotoContest.Implementation.DependencyInjection.ConfigureServices(services, true);
-        PhotoContest.Web.Implementation.DependencyInjection.ConfigureServices(services);
     }
 
     /// <summary>
@@ -140,7 +139,7 @@ public class Startup
             app.UseHsts();
 
         app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1"));
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PhotoContest.Web v1"));
 
         app.UseHttpsRedirection();
 

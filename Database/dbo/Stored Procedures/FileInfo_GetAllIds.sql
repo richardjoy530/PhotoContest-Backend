@@ -1,0 +1,4 @@
+﻿CREATE PROCEDURE FileInfo_GetAllIds
+AS
+
+SELECT Id FROM FileInfo

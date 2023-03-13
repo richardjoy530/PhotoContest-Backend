@@ -1,4 +1,4 @@
 ﻿CREATE PROCEDURE ScoreInfo_GetAll
 AS
 
-SELECT * FROM ScoreInfo
+SELECT * FROM ScoreInfo WHERE IsDeleted = 0

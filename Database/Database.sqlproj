@@ -100,5 +100,11 @@
     <Build Include="dbo\Stored Procedures\VoteInfo_GetById.sql" />
     <Build Include="dbo\Stored Procedures\VoteInfo_Insert.sql" />
     <Build Include="dbo\Stored Procedures\VoteInfo_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Contest_GetAllId.sql" />
+    <Build Include="dbo\Stored Procedures\FileInfo_GetAllIds.sql" />
+    <Build Include="dbo\Stored Procedures\ScoreInfo_GetAllIds.sql" />
+    <Build Include="dbo\Stored Procedures\Submission_GetAllIds.sql" />
+    <Build Include="dbo\Stored Procedures\UserInfo_GetAllIds.sql" />
+    <Build Include="dbo\Stored Procedures\VoteInfo_GetAllIds.sql" />
   </ItemGroup>
 </Project>

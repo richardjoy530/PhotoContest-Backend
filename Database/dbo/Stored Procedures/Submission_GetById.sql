@@ -2,4 +2,4 @@
 @Id int
 AS
 
-SELECT * FROM Submission WHERE Id = @Id
+SELECT * FROM Submission WHERE Id = @Id And IsDeleted = 0

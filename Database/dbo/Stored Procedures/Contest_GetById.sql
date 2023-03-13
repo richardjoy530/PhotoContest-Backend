@@ -2,4 +2,4 @@
 @Id int
 AS
 
-SELECT * FROM Contest WHERE Id = @Id
+SELECT * FROM Contest WHERE Id = @Id And IsDeleted = 0

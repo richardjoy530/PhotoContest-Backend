@@ -1,4 +1,4 @@
 ﻿CREATE PROCEDURE VoteInfo_GetAll
 AS
 
-SELECT * FROM VoteInfo
+SELECT * FROM VoteInfo WHERE IsDeleted = 0

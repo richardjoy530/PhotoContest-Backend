@@ -2,4 +2,4 @@
 @Id int
 AS
 
-DELETE FROM Submission WHERE Id = @Id
+Update Submission SET IsDeleted = 1 WHERE Id = @Id

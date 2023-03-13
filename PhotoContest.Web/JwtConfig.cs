@@ -1,4 +1,4 @@
-﻿namespace WebApi;
+﻿namespace PhotoContest.Web;
 
 /// <summary>
 ///     JWT Configuration

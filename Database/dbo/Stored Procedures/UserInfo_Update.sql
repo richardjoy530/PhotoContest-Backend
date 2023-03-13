@@ -15,4 +15,4 @@ UPDATE UserInfo SET Name = IIF(@UpdateName = 1, @Name, Name),
 RefId = IIF(@UpdateRefId = 1, @RefId, RefId),
 Email = IIF(@UpdateEmail = 1, @Email, Email),
 RegistrationDate = IIF(@UpdateRegistrationDate = 1, @RegistrationDate, RegistrationDate)
-WHERE Id = @Id
+WHERE Id = @Id And IsDeleted = 0

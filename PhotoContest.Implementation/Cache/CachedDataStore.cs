@@ -12,16 +12,20 @@ using VoteInfo = PhotoContest.Implementation.Ado.DataRecords.VoteInfo;
 
 namespace PhotoContest.Implementation.Cache;
 
-internal class DataStoreBase
+/// <summary>
+/// </summary>
+public class CachedDataStore : IDataStore
 {
     private IDictionary<(AssetType Type, int Id), IDataRecord> _inMemoryDataRecordMap;
     private IDictionary<AssetType, HashSet<int>> _identityMap;
+    
     private bool _cachedAllContest;
     private bool _cachedAllUserInfo;
     private bool _cachedAllFileInfo;
     private bool _cachedAllVoteInfo;
     private bool _cachedAllSubmission;
     private bool _cachedAllScoreInfo;
+    
     private readonly IProvider<Contest> _contestProvider;
     private readonly IProvider<UserInfo> _userInfoProvider;
     private readonly IProvider<FileInfo> _fileInfoProvider;
@@ -57,8 +61,16 @@ internal class DataStoreBase
         }
     }
     
-    
-    public DataStoreBase(IProvider<Contest> contestProvider,
+    /// <summary>
+    /// </summary>
+    /// <param name="contestProvider"></param>
+    /// <param name="userInfoProvider"></param>
+    /// <param name="fileInfoProvider"></param>
+    /// <param name="voteInfoProvider"></param>
+    /// <param name="submissionProvider"></param>
+    /// <param name="scoreInfoProvider"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public CachedDataStore(IProvider<Contest> contestProvider,
         IProvider<UserInfo> userInfoProvider,
         IProvider<FileInfo> fileInfoProvider,
         IProvider<VoteInfo> voteInfoProvider,
@@ -72,23 +84,12 @@ internal class DataStoreBase
         _submissionProvider = submissionProvider ?? throw new ArgumentNullException(nameof(submissionProvider));
         _scoreInfoProvider = scoreInfoProvider ?? throw new ArgumentNullException(nameof(scoreInfoProvider));
     }
+
+    /// <inheritdoc/>
+    public IDataRecord Get(int id, AssetType type) => GetCached(id, type);
     
-    public IDataRecord GetRecord(int id, AssetType type, bool replaceCache = false)
-    {
-        switch (type)
-        {
-            case AssetType.Contest: return GetDataRecord(id, type, i => _contestProvider.GetById(i), replaceCache);
-            case AssetType.FileInfo: return GetDataRecord(id, type, i => _fileInfoProvider.GetById(i), replaceCache);
-            case AssetType.ScoreInfo: return GetDataRecord(id, type, i => _scoreInfoProvider.GetById(i), replaceCache);
-            case AssetType.Submission: return GetDataRecord(id, type, i => _submissionProvider.GetById(i), replaceCache);
-            case AssetType.UserInfo: return GetDataRecord(id, type, i => _userInfoProvider.GetById(i), replaceCache);
-            case AssetType.VoteInfo: return GetDataRecord(id, type, i => _voteInfoProvider.GetById(i), replaceCache);
-        }
-
-        throw new InvalidOperationException("Unable to get the type of the asset");
-    }
-
-    public bool DeleteDataRecord(int id, AssetType type)
+    /// <inheritdoc/>
+    public bool Delete(int id, AssetType type)
     {
         var pass = false;
         switch (type)
@@ -105,8 +106,9 @@ internal class DataStoreBase
         InMemoryDataRecordMap.Remove((type, id));
         return true;
     }
-
-    public bool UpdateDataRecord(IDataRecord dataRecord, AssetType type, long updateParams)
+    
+    /// <inheritdoc/>
+    public bool Update(IDataRecord dataRecord, AssetType type, long updateParams)
     {
         var pass = false;
         switch (type)
@@ -120,11 +122,12 @@ internal class DataStoreBase
         }
         
         if (!pass) return false;
-        GetRecord(dataRecord.Id, type, true);
+        GetCached(dataRecord.Id, type, true);
         return true;
     }
-
-    public int InsertDataRecord(IDataRecord dataRecord, AssetType type)
+    
+    /// <inheritdoc/>
+    public int Insert(IDataRecord dataRecord, AssetType type)
     {
         switch (type)
         {
@@ -136,11 +139,12 @@ internal class DataStoreBase
             case AssetType.VoteInfo: _voteInfoProvider.Insert((VoteInfo)dataRecord); break;
         }
         
-        GetRecord(dataRecord.Id, type, true);
+        GetCached(dataRecord.Id, type, true);
         return dataRecord.Id;
     }
-
+    
     //todo : optimise bulk scenarios
+    /// <inheritdoc/>
     public IEnumerable<T> GetAll<T>(AssetType type)
     {
         switch (type)
@@ -156,10 +160,25 @@ internal class DataStoreBase
         var dataRecords = new Collection<T>();
         for (var id = 0; id < IdentityMap[type].Count; id++)
         {
-            dataRecords.Add((T)GetRecord(id, type));
+            dataRecords.Add((T)Get(id, type));
         }
 
         return dataRecords;
+    }
+
+    private IDataRecord GetCached(int id, AssetType type, bool replaceCache = false)
+    {
+        switch (type)
+        {
+            case AssetType.Contest: return GetDataHandler(id, type, i => _contestProvider.GetById(i), replaceCache);
+            case AssetType.FileInfo: return GetDataHandler(id, type, i => _fileInfoProvider.GetById(i), replaceCache);
+            case AssetType.ScoreInfo: return GetDataHandler(id, type, i => _scoreInfoProvider.GetById(i), replaceCache);
+            case AssetType.Submission: return GetDataHandler(id, type, i => _submissionProvider.GetById(i), replaceCache);
+            case AssetType.UserInfo: return GetDataHandler(id, type, i => _userInfoProvider.GetById(i), replaceCache);
+            case AssetType.VoteInfo: return GetDataHandler(id, type, i => _voteInfoProvider.GetById(i), replaceCache);
+        }
+
+        throw new InvalidOperationException("Unable to get the type of the asset");
     }
 
     private void GetAllIdsHandler(AssetType type, Func<int[]> handler, ref bool isCached)
@@ -169,7 +188,7 @@ internal class DataStoreBase
         isCached = true;
     }
 
-    private IDataRecord GetDataRecord(int id, AssetType type, Func<int, IDataRecord> handler, bool replaceCache)
+    private IDataRecord GetDataHandler(int id, AssetType type, Func<int, IDataRecord> handler, bool replaceCache)
     {
         bool inCache;
         if (!(inCache = InMemoryDataRecordMap.TryGetValue((type, id), out var dataRecord)) || replaceCache)
@@ -186,7 +205,7 @@ internal class DataStoreBase
     }
     
 #pragma warning disable CS0649
-    private static readonly object Locker;
-    private static readonly object LockerId;
+    private static readonly object Locker = 123;
+    private static readonly object LockerId = 456;
 #pragma warning restore CS0649
 }

@@ -21,4 +21,4 @@ UPDATE Submission SET
     RefId     = IIF(@UpdateRefId    = 1, @RefId,      RefId),
     UploadedOn  = IIF(@UpdateUploadedOn = 1, @UploadedOn,   UploadedOn),
     UserId  = IIF(@UpdateUserId = 1, @UserId,   UserId)
- WHERE Id = @Id
+ WHERE Id = @Id And IsDeleted = 0

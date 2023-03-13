@@ -1,0 +1,4 @@
+﻿CREATE PROCEDURE ScoreInfo_GetAllIds
+AS
+
+SELECT Id FROM ScoreInfo

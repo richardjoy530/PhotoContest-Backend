@@ -4,4 +4,4 @@
     @UpdatePath    bit = 0
 AS
 
-UPDATE FileInfo SET Path = IIF(@UpdatePath = 1, @Path, Path) WHERE Id = @Id
+UPDATE FileInfo SET Path = IIF(@UpdatePath = 1, @Path, Path) WHERE Id = @Id And IsDeleted = 0

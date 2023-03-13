@@ -9,4 +9,4 @@ AS
 UPDATE ScoreInfo SET 
     SubmissionId    = IIF(@UpdateSubmissionId   = 1, @SubmissionId, SubmissionId),
     Score           = IIF(@updateScore          = 1, @Score,        Score)
- WHERE Id = @Id
+ WHERE Id = @Id And IsDeleted = 0

@@ -5,14 +5,13 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PhotoContest.Web.Contracts;
-using PhotoContest.Web.Controllers;
 
 #endregion
 
 namespace PhotoContest.Web.Implementation.Controllers;
 
 /// <summary>
-///     Image Controller
+/// Image Controller
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
@@ -32,13 +31,13 @@ public class FileController : ControllerBase, IFileController
     /// <summary>
     ///     Api to save an image
     /// </summary>
-    /// <param name="imageItem"></param>
+    /// <param name="imageFileRequest"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<IActionResult> SaveImage([FromForm] ImageItem imageItem)
+    public async Task<IActionResult> SaveImage([FromForm] ImageFileRequest imageFileRequest)
     {
-        await _fileService.SaveFile(imageItem.Image);
-        return Ok(imageItem);
+        await _fileService.SaveFile(imageFileRequest.Image);
+        return Ok(imageFileRequest);
     }
 
     /// <summary>

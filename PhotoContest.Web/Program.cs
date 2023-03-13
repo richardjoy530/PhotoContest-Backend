@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 
 #endregion
 
-namespace WebApi;
+namespace PhotoContest.Web;
 
 /// <summary>
 ///     Program class

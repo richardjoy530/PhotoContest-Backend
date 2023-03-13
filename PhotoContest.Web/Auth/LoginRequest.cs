@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 #endregion
 
-namespace WebApi.Auth;
+namespace PhotoContest.Web.Auth;
 
 /// <summary>
 ///     LoginRequest

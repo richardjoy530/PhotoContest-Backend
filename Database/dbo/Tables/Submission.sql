@@ -6,6 +6,7 @@
     [UploadedOn] DATETIME      NOT NULL,
     [UserId]     INT           NOT NULL,
     [RefId]      VARCHAR (100) NOT NULL,
+    [IsDeleted]  BIT           DEFAULT ((0)) NOT NULL,
     CONSTRAINT [PK_Submission] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_ContestId_Contest_Submission] FOREIGN KEY ([ContestId]) REFERENCES [dbo].[Contest] ([Id]),
     CONSTRAINT [FK_FileId_FileInfo] FOREIGN KEY ([FileInfoId]) REFERENCES [dbo].[FileInfo] ([Id]),

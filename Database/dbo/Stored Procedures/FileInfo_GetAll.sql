@@ -1,4 +1,4 @@
 ﻿CREATE PROCEDURE FileInfo_GetAll
 AS
 
-SELECT * FROM FileInfo
+SELECT * FROM FileInfo WHERE IsDeleted = 0

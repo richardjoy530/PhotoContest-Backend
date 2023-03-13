@@ -15,7 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 
 #endregion
 
-namespace WebApi.Auth;
+namespace PhotoContest.Web.Auth;
 
 /// <summary>
 ///     Authentication controller

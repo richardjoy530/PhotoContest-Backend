@@ -2,4 +2,4 @@
 @Id int
 AS
 
-DELETE FROM ScoreInfo WHERE Id = @Id
+Update ScoreInfo SET IsDeleted = 1 WHERE Id = @Id

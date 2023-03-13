@@ -6,13 +6,13 @@ namespace PhotoContest;
 
 /// <summary>
 /// </summary>
-public interface IContestService
+public interface IContestManagementService
 {
     /// <summary>
     /// </summary>
     /// <param name="theme"></param>
     /// <param name="endDate"></param>
-    int AddContest(string theme, DateTime endDate);
+    int Create(string theme, DateTime endDate);
 
     /// <summary>
     /// </summary>

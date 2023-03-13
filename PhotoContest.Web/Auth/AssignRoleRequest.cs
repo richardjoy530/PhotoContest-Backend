@@ -1,4 +1,4 @@
-﻿namespace WebApi.Auth;
+﻿namespace PhotoContest.Web.Auth;
 
 /// <summary>
 ///     Request to assign <see cref="UserRoles" /> to a specific user

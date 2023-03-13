@@ -5,6 +5,7 @@
     [ThirdId]   INT NULL,
     [ContestId] INT NOT NULL,
     [UserId]    INT NOT NULL,
+    [IsDeleted] BIT DEFAULT ((0)) NOT NULL,
     CONSTRAINT [PK_VoteInfo] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_ContestId_VoteInfo_Contest] FOREIGN KEY ([ContestId]) REFERENCES [dbo].[Contest] ([Id]),
     CONSTRAINT [FK_FirstId_Submission] FOREIGN KEY ([FirstId]) REFERENCES [dbo].[Submission] ([Id]),
