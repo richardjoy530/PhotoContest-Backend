@@ -2,8 +2,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using PhotoContest.Implementation.Ado.DataRecords;
 
 #endregion
@@ -20,6 +22,7 @@ public class ContestProvider : IProvider<Contest>
     private const string InsertProcedure = "[dbo].[Contest_Insert]";
     private const string UpdateProcedure = "[dbo].[Contest_Update]";
     private const string DeleteProcedure = "[dbo].[Contest_Delete]";
+    private const string GetAllIdsProcedure = "[dbo].[Contest_GetAllIds]";
     private readonly string _connectionString;
 
     /// <summary>
@@ -33,6 +36,7 @@ public class ContestProvider : IProvider<Contest>
         _connectionString = dbConnection.ConnectionString;
     }
 
+    // todo: validate end date not colliding withe the existing
     /// <inheritdoc />
     public int Insert(Contest data)
     {
@@ -92,7 +96,16 @@ public class ContestProvider : IProvider<Contest>
     /// <inheritdoc />
     public int[] GetAllIds()
     {
-        throw new NotImplementedException();
+        using SqlConnection connection = new(_connectionString);
+        connection.Open();
+        using var command = connection.CreateCommand();
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = GetAllIdsProcedure;
+        using var reader = command.ExecuteReader();
+        var ids = new Collection<int>();
+        while (reader.Read())
+            ids.Add((int)reader["Id"]);
+        return ids.ToArray();
     }
 
     /// <inheritdoc />

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 #endregion
 
-namespace PhotoContest;
+namespace PhotoContest.Implementation.Service;
 
 /// <summary>
 /// </summary>

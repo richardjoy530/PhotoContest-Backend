@@ -158,9 +158,10 @@ public class CachedDataStore : IDataStore
         }
 
         var dataRecords = new Collection<T>();
-        for (var id = 0; id < IdentityMap[type].Count; id++)
+        var ids = IdentityMap[type].ToArray();
+        for (var index = 0; index < ids.Length; index++)
         {
-            dataRecords.Add((T)Get(id, type));
+            dataRecords.Add((T)Get(ids[index], type));
         }
 
         return dataRecords;

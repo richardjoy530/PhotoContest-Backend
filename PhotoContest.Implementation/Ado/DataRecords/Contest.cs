@@ -17,5 +17,24 @@ public record Contest : IDataRecord
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="theme"></param>
+    /// <param name="endDate"></param>
+    public Contest(string theme, DateTime endDate)
+    {
+        Theme = theme;
+        EndDate = endDate;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Contest()
+    {
+        
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public int Id { get; set; }
 }

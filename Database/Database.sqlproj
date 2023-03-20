@@ -70,6 +70,7 @@
     <Build Include="dbo\Tables\Submission.sql" />
     <Build Include="dbo\Tables\UserInfo.sql" />
     <Build Include="dbo\Tables\VoteInfo.sql" />
+    <Build Include="dbo\Stored Procedures\Contest_GetAllIds.sql" />
     <Build Include="dbo\Stored Procedures\Contest_Delete.sql" />
     <Build Include="dbo\Stored Procedures\Contest_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\Contest_GetById.sql" />
@@ -77,34 +78,33 @@
     <Build Include="dbo\Stored Procedures\Contest_Update.sql" />
     <Build Include="dbo\Stored Procedures\FileInfo_Delete.sql" />
     <Build Include="dbo\Stored Procedures\FileInfo_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\FileInfo_GetAllIds.sql" />
     <Build Include="dbo\Stored Procedures\FileInfo_GetById.sql" />
     <Build Include="dbo\Stored Procedures\FileInfo_Insert.sql" />
     <Build Include="dbo\Stored Procedures\FileInfo_Update.sql" />
     <Build Include="dbo\Stored Procedures\ScoreInfo_Delete.sql" />
     <Build Include="dbo\Stored Procedures\ScoreInfo_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\ScoreInfo_GetAllIds.sql" />
     <Build Include="dbo\Stored Procedures\ScoreInfo_GetById.sql" />
     <Build Include="dbo\Stored Procedures\ScoreInfo_Insert.sql" />
     <Build Include="dbo\Stored Procedures\ScoreInfo_Update.sql" />
     <Build Include="dbo\Stored Procedures\Submission_Delete.sql" />
     <Build Include="dbo\Stored Procedures\Submission_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Submission_GetAllIds.sql" />
     <Build Include="dbo\Stored Procedures\Submission_GetById.sql" />
     <Build Include="dbo\Stored Procedures\Submission_Insert.sql" />
     <Build Include="dbo\Stored Procedures\Submission_Update.sql" />
     <Build Include="dbo\Stored Procedures\UserInfo_Delete.sql" />
     <Build Include="dbo\Stored Procedures\UserInfo_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\UserInfo_GetAllIds.sql" />
     <Build Include="dbo\Stored Procedures\UserInfo_GetById.sql" />
     <Build Include="dbo\Stored Procedures\UserInfo_Insert.sql" />
     <Build Include="dbo\Stored Procedures\UserInfo_Update.sql" />
     <Build Include="dbo\Stored Procedures\VoteInfo_Delete.sql" />
     <Build Include="dbo\Stored Procedures\VoteInfo_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\VoteInfo_GetAllIds.sql" />
     <Build Include="dbo\Stored Procedures\VoteInfo_GetById.sql" />
     <Build Include="dbo\Stored Procedures\VoteInfo_Insert.sql" />
     <Build Include="dbo\Stored Procedures\VoteInfo_Update.sql" />
-    <Build Include="dbo\Stored Procedures\Contest_GetAllId.sql" />
-    <Build Include="dbo\Stored Procedures\FileInfo_GetAllIds.sql" />
-    <Build Include="dbo\Stored Procedures\ScoreInfo_GetAllIds.sql" />
-    <Build Include="dbo\Stored Procedures\Submission_GetAllIds.sql" />
-    <Build Include="dbo\Stored Procedures\UserInfo_GetAllIds.sql" />
-    <Build Include="dbo\Stored Procedures\VoteInfo_GetAllIds.sql" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,0 @@
-﻿CREATE PROCEDURE Contest_GetAllId
-AS
-
-SELECT Id FROM dbo.Contest

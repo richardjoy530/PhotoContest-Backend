@@ -4,7 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using PhotoContest.Implementation.Ado.DataRecords;
 using PhotoContest.Implementation.Ado.Providers;
 using PhotoContest.Implementation.Cache;
+using PhotoContest.Implementation.Service;
 using PhotoContest.Implementation.Service.Files;
+using PhotoContest.Services;
 
 #endregion
 
@@ -34,5 +36,6 @@ public static class DependencyInjection
 
         services.AddSingleton<IFileService, FileService>();
         services.AddSingleton<IDataStore, CachedDataStore>();
+        services.AddSingleton<IContestManagementService, ContestManagementService>();
     }
 }
