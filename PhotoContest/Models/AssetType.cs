@@ -1,30 +1,31 @@
-namespace PhotoContest.Models;
-
-/// <summary>
-/// </summary>
-public enum AssetType
+namespace PhotoContest.Models
 {
     /// <summary>
     /// </summary>
-    Contest,
+    public enum AssetType
+    {
+        /// <summary>
+        /// </summary>
+        Contest,
     
-    /// <summary>
-    /// </summary>
-    FileInfo,
+        /// <summary>
+        /// </summary>
+        FileInfo,
     
-    /// <summary>
-    /// </summary>
-    ScoreInfo,
+        /// <summary>
+        /// </summary>
+        ScoreInfo,
     
-    /// <summary>
-    /// </summary>
-    Submission,
+        /// <summary>
+        /// </summary>
+        Submission,
     
-    /// <summary>
-    /// </summary>
-    UserInfo,
+        /// <summary>
+        /// </summary>
+        UserInfo,
     
-    /// <summary>
-    /// </summary>
-    VoteInfo,
+        /// <summary>
+        /// </summary>
+        VoteInfo,
+    }
 }

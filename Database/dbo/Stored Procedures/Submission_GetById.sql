@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE Submission_GetById
-@Id int
+    @Id int
 AS
 
 SELECT * FROM Submission WHERE Id = @Id And IsDeleted = 0

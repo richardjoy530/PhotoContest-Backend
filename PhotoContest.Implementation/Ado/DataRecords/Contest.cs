@@ -1,40 +1,41 @@
 using System;
 
-namespace PhotoContest.Implementation.Ado.DataRecords;
-
-/// <summary>
-/// </summary>
-public record Contest : IDataRecord
+namespace PhotoContest.Implementation.Ado.DataRecords
 {
     /// <summary>
     /// </summary>
-    public DateTime EndDate;
-
-    /// <summary>
-    /// </summary>
-    public string Theme;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="theme"></param>
-    /// <param name="endDate"></param>
-    public Contest(string theme, DateTime endDate)
+    public record Contest : IDataRecord
     {
-        Theme = theme;
-        EndDate = endDate;
-    }
+        /// <summary>
+        /// </summary>
+        public DateTime EndDate;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public Contest()
-    {
+        /// <summary>
+        /// </summary>
+        public string Theme;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="theme"></param>
+        /// <param name="endDate"></param>
+        public Contest(string theme, DateTime endDate)
+        {
+            Theme = theme;
+            EndDate = endDate;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Contest()
+        {
         
-    }
+        }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public int Id { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Id { get; set; }
+    }
 }

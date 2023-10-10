@@ -1,16 +1,17 @@
 using PhotoContest.Models;
 
-namespace PhotoContest.Implementation.Service;
-
-internal static class Converters
+namespace PhotoContest.Implementation.Service
 {
-    public static Contest ToModel(Ado.DataRecords.Contest dataRecord)
+    internal static class Converters
     {
-        return new Contest
+        public static Contest ToModel(Ado.DataRecords.Contest dataRecord)
         {
-            Theme = dataRecord.Theme,
-            EndDate = dataRecord.EndDate,
-            Id = dataRecord.Id
-        };
+            return new Contest
+            {
+                Theme = dataRecord.Theme,
+                EndDate = dataRecord.EndDate,
+                Id = dataRecord.Id
+            };
+        }
     }
 }

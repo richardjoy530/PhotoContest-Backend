@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Http;
 
-namespace PhotoContest.Web.Contracts;
-
-/// <summary>
-/// Wrapper class for the IFormFile
-/// </summary>
-public class ImageFileRequest
+namespace PhotoContest.Web.Contracts
 {
     /// <summary>
-    /// The image file
+    /// Wrapper class for the IFormFile
     /// </summary>
-    public IFormFile Image;
+    public class ImageFileRequest
+    {
+        /// <summary>
+        /// The image file
+        /// </summary>
+        public IFormFile Image;
+    }
 }

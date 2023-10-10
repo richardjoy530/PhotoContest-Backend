@@ -1,14 +1,11 @@
-namespace PhotoContest;
-
-/// <summary>
-/// </summary>
-public interface IDataRecord
+namespace PhotoContest
 {
     /// <summary>
     /// </summary>
-    int Id
+    public interface IDataRecord
     {
-        get;
-        set;
+        /// <summary>
+        /// </summary>
+        int Id { get; set; }
     }
 }

@@ -5,30 +5,31 @@ using Microsoft.Extensions.Hosting;
 
 #endregion
 
-namespace PhotoContest.Web;
-
-/// <summary>
-///     Program class
-/// </summary>
-public abstract class Program
+namespace PhotoContest.Web
 {
     /// <summary>
-    ///     Entry function
+    ///     Program class
     /// </summary>
-    /// <param name="args"></param>
-    public static void Main(string[] args)
+    public abstract class Program
     {
-        CreateHostBuilder(args).Build().Run();
-    }
+        /// <summary>
+        ///     Entry function
+        /// </summary>
+        /// <param name="args"></param>
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
 
-    /// <summary>
-    ///     Creates a <see cref="IHostBuilder" />
-    /// </summary>
-    /// <param name="args"></param>
-    /// <returns></returns>
-    private static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        return Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+        /// <summary>
+        ///     Creates a <see cref="IHostBuilder" />
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        private static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+        }
     }
 }

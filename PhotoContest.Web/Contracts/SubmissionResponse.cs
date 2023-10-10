@@ -1,19 +1,20 @@
 using System;
 
-namespace PhotoContest.Web.Contracts;
-
-/// <summary>
-/// Response class containing details of a submission
-/// </summary>
-public class SubmissionResponse : SubmissionRequest
+namespace PhotoContest.Web.Contracts
 {
    /// <summary>
-   /// Unique integer id for this submission
+   /// Response class containing details of a submission
    /// </summary>
-   public int Id;
+   public class SubmissionResponse : SubmissionRequest
+   {
+      /// <summary>
+      /// Unique integer id for this submission
+      /// </summary>
+      public int Id;
 
-   /// <summary>
-   /// Time when this submission was made
-   /// </summary>
-   public DateTime UploadedOn;
+      /// <summary>
+      /// Time when this submission was made
+      /// </summary>
+      public DateTime UploadedOn;
+   }
 }

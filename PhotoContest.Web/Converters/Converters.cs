@@ -1,26 +1,27 @@
 using PhotoContest.Models;
 using PhotoContest.Web.Contracts;
 
-namespace PhotoContest.Web.Converters;
-
-internal static class ConverterExtensions
+namespace PhotoContest.Web.Converters
 {
-    public static ContestResponse ToResponse(this Contest data)
+    internal static class ConverterExtensions
     {
-        return new ContestResponse
+        public static ContestResponse ToResponse(this Contest data)
         {
-            EndDate = data.EndDate,
-            Id = data.Id,
-            Theme = data.Theme
-        };
-    }
+            return new ContestResponse
+            {
+                EndDate = data.EndDate,
+                Id = data.Id,
+                Theme = data.Theme
+            };
+        }
     
-    public static Contest ToModel(this ContestRequest data)
-    {
-        return new Contest
+        public static Contest ToModel(this ContestRequest data)
         {
-            EndDate = data.EndDate,
-            Theme = data.Theme
-        };
+            return new Contest
+            {
+                EndDate = data.EndDate,
+                Theme = data.Theme
+            };
+        }
     }
 }

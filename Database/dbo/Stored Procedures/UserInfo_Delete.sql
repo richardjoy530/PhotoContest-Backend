@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE UserInfo_Delete
-@Id int
+    @Id int
 AS
 
 Update UserInfo SET IsDeleted = 1 WHERE Id = @Id

@@ -1,152 +1,74 @@
-#region
-
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using PhotoContest.Web.Auth;
+using PhotoContest.Implementation;
 
-#endregion
-
-namespace PhotoContest.Web;
-
-/// <summary>
-///     The <see cref="Startup" /> class configures services and the app's request pipeline.
-/// </summary>
-public class Startup
+namespace PhotoContest.Web
 {
     /// <summary>
-    ///     Initialises a <see cref="Startup" /> class
+    ///     The <see cref="Startup" /> class configures services and the app's request pipeline.
     /// </summary>
-    /// <param name="configuration"></param>
-    public Startup(IConfiguration configuration)
+    public class Startup
     {
-        Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-    }
-
-    /// <summary>
-    ///     Configuration
-    /// </summary>
-    private IConfiguration Configuration { get; }
-
-    private static string XmlCommentsFilePath
-    {
-        get
+        private static string XmlCommentsFilePath
         {
-            var basePath = AppContext.BaseDirectory;
-            var fileName = Assembly.GetExecutingAssembly().GetName().Name + ".xml";
-            return Path.Combine(basePath, fileName);
+            get
+            {
+                var basePath = AppContext.BaseDirectory;
+                var fileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                return Path.Combine(basePath, fileName);
+            }
         }
-    }
 
-    /// <summary>
-    ///     This method gets called by the runtime. Use this method to add services to the container.
-    /// </summary>
-    /// <param name="services"></param>
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddControllers();
-
-        // TODO: Configure JsonConverter for StringToEnumConversion
-        // TODO: Configure Swagger to use enum name instead of value
-        services.AddSwaggerGen(c =>
+        /// <summary>
+        ///     This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
+        public void ConfigureServices(IServiceCollection services)
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "PhotoContest PhotoContest.Web", Version = "v1" });
-            c.IncludeXmlComments(XmlCommentsFilePath);
-            c.AddSecurityDefinition("JWT authorization", new OpenApiSecurityScheme
-            {
-                Description =
-                    "The provided token will be added in all the requests made through swagger. Use `/api/Auth/token` to get your token.",
-                Name = "Authorization",
-                In = ParameterLocation.Header,
-                BearerFormat = "JWT",
-                Type = SecuritySchemeType.Http,
-                Scheme = "Bearer"
-            });
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "JWT authorization"
-                        }
-                    },
-                    new List<string>()
-                }
-            });
-        });
+            services.AddControllers();
 
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Connection")));
-        services.AddIdentity<IdentityUser, IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders();
-
-        services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
-        services.AddAuthentication(options =>
+            // TODO: Configure JsonConverter for StringToEnumConversion
+            // TODO: Configure Swagger to use enum name instead of value
+            services.AddSwaggerGen(c =>
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(tokenOptions =>
-            {
-                var key = Encoding.ASCII.GetBytes(Configuration["JwtConfig:Secret"]);
-                tokenOptions.SaveToken = true;
-                tokenOptions.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    RequireExpirationTime = false,
-                    ValidateLifetime = true
-                };
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PhotoContest PhotoContest.Web", Version = "v1" });
+                c.IncludeXmlComments(XmlCommentsFilePath);
             });
 
-        // TODO: we are not making use of the IDbConnection find another way to inject conn string
-        services.AddSingleton<IDbConnection>(_ => new SqlConnection(Configuration.GetConnectionString("Connection")));
+            services.AddLogging();
+            services.AddSingleton<ILogger, Logger<Startup>>();
+            services.AddSingleton<IDatabase, Database>();
+        
+            services.ConfigureServices(true);
+        }
 
-        PhotoContest.Implementation.DependencyInjection.ConfigureServices(services, true);
-    }
+        /// <summary>
+        ///     This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+                app.UseDeveloperExceptionPage();
+            else
+                app.UseHsts();
 
-    /// <summary>
-    ///     This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    /// </summary>
-    /// <param name="app"></param>
-    /// <param name="env"></param>
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-        if (env.IsDevelopment())
-            app.UseDeveloperExceptionPage();
-        else
-            app.UseHsts();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PhotoContest.Web v1"));
 
-        app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PhotoContest.Web v1"));
+            app.UseHttpsRedirection();
 
-        app.UseHttpsRedirection();
+            app.UseRouting();
 
-        app.UseRouting();
-
-        app.UseAuthorization();
-
-        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
     }
 }

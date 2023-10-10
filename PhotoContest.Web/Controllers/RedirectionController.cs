@@ -4,21 +4,22 @@ using Microsoft.AspNetCore.Mvc;
 
 #endregion
 
-namespace PhotoContest.Web.Implementation.Controllers;
-
-/// <summary>
-/// </summary>
-[Route("")]
-[ApiController]
-[ApiExplorerSettings(IgnoreApi = true)]
-public class RedirectionController : ControllerBase
+namespace PhotoContest.Web.Controllers
 {
     /// <summary>
     /// </summary>
-    /// <returns></returns>
-    [HttpGet]
-    public IActionResult RedirectToSwagger()
+    [Route("")]
+    [ApiController]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public class RedirectionController : ControllerBase
     {
-        return RedirectPermanent("swagger");
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult RedirectToSwagger()
+        {
+            return RedirectPermanent("swagger");
+        }
     }
 }
