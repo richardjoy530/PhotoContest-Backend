@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PhotoContest.Web.Auth;
@@ -120,9 +121,11 @@ public class Startup
                 };
             });
 
+        services.AddLogging();
+        services.AddSingleton<ILogger, Logger<Startup>>();
+        
         // TODO: we are not making use of the IDbConnection find another way to inject conn string
         services.AddSingleton<IDbConnection>(_ => new SqlConnection(Configuration.GetConnectionString("Connection")));
-
         PhotoContest.Implementation.DependencyInjection.ConfigureServices(services, true);
     }
 

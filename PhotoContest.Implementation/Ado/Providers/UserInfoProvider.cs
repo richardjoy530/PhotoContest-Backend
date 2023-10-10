@@ -2,8 +2,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using PhotoContest.Implementation.Ado.DataRecords;
 
 #endregion
@@ -17,6 +19,7 @@ public class UserInfoProvider : IProvider<UserInfo>
 {
     private const string GetByIdProcedure = "[dbo].[UserInfo_GetById]";
     private const string GetProcedure = "[dbo].[UserInfo_GetAll]";
+    private const string GetAllIdsProcedure = "[dbo].[UserInfo_GetAllIds]";
     private const string InsertProcedure = "[dbo].[UserInfo_Insert]";
     private const string UpdateProcedure = "[dbo].[UserInfo_Update]";
     private const string DeleteProcedure = "[dbo].[UserInfo_Delete]";
@@ -102,7 +105,16 @@ public class UserInfoProvider : IProvider<UserInfo>
     /// <inheritdoc />
     public int[] GetAllIds()
     {
-        throw new NotImplementedException();
+        using SqlConnection connection = new(_connectionString);
+        connection.Open();
+        using var command = connection.CreateCommand();
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = GetAllIdsProcedure;
+        using var reader = command.ExecuteReader();
+        var ids = new Collection<int>();
+        while (reader.Read())
+            ids.Add((int)reader["Id"]);
+        return ids.ToArray();
     }
 
     /// <inheritdoc />

@@ -7,12 +7,12 @@ An ASP .Net WebApi application which hosts the backend of PhotoContest
 - [Visual Studio 2019](https://visualstudio.microsoft.com/) or above
 - [SQL Server 2019 Express](https://www.microsoft.com/en-IN/sql-server/sql-server-downloads)
 
-| Project                 | Requirment         |
-| -------                 | ----------         |
-| Server                  | [.NET 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)                      |
-| Provider                | [.NET 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)                      |
-| Provider.Implementation | [.NET 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)                      |
-| Database                | [.NET Framework 4.5](https://dotnet.microsoft.com/en-us/download/visual-studio-sdks)  |
+| Project                 | Requirment                                                                           |
+| -------                 |--------------------------------------------------------------------------------------|
+| Server                  | [.NET 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)                     |
+| Provider                | [.NET 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)                     |
+| Provider.Implementation | [.NET 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)                     |
+| Database                | [.NET Framework 4.5](https://dotnet.microsoft.com/en-us/download/visual-studio-sdks) |
 
 ## Development environment setup
 

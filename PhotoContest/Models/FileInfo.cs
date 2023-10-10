@@ -14,4 +14,9 @@ public class FileInfo
     ///     Path of the location where the file is saved
     /// </summary>
     public string Path { get; set; }
+    
+    /// <summary>
+    /// RefId
+    /// </summary>
+    public string RefId  { get; set; }
 }

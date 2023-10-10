@@ -8,14 +8,14 @@ using PhotoContest.Web.Contracts;
 
 #endregion
 
-namespace PhotoContest.Web.Implementation.Controllers;
+namespace PhotoContest.Web.Controllers;
 
 /// <summary>
 /// Image Controller
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class FileController : ControllerBase, IFileController
+public class FileController : ControllerBase
 {
     private readonly IFileService _fileService;
 

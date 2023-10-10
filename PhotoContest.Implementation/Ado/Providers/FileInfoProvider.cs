@@ -2,8 +2,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using PhotoContest.Implementation.Ado.DataRecords;
 
 #endregion
@@ -20,6 +22,7 @@ public class FileInfoProvider : IProvider<FileInfo>
     private const string InsertProcedure = "[dbo].[FileInfo_Insert]";
     private const string UpdateProcedure = "[dbo].[FileInfo_Update]";
     private const string DeleteProcedure = "[dbo].[FileInfo_Delete]";
+    private const string GetAllIdsProcedure = "[dbo].[FileInfo_GetAllIds]";
     private readonly string _connectionString;
 
     /// <summary>
@@ -88,7 +91,16 @@ public class FileInfoProvider : IProvider<FileInfo>
     /// <inheritdoc />
     public int[] GetAllIds()
     {
-        throw new NotImplementedException();
+        using SqlConnection connection = new(_connectionString);
+        connection.Open();
+        using var command = connection.CreateCommand();
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = GetAllIdsProcedure;
+        using var reader = command.ExecuteReader();
+        var ids = new Collection<int>();
+        while (reader.Read())
+            ids.Add((int)reader["Id"]);
+        return ids.ToArray();
     }
 
     /// <inheritdoc />

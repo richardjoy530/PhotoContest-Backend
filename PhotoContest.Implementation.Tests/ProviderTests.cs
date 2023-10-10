@@ -1,8 +1,9 @@
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using PhotoContest.Implementation.Ado.DataRecords;
-using PhotoContest.Implementation.Cache;
 using PhotoContest.Models;
 using Contest = PhotoContest.Implementation.Ado.DataRecords.Contest;
 using FileInfo = PhotoContest.Implementation.Ado.DataRecords.FileInfo;
@@ -13,8 +14,8 @@ namespace PhotoContest.Implementation.Tests;
 
 public class ProviderTests
 {
-    private static readonly string ConnectionString = "Server=localhost;Database=FridayDatabase;Trusted_Connection=yes;";
-    private CachedDataStore CachedDataStore { get; set; }
+    private static readonly string ConnectionString = "Server=localhost;Database=TestDatabase;Trusted_Connection=yes;";
+    private IDataStore CachedDataStore { get; set; }
     private static IList<KeyValuePair<AssetType, int>> IdentityMap { get; set; }
 
     [OneTimeSetUp]
@@ -22,10 +23,11 @@ public class ProviderTests
     {
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddSingleton<IDbConnection>(_ => new SqlConnection(ConnectionString));
+        serviceCollection.AddSingleton(typeof(ILogger), new NullLogger<ProviderTests>());
         serviceCollection.ConfigureServices(true);
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
-        CachedDataStore = serviceProvider.GetService<CachedDataStore>() ?? throw new InvalidOperationException();
+        CachedDataStore = serviceProvider.GetService<IDataStore>() ?? throw new InvalidOperationException();
         IdentityMap = new List<KeyValuePair<AssetType, int>>();
     }
 
@@ -238,5 +240,12 @@ public class ProviderTests
 
         foreach (var id in IdentityMap.Where(kv => kv.Key == AssetType.Contest).Select(kv => kv.Value))
             Assert.IsTrue(CachedDataStore.Delete(id, AssetType.Contest));
+        
+        using SqlConnection connection = new(ConnectionString);
+        connection.Open();
+        using var command = connection.CreateCommand();
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = "[dbo].[Cleanup]";
+        command.ExecuteNonQuery();
     }
 }

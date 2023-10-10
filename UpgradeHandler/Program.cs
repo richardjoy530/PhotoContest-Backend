@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using System.Net;
 using PhotoContest.Models;
 using FileInfo = PhotoContest.Models.FileInfo;
 
@@ -19,10 +20,10 @@ internal abstract class Program
 
     public static void Main()
     {
-        allContests = GetAllContest();
+        // allContests = GetAllContest();
         allFileInfos = GetAllFileInfos();
-        allUserInfos = GetAllUserInfos();
-        allSubmissionDatas = GetAllSubmissionData();
+        // allUserInfos = GetAllUserInfos();
+        // allSubmissionDatas = GetAllSubmissionData();
 
         // foreach (var entrusting in File.ReadAllLines(@"E:\Project\Python\data1.log"))
         // {
@@ -129,6 +130,18 @@ internal abstract class Program
         //         }
         //     }
         // }
+
+        foreach (var info in allFileInfos)
+        {
+            if (info.Id == 0)
+            {
+                continue;
+            }
+            using (var client = new WebClient()) 
+            {
+                // client.DownloadFile(new Uri(info.Path), @$"images\{info.RefId}.png");
+            }
+        }
     }
 
     public static void UpdateContest(Contest data, int id)
@@ -312,7 +325,8 @@ internal abstract class Program
         return new FileInfo
         {
             Path = (string)record["Path"],
-            Id = (int)record["Id"]
+            Id = (int)record["Id"],
+            RefId = (string)record["RefId"]
         };
     }
 

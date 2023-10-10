@@ -1,12 +1,14 @@
 using System;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotoContest.Services;
 using PhotoContest.Web.Contracts;
 using PhotoContest.Web.Converters;
 
-namespace PhotoContest.Web.Implementation.Controllers;
+namespace PhotoContest.Web.Controllers;
 
 /// <summary>
 /// </summary>
@@ -42,6 +44,8 @@ public class ContestController : ControllerBase
     [HttpGet("all")]
     public ActionResult<ContestResponse[]> GetAll()
     {
+        Thread.CurrentPrincipal = new ClaimsPrincipal();
+        Console.WriteLine($"thread: {Thread.CurrentThread.ManagedThreadId}");
         return Ok(_contestManagementService.GetAll().Select(ConverterExtensions.ToResponse));
     }
 

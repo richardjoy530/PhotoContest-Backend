@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 using PhotoContest.Implementation.Ado.DataRecords;
 
 #endregion
@@ -24,22 +25,25 @@ public class ContestProvider : IProvider<Contest>
     private const string DeleteProcedure = "[dbo].[Contest_Delete]";
     private const string GetAllIdsProcedure = "[dbo].[Contest_GetAllIds]";
     private readonly string _connectionString;
+    private readonly ILogger _logger;
 
     /// <summary>
     ///     Initializes a new instance of ContestProvider class
     /// </summary>
     /// <param name="dbConnection"></param>
-    public ContestProvider(IDbConnection dbConnection)
+    /// <param name="logger"></param>
+    public ContestProvider(IDbConnection dbConnection, ILogger logger)
     {
         if (dbConnection is null) throw new ArgumentNullException(nameof(dbConnection));
-
         _connectionString = dbConnection.ConnectionString;
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     // todo: validate end date not colliding withe the existing
     /// <inheritdoc />
     public int Insert(Contest data)
     {
+        _logger.Log(LogLevel.Information, "Inserting Contest");
         if (data is null) throw new ArgumentNullException(nameof(data));
 
         if (data.Id != 0) throw new ArgumentException("Id must be 0 while inserting");

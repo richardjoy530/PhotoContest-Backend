@@ -107,4 +107,7 @@
     <Build Include="dbo\Stored Procedures\VoteInfo_Insert.sql" />
     <Build Include="dbo\Stored Procedures\VoteInfo_Update.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="dbo\Stored Procedures\Cleanup.sql" />
+  </ItemGroup>
 </Project>

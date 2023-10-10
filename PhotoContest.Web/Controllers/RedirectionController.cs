@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 #endregion
 
-namespace PhotoContest.Web.Implementation.Controllers;
+namespace PhotoContest.Web.Controllers;
 
 /// <summary>
 /// </summary>
