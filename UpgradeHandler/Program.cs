@@ -137,10 +137,8 @@ namespace UpgradeHandler
                 {
                     continue;
                 }
-                using (var client = new WebClient()) 
-                {
-                    // client.DownloadFile(new Uri(info.Path), @$"images\{info.RefId}.png");
-                }
+                using WebClient client = new WebClient();
+                client.DownloadFile(new Uri(info.Path), @$"images\{info.RefId}.png");
             }
         }
 
