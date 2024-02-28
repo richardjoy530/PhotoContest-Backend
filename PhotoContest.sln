@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32126.315
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoContest.Web", "PhotoContest.Web\PhotoContest.Web.csproj", "{766939AF-AAF1-494F-8DB5-42F6F456C386}"
 EndProject
@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoContest.Implementation
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{F0DFFCF6-CED6-4907-B712-F3320F8322F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpgradeHandler", "UpgradeHandler\UpgradeHandler.csproj", "{FA1A3DE2-E1EA-4732-97AF-C6579E881D00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpgradeHandler", "UpgradeHandler\UpgradeHandler.csproj", "{FA1A3DE2-E1EA-4732-97AF-C6579E881D00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoContest.Implementation.Tests", "PhotoContest.Implementation.Tests\PhotoContest.Implementation.Tests.csproj", "{8F601E83-2DEC-4114-B8BC-718E1FCB043D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoContest.Implementation.Tests", "PhotoContest.Implementation.Tests\PhotoContest.Implementation.Tests.csproj", "{8F601E83-2DEC-4114-B8BC-718E1FCB043D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
