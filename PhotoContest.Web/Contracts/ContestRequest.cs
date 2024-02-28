@@ -19,7 +19,7 @@ namespace PhotoContest.Web.Contracts
         public string Theme { get; set; }
 
         /// <summary>
-        ///     End date of the contest in yyyy-mm-dd format timezone IST
+        ///     End date of the contest in yyyy-mm-dd format timezone UTC
         /// </summary>
         [Required]
         public DateTime EndDate { get; set; }

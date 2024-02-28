@@ -45,8 +45,6 @@ namespace PhotoContest.Web.Controllers
         [HttpGet("all")]
         public ActionResult<ContestResponse[]> GetAll()
         {
-            Thread.CurrentPrincipal = new ClaimsPrincipal();
-            Console.WriteLine($"thread: {Thread.CurrentThread.ManagedThreadId}");
             return Ok(_contestManagementService.GetAll().Select(ConverterExtensions.ToResponse));
         }
 
