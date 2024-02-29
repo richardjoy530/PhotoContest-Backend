@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using PhotoContest.Implementation.Ado;
+using PhotoContest.Implementation.Ado.Providers;
 using FileInfo = PhotoContest.Implementation.Ado.DataRecords.FileInfo;
 
 namespace PhotoContest.Implementation.Service.Files
@@ -11,7 +11,7 @@ namespace PhotoContest.Implementation.Service.Files
     /// </summary>
     public class FileService : IFileService
     {
-        private readonly IProvider<FileInfo> _fileInfoProvider;
+        private readonly IFileInfoProvider _fileInfoProvider;
         private readonly IFileProvider _fileProvider;
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace PhotoContest.Implementation.Service.Files
         /// <param name="fileProvider"></param>
         /// <param name="fileInfoProvider"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public FileService(IFileProvider fileProvider, IProvider<FileInfo> fileInfoProvider)
+        public FileService(IFileProvider fileProvider, IFileInfoProvider fileInfoProvider)
         {
             _fileInfoProvider = fileInfoProvider ?? throw new ArgumentNullException(nameof(fileInfoProvider));
             _fileProvider = fileProvider ?? throw new ArgumentNullException(nameof(fileProvider));

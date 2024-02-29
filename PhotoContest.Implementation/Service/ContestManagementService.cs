@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using PhotoContest.Implementation.Ado;
 using PhotoContest.Implementation.Ado.DataRecords;
+using PhotoContest.Implementation.Ado.Providers;
 using PhotoContest.Services;
 using Contest = PhotoContest.Models.Contest;
 
@@ -13,7 +14,7 @@ namespace PhotoContest.Implementation.Service
     /// </summary>
     public class ContestManagementService : IContestManagementService
     {
-        private readonly IProvider<Ado.DataRecords.Contest> _dataStore;
+        private readonly IContestProvider _dataStore;
 
         private static Contest _currentContest;
     
@@ -34,7 +35,7 @@ namespace PhotoContest.Implementation.Service
     
         /// <summary>
         /// </summary>
-        public ContestManagementService(IProvider<Ado.DataRecords.Contest> dataStore)
+        public ContestManagementService(IContestProvider dataStore)
         {
             _dataStore = dataStore ?? throw new ArgumentNullException(nameof(dataStore));
         }
@@ -128,7 +129,7 @@ namespace PhotoContest.Implementation.Service
         public IEnumerable<Contest> GetLastContest(int count)
         {
             var dataRecords = _dataStore.GetAll().ToList();
-            dataRecords.Sort((c, v) => c.EndDate.CompareTo(v));
+            dataRecords.Sort((c, v) => c.EndDate.CompareTo(v.EndDate));
             return dataRecords.TakeLast(count).Select(Converters.ToModel);
         }
     }

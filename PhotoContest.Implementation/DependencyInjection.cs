@@ -18,12 +18,12 @@ namespace PhotoContest.Implementation
         /// <param name="isDev"></param>
         public static void ConfigureServices(this IServiceCollection services, bool isDev)
         {
-            services.AddSingleton<IProvider<Submission>, SubmissionProvider>();
-            services.AddSingleton<IProvider<UserInfo>, UserInfoProvider>();
-            services.AddSingleton<IProvider<VoteInfo>, VoteInfoProvider>();
-            services.AddSingleton<IProvider<Contest>, ContestProvider>();
-            services.AddSingleton<IProvider<ScoreInfo>, ScoreInfoProvider>();
-            services.AddSingleton<IProvider<FileInfo>, FileInfoProvider>();
+            services.AddSingleton<ISubmissionProvider, SubmissionProvider>();
+            services.AddSingleton<IUserInfoProvider, UserInfoProvider>();
+            services.AddSingleton<IVoteInfoProvider, VoteInfoProvider>();
+            services.AddSingleton<IContestProvider, ContestProvider>();
+            services.AddSingleton<IScoreInfoProvider, ScoreInfoProvider>();
+            services.AddSingleton<IFileInfoProvider, FileInfoProvider>();
 
             if (isDev)
                 services.AddSingleton<IFileProvider, SystemFileProvider>();
