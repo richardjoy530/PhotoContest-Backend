@@ -12,7 +12,7 @@ namespace PhotoContest.Implementation.Ado.Providers
     /// <summary>
     ///     Database access layer of <see cref="Contest" />
     /// </summary>
-    public class ContestProvider : IProvider<Contest>
+    public class ContestProvider : IContestProvider
     {
         private const string GetByIdProcedure = "[dbo].[Contest_GetById]";
         private const string GetProcedure = "[dbo].[Contest_GetAll]";

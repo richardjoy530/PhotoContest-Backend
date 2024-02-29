@@ -11,7 +11,7 @@ namespace PhotoContest.Implementation.Ado.Providers
     /// <summary>
     ///     Database access layer of <see cref="Submission" />
     /// </summary>
-    public class SubmissionProvider : IProvider<Submission>
+    public class SubmissionProvider : ISubmissionProvider
     {
         private const string GetByIdProcedure = "[dbo].[Submission_GetById]";
         private const string GetProcedure = "[dbo].[Submission_GetAll]";

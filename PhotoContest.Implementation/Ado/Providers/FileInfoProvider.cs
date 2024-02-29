@@ -11,7 +11,7 @@ namespace PhotoContest.Implementation.Ado.Providers
     /// <summary>
     ///     Database access layer of <see cref="Contest" />
     /// </summary>
-    public class FileInfoProvider : IProvider<FileInfo>
+    public class FileInfoProvider : IFileInfoProvider
     {
         private const string GetByIdProcedure = "[dbo].[FileInfo_GetById]";
         private const string GetProcedure = "[dbo].[FileInfo_GetAll]";

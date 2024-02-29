@@ -11,7 +11,7 @@ namespace PhotoContest.Implementation.Ado.Providers
     /// <summary>
     ///     Database access layer of <see cref="VoteInfo" />
     /// </summary>
-    public class VoteInfoProvider : IProvider<VoteInfo>
+    public class VoteInfoProvider : IVoteInfoProvider
     {
         private const string GetByIdProcedure = "[dbo].[VoteInfo_GetById]";
         private const string GetProcedure = "[dbo].[VoteInfo_GetAll]";

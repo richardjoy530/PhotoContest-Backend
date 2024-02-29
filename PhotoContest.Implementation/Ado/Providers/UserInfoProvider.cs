@@ -11,7 +11,7 @@ namespace PhotoContest.Implementation.Ado.Providers
     /// <summary>
     ///     Database access layer of <see cref="Models.UserInfo" />
     /// </summary>
-    public class UserInfoProvider : IProvider<UserInfo>
+    public class UserInfoProvider : IUserInfoProvider
     {
         private const string GetByIdProcedure = "[dbo].[UserInfo_GetById]";
         private const string GetProcedure = "[dbo].[UserInfo_GetAll]";
