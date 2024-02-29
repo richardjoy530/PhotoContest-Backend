@@ -4,7 +4,7 @@ namespace PhotoContest.Implementation.Ado.DataRecords
 {
     /// <summary>
     /// </summary>
-    public record Submission : IDataRecord
+    public class Submission : IDataRecord
     {
         /// <summary>
         /// </summary>
