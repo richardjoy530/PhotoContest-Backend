@@ -19,7 +19,7 @@
     <!--Exclude the DB migration code form the EntityFramework for now. Not sure when we'll need this again-->
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.2" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.12" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.12">
